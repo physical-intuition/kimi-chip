@@ -1,0 +1,7 @@
+read_verilog rtl/int4_mac_opt.v
+read_verilog rtl/mac_array_opt.v
+read_verilog rtl/compute_core_opt.v
+hierarchy -top compute_core_opt
+synth -flatten
+stat
+write_verilog -noattr synth/compute_core_opt_synth.v

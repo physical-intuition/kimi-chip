@@ -1,0 +1,6 @@
+read_verilog rtl/mac_csa.v
+read_verilog rtl/mac_array_csa.v
+read_verilog rtl/compute_core_csa.v
+hierarchy -top compute_core_csa
+synth -flatten
+stat

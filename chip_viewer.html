@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kimi K3 Compute Core - Interactive 3D</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background: #0a0a0f; 
+            font-family: 'Inter', -apple-system, sans-serif;
+            overflow: hidden;
+        }
+        #container { width: 100vw; height: 100vh; }
+        #info {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: #e0e0e0;
+            font-size: 14px;
+            z-index: 100;
+            background: rgba(10, 10, 20, 0.9);
+            padding: 20px;
+            border-radius: 12px;
+            max-width: 340px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        #info h1 { 
+            font-size: 18px; 
+            margin-bottom: 8px; 
+            color: #fff;
+            font-weight: 600;
+        }
+        #info .subtitle {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 16px;
+        }
+        #info .spec { 
+            display: flex; 
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 13px;
+        }
+        #info .spec:last-child { border-bottom: none; }
+        .highlight { color: #f0a050; font-weight: 500; }
+        #tooltip {
+            position: absolute;
+            background: rgba(15, 15, 25, 0.95);
+            color: #fff;
+            padding: 14px 18px;
+            border-radius: 10px;
+            font-size: 13px;
+            pointer-events: none;
+            display: none;
+            z-index: 200;
+            border: 1px solid rgba(255,255,255,0.12);
+            max-width: 280px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        }
+        #tooltip h3 { 
+            color: #f0a050; 
+            margin-bottom: 8px;
+            font-size: 15px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        #tooltip p { line-height: 1.5; color: #c0c0c0; }
+        #controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #555;
+            font-size: 12px;
+            z-index: 100;
+        }
+        #legend {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(10, 10, 20, 0.9);
+            padding: 16px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.1);
+            z-index: 100;
+        }
+        #legend h4 { color: #888; font-size: 11px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+        .legend-item { display: flex; align-items: center; margin: 6px 0; font-size: 12px; color: #aaa; }
+        .legend-color { width: 14px; height: 14px; border-radius: 3px; margin-right: 10px; }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <div id="info">
+        <h1>v4 Compute Core</h1>
+        <div class="subtitle">Based on Kimi K3 architecture</div>
+        <div class="spec"><span>Die Area</span><span class="highlight">0.066 mm²</span></div>
+        <div class="spec"><span>Frequency</span><span class="highlight">752 MHz</span></div>
+        <div class="spec"><span>Standard Cells</span><span class="highlight">43,882</span></div>
+        <div class="spec"><span>Compute</span><span class="highlight">256 INT4 MACs</span></div>
+        <div class="spec"><span>Accumulator</span><span class="highlight">12-bit (optimized)</span></div>
+        <div class="spec"><span>Process</span><span class="highlight">Nangate45</span></div>
+        <div class="spec" style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.1);"><span>Peak Throughput</span><span class="highlight">~58K tok/s</span></div>
+    </div>
+    <div id="tooltip"></div>
+    <div id="controls">drag to rotate · scroll to zoom · hover for details</div>
+    <div id="legend">
+        <h4>Block Types</h4>
+        <div class="legend-item"><div class="legend-color" style="background: #4080a0;"></div>msh_conv (MAC Array)</div>
+        <div class="legend-item"><div class="legend-color" style="background: #a06040;"></div>msh_deq (Dequantize)</div>
+        <div class="legend-item"><div class="legend-color" style="background: #406080;"></div>SRAM Buffers</div>
+        <div class="legend-item"><div class="legend-color" style="background: #705090;"></div>msh_mla (Attention)</div>
+        <div class="legend-item"><div class="legend-color" style="background: #508060;"></div>msh_kwa (KV Cache)</div>
+        <div class="legend-item"><div class="legend-color" style="background: #e0c050;"></div>I/O Pins</div>
+    </div>
+
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+        const container = document.getElementById('container');
+        const tooltip = document.getElementById('tooltip');
+
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x08080e);
+
+        const camera = new THREE.PerspectiveCamera(42, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(22, 14, 22);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        container.appendChild(renderer.domElement);
+
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.minDistance = 10;
+        controls.maxDistance = 50;
+        controls.autoRotate = true;
+        controls.autoRotateSpeed = 0.5;
+
+        // Lighting
+        scene.add(new THREE.AmbientLight(0x404060, 0.6));
+
+        const keyLight = new THREE.DirectionalLight(0xffffff, 1.0);
+        keyLight.position.set(20, 25, 15);
+        keyLight.castShadow = true;
+        keyLight.shadow.mapSize.width = 2048;
+        keyLight.shadow.mapSize.height = 2048;
+        scene.add(keyLight);
+
+        scene.add(new THREE.DirectionalLight(0x6080ff, 0.3).translateX(-15).translateY(10).translateZ(-15));
+        scene.add(new THREE.DirectionalLight(0xffa050, 0.2).translateY(8).translateZ(-20));
+
+        // Materials
+        const mats = {
+            substrate: new THREE.MeshStandardMaterial({ color: 0x15151a, metalness: 0.1, roughness: 0.85 }),
+            silicon: new THREE.MeshStandardMaterial({ color: 0x1a3028, metalness: 0.25, roughness: 0.65 }),
+            mac_conv: new THREE.MeshStandardMaterial({ color: 0x4080a0, metalness: 0.6, roughness: 0.3 }),
+            deq: new THREE.MeshStandardMaterial({ color: 0xa06040, metalness: 0.6, roughness: 0.3 }),
+            sram: new THREE.MeshStandardMaterial({ color: 0x406080, metalness: 0.5, roughness: 0.4 }),
+            mla: new THREE.MeshStandardMaterial({ color: 0x705090, metalness: 0.5, roughness: 0.4 }),
+            kwa: new THREE.MeshStandardMaterial({ color: 0x508060, metalness: 0.5, roughness: 0.4 }),
+            io: new THREE.MeshStandardMaterial({ color: 0x2a3545, metalness: 0.55, roughness: 0.4 }),
+            pins: new THREE.MeshStandardMaterial({ color: 0xe0c050, metalness: 0.95, roughness: 0.1 }),
+            xbus: new THREE.MeshStandardMaterial({ color: 0xc08030, metalness: 0.85, roughness: 0.2 }),
+            mac_a: new THREE.MeshStandardMaterial({ color: 0x4590b5, metalness: 0.55, roughness: 0.35 }),
+            mac_b: new THREE.MeshStandardMaterial({ color: 0x55a085, metalness: 0.55, roughness: 0.35 }),
+        };
+
+        const blocks = [];
+        const chip = new THREE.Group();
+
+        // Kimi K3-style block layout
+        const defs = [
+            // Base layers
+            { name: 'Substrate', x: 0, y: -0.4, z: 0, w: 12, h: 0.6, d: 12, m: 'substrate',
+              desc: 'Package substrate with power/ground distribution network' },
+            { name: 'Silicon Die', x: 0, y: 0.3, z: 0, w: 11, h: 1.0, d: 11, m: 'silicon',
+              desc: 'Active silicon layer - Nangate45 process, 43,882 standard cells' },
+            
+            // ESRAM (top bar like in Kimi)
+            { name: 'ESRAM', x: 0, y: 1.2, z: -4.5, w: 9, h: 0.5, d: 1.2, m: 'sram',
+              desc: 'Embedded SRAM bank for weight and activation storage' },
+            
+            // msh_conv - Main MAC array (center, largest block)
+            { name: 'msh_conv', x: 0, y: 1.8, z: 0, w: 5.5, h: 1.4, d: 5.5, m: 'mac_conv',
+              desc: 'Main compute block: 256 INT4 MACs in 16×16 array. Contains DATA_MAC, WT_MAC, ACCUM, and RESHAPE units. Peak: 386 GOPS @ 752 MHz' },
+            
+            // msh_deq - Dequantization (right side)
+            { name: 'msh_deq', x: 4, y: 1.5, z: 0, w: 1.4, h: 1.0, d: 4, m: 'deq',
+              desc: 'Fused dequantization unit with X_ROW, Y_ROW, D_ROW, GATER. Converts INT4 weights to computation format on-the-fly' },
+            
+            // msh_mla - Attention/MLA block (left side)
+            { name: 'msh_mla', x: -4, y: 1.5, z: 0.5, w: 1.4, h: 1.0, d: 3.5, m: 'mla',
+              desc: 'Multi-head latent attention. Contains D_OFFSET, X_CACHE, Y_CACHE, QX_BIT, SOFTMAX units' },
+            
+            // msh_kwa - KV cache (back left)
+            { name: 'msh_kwa', x: -4, y: 1.5, z: -2.5, w: 1.4, h: 1.0, d: 2, m: 'kwa',
+              desc: 'KV cache controller with QP_LV, ALPHA, RANGE, READOUT logic' },
+            
+            // msh_xbus - Central data bus
+            { name: 'msh_xbus', x: 0, y: 1.0, z: 3.2, w: 8, h: 0.25, d: 0.6, m: 'xbus',
+              desc: 'Central crossbar data bus connecting all compute and memory blocks' },
+            
+            // meh_mbus - Memory bus (front left)
+            { name: 'meh_mbus', x: -3.5, y: 1.3, z: 3.5, w: 1.8, h: 0.7, d: 1.5, m: 'sram',
+              desc: 'Memory bus interface: 2 × 32kB × 16b configuration' },
+            
+            // tak_buf - Token buffer
+            { name: 'tak_buf', x: 3.5, y: 1.3, z: 3.5, w: 1.5, h: 0.7, d: 1.5, m: 'sram',
+              desc: 'Token buffer: 512 × 20b for input token staging' },
+            
+            // hsz_buf - Hazard buffer
+            { name: 'hsz_buf', x: 3.5, y: 1.3, z: -3, w: 1.5, h: 0.7, d: 1.8, m: 'sram',
+              desc: 'Hazard buffer for pipeline stall management and activation double-buffering' },
+            
+            // zz_buf - Large buffer (back right)
+            { name: 'zz_buf', x: 0, y: 1.2, z: 4.2, w: 4, h: 0.5, d: 1, m: 'sram',
+              desc: 'Output buffer: 16k × 128b, 64 banks for high-bandwidth output staging' },
+        ];
+
+        // Create main blocks
+        defs.forEach(def => {
+            const geo = new THREE.BoxGeometry(def.w, def.h, def.d);
+            const mesh = new THREE.Mesh(geo, mats[def.m]);
+            mesh.position.set(def.x, def.y, def.z);
+            mesh.castShadow = true;
+            mesh.receiveShadow = true;
+            mesh.userData = { name: def.name, desc: def.desc };
+            chip.add(mesh);
+            blocks.push(mesh);
+        });
+
+        // Add MAC unit grid on top of msh_conv
+        const macSize = 0.3;
+        const macGap = 0.04;
+        for (let row = 0; row < 16; row++) {
+            for (let col = 0; col < 16; col++) {
+                const geo = new THREE.BoxGeometry(macSize, 0.35, macSize);
+                const mat = (row + col) % 2 === 0 ? mats.mac_a : mats.mac_b;
+                const mesh = new THREE.Mesh(geo, mat);
+                const x = -2.5 + col * (macSize + macGap);
+                const z = -2.5 + row * (macSize + macGap);
+                mesh.position.set(x, 2.75, z);
+                mesh.castShadow = true;
+                mesh.userData = { 
+                    name: `MAC[${row}][${col}]`, 
+                    desc: `INT4 multiply-accumulate unit. Performs 4 INT4×INT4 products per cycle. 12-bit accumulator (optimized from 32-bit, 60% area reduction).` 
+                };
+                chip.add(mesh);
+                blocks.push(mesh);
+            }
+        }
+
+        // I/O ring
+        const ringH = 0.7;
+        const ringW = 0.5;
+        [[0, 5.5, 11, ringW], [0, -5.5, 11, ringW], [5.5, 0, ringW, 11], [-5.5, 0, ringW, 11]].forEach(([x, z, w, d]) => {
+            const geo = new THREE.BoxGeometry(w, ringH, d);
+            const mesh = new THREE.Mesh(geo, mats.io);
+            mesh.position.set(x, 0.9, z);
+            mesh.castShadow = true;
+            mesh.receiveShadow = true;
+            mesh.userData = { name: 'I/O Ring', desc: '3224 I/O pads for high-bandwidth data interface and power delivery' };
+            chip.add(mesh);
+            blocks.push(mesh);
+        });
+
+        // I/O pins
+        const pinGeo = new THREE.CylinderGeometry(0.1, 0.1, 0.5, 8);
+        for (let i = 0; i < 22; i++) {
+            for (let side = 0; side < 4; side++) {
+                let x, z;
+                const offset = -5 + i * 0.48;
+                if (side === 0) { x = offset; z = 5.5; }
+                else if (side === 1) { x = offset; z = -5.5; }
+                else if (side === 2) { x = 5.5; z = offset; }
+                else { x = -5.5; z = offset; }
+                
+                const pin = new THREE.Mesh(pinGeo, mats.pins);
+                pin.position.set(x, 1.55, z);
+                pin.userData = { name: 'I/O Pin', desc: 'High-speed I/O pad. Part of 3224-pin interface.' };
+                chip.add(pin);
+                blocks.push(pin);
+            }
+        }
+
+        scene.add(chip);
+
+        // Interaction
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+        let hovered = null;
+
+        function onMouseMove(e) {
+            mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+            
+            raycaster.setFromCamera(mouse, camera);
+            const hits = raycaster.intersectObjects(blocks);
+            
+            if (hits.length > 0 && hits[0].object.userData.name) {
+                const obj = hits[0].object;
+                tooltip.style.display = 'block';
+                tooltip.style.left = e.clientX + 18 + 'px';
+                tooltip.style.top = e.clientY + 18 + 'px';
+                tooltip.innerHTML = `<h3>${obj.userData.name}</h3><p>${obj.userData.desc}</p>`;
+                
+                if (hovered !== obj) {
+                    if (hovered?.material.emissive) hovered.material.emissive.setHex(0x000000);
+                    if (obj.material.emissive) obj.material.emissive.setHex(0x181818);
+                    hovered = obj;
+                }
+                controls.autoRotate = false;
+            } else {
+                tooltip.style.display = 'none';
+                if (hovered?.material.emissive) hovered.material.emissive.setHex(0x000000);
+                hovered = null;
+                controls.autoRotate = true;
+            }
+        }
+
+        window.addEventListener('mousemove', onMouseMove);
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+read_verilog rtl/int4_mac.v
+read_verilog rtl/mac_array.v
+read_verilog rtl/mm_controller.v
+read_verilog rtl/compute_core.v
+hierarchy -top compute_core
+synth -flatten
+stat
+write_verilog -noattr synth/compute_core_synth.v

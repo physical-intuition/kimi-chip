@@ -1,0 +1,9 @@
+read_verilog rtl/int4_mac_v4.v
+read_verilog rtl/mac_array_v4.v
+read_verilog rtl/compute_core_v4.v
+hierarchy -top compute_core_v4
+synth -top compute_core_v4 -flatten
+dfflibmap -liberty /home/kit/OpenROAD-flow-scripts/flow/platforms/nangate45/lib/NangateOpenCellLibrary_typical.lib
+abc -liberty /home/kit/OpenROAD-flow-scripts/flow/platforms/nangate45/lib/NangateOpenCellLibrary_typical.lib
+stat -liberty /home/kit/OpenROAD-flow-scripts/flow/platforms/nangate45/lib/NangateOpenCellLibrary_typical.lib
+write_verilog -noattr synth/compute_core_v4_ng45.v

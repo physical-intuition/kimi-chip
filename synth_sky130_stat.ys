@@ -1,0 +1,8 @@
+read_verilog rtl/int4_mac_v2.v
+read_verilog rtl/mac_array_v2.v
+read_verilog rtl/compute_core_v2.v
+hierarchy -top compute_core_v2
+synth -top compute_core_v2
+dfflibmap -liberty /home/kit/OpenROAD-flow-scripts/flow/platforms/sky130hd/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+abc -liberty /home/kit/OpenROAD-flow-scripts/flow/platforms/sky130hd/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+stat -liberty /home/kit/OpenROAD-flow-scripts/flow/platforms/sky130hd/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
