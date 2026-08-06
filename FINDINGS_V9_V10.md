@@ -70,7 +70,41 @@ v4 constraint sweep (unchanged RTL): closes 1.33 ns (+0.03) → **752 MHz
 confirmed**; pushed harder the path compresses to ~1.13 ns → **~885 MHz**
 ceiling (+18% from constraint honesty alone).
 
-v9 / v10a / v10b sweep at 0.66–1.33 ns targets: RUNNING — table to be filled
-in from `reports/nangate45/kimi_*/base/6_finish.rpt` when the fixed-RTL runs
-land. Note die area is pad-limited for the 24-bit-bus variants (6.1K pins on
-a bare core); cell area from synthesis is the fair area comparison.
+Corrected sweep (fixed RTL + corrected SDC, all routed DRC-clean), implied
+ceilings from best critical path across three clock targets each:
+
+| Variant | Best path | Ceiling | Notes |
+|---|---|---|---|
+| v4 | 1.13 ns | ~885 MHz | fastest — but double-counts, K<=64 |
+| v10a | 1.20 ns | ~833 MHz | correct, 1 MAC/cycle: ~1.9x v4 sustained compute |
+| v10b | 1.28 ns | ~781 MHz | CSA disproven: its fold (resolve+24b add) is its own critical path |
+| v9 | 1.29 ns | ~775 MHz | correct baseline |
+
+Routed critical paths (from 6_finish.rpt): v10a binds on the input-data ->
+multiply -> add path; v10b binds register-to-register on its own fold. v11
+(registered product + two-stage fold, in rtl/) targets both; unmeasured.
+
+## Full chip: the 250 MHz question, answered
+
+Factory full-chip global placement sticks at ~250 MHz because its flow has no
+SRAM macro path: the 96 KB of sram_sp buffers synthesize to ~500 Kbit of
+flip-flops plus 4096:1 read-mux ladders (~12 logic levels before the MAC).
+fullchip_v10 (rtl/) replaces them with 16x fakeram45_512x64 platform hard
+macros (64 KB), a 3-cycle pipelined read path, and a phase-muxed host port.
+Result on Nangate45, frozen 26Q2, clock set to 1.33 ns (= v4's 752 MHz):
+
+| | Factory full chip | fullchip_v10 |
+|---|---|---|
+| Memories | flops (no macro path) | 16x fakeram45_512x64 |
+| Routed DRC | - | **0 violations** |
+| Worst slack @ 1.33 ns | - | **-0.00 ns -> fmax ~752 MHz** |
+| Sustained MACs | 256 x f/2 | 256 x f (streaming) |
+| vs 250 MHz baseline | 1x | **~3x clock, ~6x sustained compute** |
+
+Verification: bit-exact vs expected at K=300 through all bank boundaries
+(310 cycles = K+10, confirming 1 MAC/cycle through the real memory system).
+Memory timing triple-sourced: platform lib clk->Q 0.305 ns, OpenRAM-compiled
+256x64 measured 0.34 ns, and a deliberately 2.4x-pessimistic model (0.83 ns)
+used for the conservative bound. An 830 MHz-target run and a control-arm run
+of the unmodified inference_accelerator (memories as flops, same flow) are
+in flight to complete the ceiling and baseline rows.

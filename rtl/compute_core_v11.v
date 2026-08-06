@@ -7,11 +7,8 @@
 // cycles instead of ~2K+3. Same single-add semantics as v9 (en derives
 // from a delayed issue-valid pipe, never from FSM dwell).
 //
-// USE_CSA selects the carry-save array (v10b) vs the ripple array (v10a);
-// everything else is identical, so a/b comparisons isolate the CSA effect.
-module compute_core_v10 #(
-    parameter USE_CSA = 0,
-    parameter RD_LAT = 2   // SRAM read latency in cycles (vpipe depth)
+module compute_core_v11 #(
+        parameter RD_LAT = 2   // SRAM read latency in cycles (vpipe depth)
 )(
     input wire clk,
     input wire rst_n,
@@ -27,7 +24,7 @@ module compute_core_v10 #(
     output reg done
 );
     localparam CHUNK = 16;
-    localparam IDLE=0, CLEAR=1, RUN=2, FLUSH=3, FLUSH2=4, DONE=5;
+    localparam IDLE=0, CLEAR=1, RUN=2, FLUSH=3, FLUSH2=4, FLUSH3=5, FLUSH4=6, DONE=7;
     reg [2:0] state;
     reg [15:0] k_iss;
     reg [RD_LAT-1:0] vpipe; // issue-valid, delayed to match SRAM latency
@@ -37,17 +34,10 @@ module compute_core_v10 #(
     wire issuing = (state == RUN) && (k_iss != k_dim);
     wire mac_en  = vpipe[RD_LAT-1];      // add exactly when rdata is valid
 
-    generate if (USE_CSA) begin : g_csa
-        mac_array_v10 #(.ROWS(16), .COLS(16)) array (
-            .clk(clk), .rst_n(rst_n),
-            .en(mac_en), .clear(mac_clear), .drain(mac_drain),
-            .activations(act_rdata), .weights(wgt_rdata), .acc_out(acc_out));
-    end else begin : g_ripple
-        mac_array_v9 #(.ROWS(16), .COLS(16)) array (
-            .clk(clk), .rst_n(rst_n),
-            .en(mac_en), .clear(mac_clear), .drain(mac_drain),
-            .activations(act_rdata), .weights(wgt_rdata), .acc_out(acc_out));
-    end endgenerate
+    mac_array_v11 #(.ROWS(16), .COLS(16)) array (
+        .clk(clk), .rst_n(rst_n),
+        .en(mac_en), .clear(mac_clear), .drain(mac_drain),
+        .activations(act_rdata), .weights(wgt_rdata), .acc_out(acc_out));
 
     // chunk bookkeeping: fold pulses the cycle after every CHUNK-th add
     // (concurrent adds are absorbed by the MACs' drain branch), plus a
@@ -85,7 +75,9 @@ module compute_core_v10 #(
                     if (!issuing && vpipe == {RD_LAT{1'b0}}) state <= FLUSH;
                 end
                 FLUSH: state <= FLUSH2;      // drain pulses into FLUSH2
-                FLUSH2: state <= DONE;
+                FLUSH2: state <= FLUSH3;     // MAC-internal add completes
+                FLUSH3: state <= FLUSH4;     // fold stage captured
+                FLUSH4: state <= DONE;       // wide add landed
                 DONE: begin
                     done <= 1; wgt_cs <= 0; act_cs <= 0;
                     if (start) begin state <= CLEAR; mac_clear <= 1; done <= 0; end
@@ -93,28 +85,4 @@ module compute_core_v10 #(
             endcase
         end
     end
-endmodule
-
-module compute_core_v10a (
-    input wire clk, input wire rst_n, input wire start, input wire [15:0] k_dim,
-    output wire wgt_cs, output wire [15:0] wgt_addr, input wire [63:0] wgt_rdata,
-    output wire act_cs, output wire [15:0] act_addr, input wire [63:0] act_rdata,
-    output wire [256*24-1:0] acc_out, output wire done);
-    compute_core_v10 #(.USE_CSA(0)) u (
-        .clk(clk), .rst_n(rst_n), .start(start), .k_dim(k_dim),
-        .wgt_cs(wgt_cs), .wgt_addr(wgt_addr), .wgt_rdata(wgt_rdata),
-        .act_cs(act_cs), .act_addr(act_addr), .act_rdata(act_rdata),
-        .acc_out(acc_out), .done(done));
-endmodule
-
-module compute_core_v10b (
-    input wire clk, input wire rst_n, input wire start, input wire [15:0] k_dim,
-    output wire wgt_cs, output wire [15:0] wgt_addr, input wire [63:0] wgt_rdata,
-    output wire act_cs, output wire [15:0] act_addr, input wire [63:0] act_rdata,
-    output wire [256*24-1:0] acc_out, output wire done);
-    compute_core_v10 #(.USE_CSA(1)) u (
-        .clk(clk), .rst_n(rst_n), .start(start), .k_dim(k_dim),
-        .wgt_cs(wgt_cs), .wgt_addr(wgt_addr), .wgt_rdata(wgt_rdata),
-        .act_cs(act_cs), .act_addr(act_addr), .act_rdata(act_rdata),
-        .acc_out(acc_out), .done(done));
 endmodule
