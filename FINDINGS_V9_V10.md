@@ -97,17 +97,25 @@ Result on Nangate45, frozen 26Q2, clock set to 1.33 ns (= v4's 752 MHz):
 |---|---|---|
 | Memories | flops (no macro path) | 16x fakeram45_512x64 |
 | Routed DRC | - | **0 violations** |
-| Worst slack @ 1.33 ns | - | **-0.00 ns -> fmax ~752 MHz** |
+| Worst slack @ 1.33 ns | - | **-0.02 ns -> fmax ~741 MHz** |
+| Pushed @ 1.20 ns | - | -0.12 ns -> **ceiling ~758 MHz** |
 | Sustained MACs | 256 x f/2 | 256 x f (streaming) |
 | vs 250 MHz baseline | 1x | **~3x clock, ~6x sustained compute** |
 
-Verification: bit-exact vs expected at K=300 through all bank boundaries
-(310 cycles = K+10, confirming 1 MAC/cycle through the real memory system).
+Final numbers are from the bank-select-fixed RTL (see tb_fullchip_banks.v:
+a select-pipeline off-by-one was caught by bank-crossing tests and fixed;
+physical results re-measured, delta vs the pre-fix netlist within 20 ps).
+The routed critical path is the read-data broadcast (mem rdata_q register ->
+interior MAC row7/col7 through mult+add): the measured ~9% full-chip tax vs
+the 833 MHz core ceiling. Known remedy (unbuilt): register the broadcast
+per column group ("v12"), absorbed by RD_LAT=4.
+
+Verification: bit-exact vs expected at K=300/700/1030 including bank
+crossings (1 MAC/cycle through the real memory system).
 Memory timing triple-sourced: platform lib clk->Q 0.305 ns, OpenRAM-compiled
 256x64 measured 0.34 ns, and a deliberately 2.4x-pessimistic model (0.83 ns)
-used for the conservative bound. An 830 MHz-target run and a control-arm run
-of the unmodified inference_accelerator (memories as flops, same flow) are
-in flight to complete the ceiling and baseline rows.
+used for the conservative bound. The control-arm run of the unmodified inference_accelerator (memories as
+flops, same flow) is in flight for the measured baseline row.
 
 ## Exact reproduction commands
 
