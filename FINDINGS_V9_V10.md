@@ -28,8 +28,10 @@ computes — but "same compute" needs these fixed.
 Hierarchical accumulation: a fast 12-bit *chunk* accumulator (identical
 per-cycle path to v4: mult + 12-bit add) folds into a 24-bit wide accumulator
 every 16 adds, on its own cycle. Bound is provable: 16×64 = 1024 ≤ 2047.
-24-bit covers K ≤ 131,071 (d_ff 22016 with 6× margin); k_dim/addr widened to
-16 bits so the full SRAM depth is usable. Single-add control (bug 1 fixed);
+The binding K limit is the 16-bit k_dim (65,535) — and 65,535×64 ≤ 2²³−1, so
+every expressible K is adversarially overflow-proof in the 24-bit accumulator
+with 2× margin: the accumulator can never be the binding constraint. Covers
+d_ff 22016; addresses reach the full instantiated SRAM depth. Single-add control (bug 1 fixed);
 restartable without reset (see below).
 
 ## v10a — streaming control: ~2× sustained throughput

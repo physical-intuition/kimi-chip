@@ -6,10 +6,11 @@
 // accumulator every CHUNK cycles. The 24-bit add happens once per chunk on a
 // register-to-register path with no multiplier in front of it, so it is not
 // the critical path. Chunk of 16: 16 adds x max|prod| 64 = 1024 <= 2047,
-// provably safe in 12 bits signed. 24-bit wide accumulator: adversarial
-// K*64 <= 8388607 gives K <= 131071. Covers d_ff 22016 with 6x margin -
-// and lets the core use the full 4096-deep SRAMs (v4's 6-bit addressing
-// reached 1.6% of them).
+// provably safe in 12 bits signed. 24-bit wide accumulator: the binding
+// K limit is the 16-bit k_dim (65535), and 65535*64 = 4194240 <= 8388607,
+// so every expressible K is adversarially overflow-proof with 2x margin.
+// Covers d_ff 22016 - and lets the core use the full 4096-deep SRAMs
+// (v4's 6-bit addressing reached 1.6% of them).
 module int4_mac_v9 (
     input wire clk,
     input wire rst_n,
