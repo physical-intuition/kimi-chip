@@ -108,3 +108,49 @@ Memory timing triple-sourced: platform lib clk->Q 0.305 ns, OpenRAM-compiled
 used for the conservative bound. An 830 MHz-target run and a control-arm run
 of the unmodified inference_accelerator (memories as flops, same flow) are
 in flight to complete the ceiling and baseline rows.
+
+## Exact reproduction commands
+
+Everything ran in the stock ORFS docker image (26Q2-era; any 26Q2 build
+works - pin by digest, not tag). No flow scripts modified or mounted.
+
+Stage a design (example: the full chip):
+
+    # RTL into the flow tree (files from this repo's rtl/)
+    cp rtl/int4_mac_v9.v rtl/mac_array_v9.v rtl/compute_core_v10.v \
+       rtl/fullchip_v10.v  OpenROAD-flow-scripts/flow/designs/src/kimi_fullchip/
+    # config + SDC from this repo's flow/
+    cp -r flow/nangate45/kimi_fullchip \
+       OpenROAD-flow-scripts/flow/designs/nangate45/
+
+Run the flow (one command per design; ~10-30 min each on a big box):
+
+    docker run --rm \
+      -v $PWD/OpenROAD-flow-scripts/flow:/OpenROAD-flow-scripts/flow \
+      -w /OpenROAD-flow-scripts/flow \
+      openroad/orfs:<26q2-digest> \
+      bash -c "source ../env.sh && \
+               make DESIGN_CONFIG=designs/nangate45/kimi_fullchip/config.mk"
+
+Read the result:
+
+    grep "worst slack max" flow/reports/nangate45/kimi_fullchip/base/6_finish.rpt
+    grep "Number of violations" flow/logs/nangate45/kimi_fullchip/base/5_2_route.log
+    # fmax = 1 / (clock_period - worst_slack); clock_period is set in the
+    # design's constraint.sdc (1.33 ns for the full chip = v4's 752 MHz)
+
+Same pattern for every design in flow/nangate45/ (the sweep points differ
+only in SDC period + ABC_CLOCK_PERIOD_IN_PS). The v4 rows need only her
+existing rtl/int4_mac_v4.v, mac_array_v4.v, compute_core_v4.v staged to
+designs/src/kimi_v4/.
+
+Testbenches (Verilator 5.x):
+
+    verilator --binary --timing -Wno-fatal tb/tb_v4_count.v \
+      rtl/int4_mac_v4.v rtl/mac_array_v4.v rtl/compute_core_v4.v -o tbc
+    ./obj_dir/tbc     # prints 7 - the v4 double-count repro (expected: 4)
+
+    verilator --binary --timing -Wno-fatal tb/tb_v9_v10.v rtl/int4_mac_v9.v \
+      rtl/mac_array_v9.v rtl/compute_core_v9.v rtl/int4_mac_v10.v \
+      rtl/mac_array_v10.v rtl/compute_core_v10.v -o tb10
+    ./obj_dir/tb10    # 12/12 PASS with cycle counts (v10a ~2x v9 throughput)
