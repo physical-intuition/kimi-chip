@@ -23,7 +23,7 @@ address 64 of the 4096-deep SRAMs the accelerator instantiates (1.6%).
 Neither finding dents the PPA results — the flow doesn't care what the logic
 computes — but "same compute" needs these fixed.
 
-## v9 — correct, unlimited K, same fast path
+## v9 — correct, overflow-proof for all expressible K, same fast path
 
 Hierarchical accumulation: a fast 12-bit *chunk* accumulator (identical
 per-cycle path to v4: mult + 12-bit add) folds into a 24-bit wide accumulator

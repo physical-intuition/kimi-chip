@@ -1,4 +1,4 @@
-// INT4 MAC v9 - hierarchical accumulator: unlimited K at v4's clock speed.
+// INT4 MAC v9 - hierarchical accumulator: overflow-proof for all expressible K.
 //
 // v4's single 12-bit accumulator caps K at 64 (and worst-case inputs can
 // overflow it: 64 * 64 = 4096 > 2047). v9 keeps the same narrow, fast
