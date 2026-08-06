@@ -48,12 +48,14 @@ module fullchip_v10 (
         wire        ren   = m ? act_cs   : wgt_cs;
         wire        hw    = h_we && (h_sel == m[0]);
         wire [63:0] bank_rd [0:7];
-        reg  [2:0]  tsel_q1, tsel_q2;
+        // select registered ONCE: fakeram rd_out is valid the cycle after
+        // ce/addr, and tsel_q1 (registered the same edge) is that address's
+        // bank - data and select arrive at the mux in the same cycle.
+        reg  [2:0]  tsel_q1;
         reg  [63:0] rdata_q;
         always @(posedge clk) begin
             tsel_q1 <= raddr[11:9];
-            tsel_q2 <= tsel_q1;
-            rdata_q <= bank_rd[tsel_q2];
+            rdata_q <= bank_rd[tsel_q1];
         end
         for (b = 0; b < 8; b = b + 1) begin : bank
             wire h_hit = hw && (h_addr[11:9] == b[2:0]);
