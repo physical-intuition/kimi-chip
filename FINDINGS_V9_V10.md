@@ -93,14 +93,15 @@ fullchip_v10 (rtl/) replaces them with 16x fakeram45_512x64 platform hard
 macros (64 KB), a 3-cycle pipelined read path, and a phase-muxed host port.
 Result on Nangate45, frozen 26Q2, clock set to 1.33 ns (= v4's 752 MHz):
 
-| | Factory full chip | fullchip_v10 |
+| | inference_accelerator (control arm) | fullchip_v10 |
 |---|---|---|
 | Memories | flops (no macro path) | 16x fakeram45_512x64 |
-| Routed DRC | - | **0 violations** |
-| Worst slack @ 1.33 ns | - | **-0.02 ns -> fmax ~741 MHz** |
+| Routed DRC | **0 violations** | **0 violations** |
+| Worst slack @ 1.33 ns | -1.67 ns -> path 3.00 ns -> **~333 MHz** | **-0.02 ns -> fmax ~741 MHz** |
 | Pushed @ 1.20 ns | - | -0.12 ns -> **ceiling ~758 MHz** |
+| Critical path | sram rdata reg -> row14/col13 32b acc | mem rdata reg -> row7/col7 12b chunk |
 | Sustained MACs | 256 x f/2 | 256 x f (streaming) |
-| vs 250 MHz baseline | 1x | **~3x clock, ~6x sustained compute** |
+| vs measured baseline | 1x | **~2.3x clock, ~4.6x sustained compute** |
 
 Final numbers are from the bank-select-fixed RTL (see tb_fullchip_banks.v:
 a select-pipeline off-by-one was caught by bank-crossing tests and fixed;
@@ -114,8 +115,16 @@ Verification: bit-exact vs expected at K=300/700/1030 including bank
 crossings (1 MAC/cycle through the real memory system).
 Memory timing triple-sourced: platform lib clk->Q 0.305 ns, OpenRAM-compiled
 256x64 measured 0.34 ns, and a deliberately 2.4x-pessimistic model (0.83 ns)
-used for the conservative bound. The control-arm run of the unmodified inference_accelerator (memories as
-flops, same flow) is in flight for the measured baseline row.
+used for the conservative bound.
+
+Control arm (measured): the unmodified inference_accelerator, exact same
+flow and constraints, routes DRC-clean at a 3.00 ns path = ~333 MHz -- the
+same order as the ~250 MHz Factory observation (different flow snapshot).
+Its critical path is the same *class* as ours -- read-data register into
+the array interior -- but 1.67 ns worse: 32-bit single-level accumulate,
+no chunked add, and a flop-sea floorplan stretching the broadcast. So the
+memory macros, the hierarchical 12b chunk, and the compact floorplan are
+each visible in the delta.
 
 ## Exact reproduction commands
 
