@@ -195,6 +195,32 @@ while the netlist grew 50% (die 1.44 mm2 vs v12-u40's 1.20).
 Net vs the measured baseline: ~9.6x sustained compute in ~1/10th the
 silicon, every number from a routed, DRC-clean signoff on the same flow.
 
+## v14: ping-pong tiles -- sustained = peak
+
+v13's honest weakness was utilization: the host port is phase-muxed with
+compute, so reloading between passes costs 3-4x the compute time and
+sustained throughput across back-to-back tiles is ~1/3 of peak. v14
+splits each operand memory into two TILES (2 groups x 2 banks x 512 =
+2048 elements each): the host writes one tile while the core streams the
+other -- different physical banks, so the single-port macros never see a
+conflict and loads run at full rate DURING compute. A new accum start
+mode preserves accumulators across passes, so K spans tiles: usable K
+rises from the 4096-element memory bound to the arithmetic bound
+(131,071 elements).
+
+Sim: 121 elements loaded into tile 1 concurrently with a bit-exact
+700-element pass on tile 0; cross-pass accumulation matches the K=1030
+reference for even and odd split points; clean restart drops state.
+
+Measured (util 40, 1.20 ns target): **-0.02 -> 1.22 ns -> ~820 MHz,
+routed DRC-clean** -- the retiling slightly IMPROVED timing over v13.
+
+Final chip: **~820 MHz x 512 MACs/cycle = ~420 GMAC/s (0.84 INT4 TOPS),
+sustained ~= peak for pipelined workloads, 1.44 mm2** -- roughly 10x the
+measured baseline's compute in a tenth of its silicon, and ~3x v13's
+sustained rate. Known next bottleneck (documented, unbuilt): the 64-bit
+host load port itself; a wider or burst-mode port is the natural v15.
+
 ## Exact reproduction commands
 
 Everything ran in the stock ORFS docker image (26Q2-era; any 26Q2 build
