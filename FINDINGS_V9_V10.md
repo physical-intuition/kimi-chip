@@ -156,11 +156,44 @@ Utilization (auto placement): 25 -> -0.115, 35 -> -0.10, 40 -> -0.08,
 50 -> -0.11. Shorter die-span wins until macro crowding (29% of core at
 util 50) gives it back.
 
-Full-chip result: **util 40 -> 1.28 ns path -> ~781 MHz**, routed
+v12 full-chip result: **util 40 -> 1.28 ns path -> ~781 MHz**, routed
 DRC-clean with all 16 macros -- 3.1x the measured 333 MHz baseline,
 ~6x its sustained compute, ~52 MHz under the core-only 833 ceiling.
 The residue is the irreducible cost of a 16x16 array living on the same
 die as 64 KB of SRAM at this node.
+
+## v13: paired reads + registered product = 512 MACs/cycle at 800 MHz
+
+Once fmax saturated, the remaining lever was work per cycle. v13 composes
+two changes (rtl/, both falling directly out of the v12 postmortem):
+
+- The same 16 macros re-grouped as 2x4 banks per operand (even/odd
+  element): a pair index reads both groups at once -> 128 bits/operand/
+  cycle, no bank conflicts, single-port macros and 64 KB unchanged.
+- v11's registered product, widened to the pair: prod_q <= a0*b0 + a1*b1
+  (9b); the 13-bit chunk add (16 pair-adds x 128 = 2048 <= 4095) and the
+  24-bit fold each get their own cycle. Odd k_dim: the final half-pair's
+  odd activation slot is zeroed through the lane register.
+
+Sim: lane-distinct data, K=1/2/37/700/1029/1030 at scattered
+accumulators, restart-after-DONE -- all bit-exact; K=700 completes in
+361 cycles = K/2+11, the machine-checked proof of 2 elements/lane/cycle.
+
+Measured (util 40, 1.20 ns target): **-0.05 -> 1.25 ns -> 800 MHz,
+routed DRC-clean**. The critical path is lane register -> prod_q --
+the chunk add is off the worst cycle, exactly as designed; fmax IMPROVED
+while the netlist grew 50% (die 1.44 mm2 vs v12-u40's 1.20).
+
+| | control arm (measured) | v12 u40 | v13 u40 |
+|---|---|---|---|
+| clock | 333 MHz | 781 MHz | **800 MHz** |
+| MACs/cycle | 128 | 256 | **512** |
+| sustained | ~43 GMAC/s | ~200 GMAC/s | **~410 GMAC/s (0.8 INT4 TOPS)** |
+| die | 14.13 mm2 | 1.20 mm2 | 1.44 mm2 |
+| GMAC/s/mm2 | 3 | 167 | **285** |
+
+Net vs the measured baseline: ~9.6x sustained compute in ~1/10th the
+silicon, every number from a routed, DRC-clean signoff on the same flow.
 
 ## Exact reproduction commands
 
