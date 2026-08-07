@@ -31,8 +31,11 @@ if {$y0 < $cy0} { error "core too short for 8-macro stack" }
 #   mem\[0\].bank\[0\].u
 for {set b 0} {$b < $n} {incr b} {
     set y [expr $y0 + $b * ($mh + $gap)]
+    # left stack mirrored: pins are on the macro's left face (metal3, x~0),
+    # MY turns them inward; flush-R0 left them staring at the die edge (the
+    # GRT-0116 congestion failure)
     place_macro -macro_name [format {mem\[0\].bank\[%d\].u} $b] \
-        -location [list $cx0 $y] -orientation R0
+        -location [list $cx0 $y] -orientation MY
     place_macro -macro_name [format {mem\[1\].bank\[%d\].u} $b] \
         -location [list [expr $cx1 - $mw] $y] -orientation R0
 }
