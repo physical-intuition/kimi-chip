@@ -27,11 +27,13 @@ set stackh [expr $n * $mh + ($n - 1) * $gap]
 set y0 [expr $cy0 + (($cy1 - $cy0) - $stackh) / 2.0]
 if {$y0 < $cy0} { error "core too short for 8-macro stack" }
 
+# odb stores the yosys-escaped names with literal backslashes:
+#   mem\[0\].bank\[0\].u
 for {set b 0} {$b < $n} {incr b} {
     set y [expr $y0 + $b * ($mh + $gap)]
-    place_macro -macro_name "mem\[0\].bank\[$b\].u" \
+    place_macro -macro_name [format {mem\[0\].bank\[%d\].u} $b] \
         -location [list $cx0 $y] -orientation R0
-    place_macro -macro_name "mem\[1\].bank\[$b\].u" \
+    place_macro -macro_name [format {mem\[1\].bank\[%d\].u} $b] \
         -location [list [expr $cx1 - $mw] $y] -orientation R0
 }
 puts "edge placement done: 16 macros pinned, stack y0=$y0"
