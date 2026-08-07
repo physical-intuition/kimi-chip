@@ -126,6 +126,42 @@ no chunked add, and a flop-sea floorplan stretching the broadcast. So the
 memory macros, the hierarchical 12b chunk, and the compact floorplan are
 each visible in the delta.
 
+## v12 + floorplan sweep: the last 75 MHz, dissected
+
+v12 (rtl/) registers the read-data broadcast per 4-bit lane (32 lane
+registers placeable beside the strips they feed; read latency 3 -> 4).
+Verified with lane-DISTINCT data across bank crossings, residual chunks,
+and restart (tb_fullchip_v12.v, tb_v12_fill.v). Physically it moved the
+critical path exactly as designed -- startpoint is now the lane register,
+not the memory interface -- and changed fmax by nothing (-0.115 vs v10's
+-0.12 at 1.20 ns): the broadcast was riding repeaters nearly free, and
+the binding cost is the array's own span (1.06 ns from lane register Q
+through a 16-MAC strip's fanout + mult + 12b add). Deeper pipelining is
+not the lever; geometry is.
+
+Three controlled axes confirm it (all v12 RTL, 1.20 ns target, routed
+DRC-clean unless noted):
+
+Effort: a 1.10 ns-target rebuild lands -0.22 -> the same 1.32 ns path.
+The tools are saturated; constraint pressure buys zero.
+
+Arrangement: pinning the 16 macros to the left/right core edges
+(MACRO_PLACEMENT_TCL, pins mirrored inward -- flush-R0 pins facing the
+die edge fail GRT-0116) is fmax-neutral: -0.12 (u25), -0.11 (u35).
+Auto placement already keeps each bank near its consumers. Shrinking
+keep-outs instead (halo 5, channel 10) fails PDN-0179: the straps need
+the channels.
+
+Utilization (auto placement): 25 -> -0.115, 35 -> -0.10, 40 -> -0.08,
+50 -> -0.11. Shorter die-span wins until macro crowding (29% of core at
+util 50) gives it back.
+
+Full-chip result: **util 40 -> 1.28 ns path -> ~781 MHz**, routed
+DRC-clean with all 16 macros -- 3.1x the measured 333 MHz baseline,
+~6x its sustained compute, ~52 MHz under the core-only 833 ceiling.
+The residue is the irreducible cost of a 16x16 array living on the same
+die as 64 KB of SRAM at this node.
+
 ## Exact reproduction commands
 
 Everything ran in the stock ORFS docker image (26Q2-era; any 26Q2 build
