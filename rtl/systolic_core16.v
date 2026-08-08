@@ -120,20 +120,25 @@ module systolic_core16 (
     reg  [15:0] bact;
     wire bot0 = (state == RUNC) && (cnt == 17);
     wire [15:0] bpulse = {bgo[14:0], bot0};
+    // Accesses are strictly sequential in r, so each unit is a ROTATING
+    // RING, not an indexed file: no index decode, no 16:1 read mux -- the
+    // adder sees one fixed register (ring[0] -> +P -> ring[15]). Exactly
+    // 16 rotations per window returns the ring to identity, so the flat
+    // readout mapping is position-stable outside active windows.
     generate genvar bj, br;
         for (bj = 0; bj < 16; bj = bj + 1) begin : bu
-            reg signed [23:0] acc [0:15];
+            reg signed [23:0] ring [0:15];
             integer y;
-            wire [3:0] bidx = bpulse[bj] ? 4'd0 : bcnt[bj][3:0];
             always @(posedge clk) begin
                 if (aclr) begin
-                    for (y = 0; y < 16; y = y + 1) acc[y] <= 0;
+                    for (y = 0; y < 16; y = y + 1) ring[y] <= 0;
                 end else if (bpulse[bj] | bact[bj]) begin
-                    acc[bidx] <= acc[bidx] + {{12{P[15][bj][11]}}, P[15][bj]};
+                    for (y = 0; y < 15; y = y + 1) ring[y] <= ring[y+1];
+                    ring[15] <= ring[0] + {{12{P[15][bj][11]}}, P[15][bj]};
                 end
             end
             for (br = 0; br < 16; br = br + 1) begin : flat
-                assign acc_out[(br*16 + bj)*24 +: 24] = acc[br];
+                assign acc_out[(br*16 + bj)*24 +: 24] = ring[br];
             end
         end
     endgenerate
