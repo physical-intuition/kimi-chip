@@ -128,7 +128,7 @@ module systolic_os16 (
             for (gc = 0; gc < 16; gc = gc + 1) begin : col
                 reg fq;
                 always @(posedge clk) fq <= Fx[gr][gc];
-                int4_mac_v9 mac (
+                int4_mac_v9f mac (
                     .clk(clk), .rst_n(rst_n),
                     .en(Vx[gr][gc]), .clear(aclr), .drain(fq),
                     .a(Ax[gr][gc]), .b(Wx[gr][gc]),
