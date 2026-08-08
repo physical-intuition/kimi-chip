@@ -288,9 +288,43 @@ routed DRC-clean, critical path Wx -> prod_q INSIDE one PE.**
 
 The paired systolic core is the family champion -- ~470 GMAC/s
 (0.94 INT4 TOPS) continuous, ~11x the measured 43 GMAC/s baseline --
-and its worst path has no geometric term, so M3 stage 2 (32x32 = 2048
-MACs/cycle ~= 1.9 INT4 TOPS at this clock) is a wiring exercise, not a
-timing gamble.
+and its worst path has no geometric term, so the 32x32 scale-up is a
+wiring exercise, not a timing gamble. Measured next:
+
+## os32p: the 32x32 finale -- 2048 MACs/cycle, and the flow's own wall
+
+systolic_os32p: 1024 paired PEs; a 32-lane element is two words, so the
+8 banks per operand re-group as FOUR groups (lane-half x element-parity)
+= 256 bits/operand/cycle from the same 16 macros; transpose buffers
+deepen to 32; capacity 2048 elements/operand (same 64 KB). Sim: 20/20
+bit-exact including the half-buffer boundary rows, and K=700 in 431
+cycles vs 430 predicted -- the schedule model is exact.
+
+Two flow lessons at the 1M-net scale, both measured:
+- GPL_TIMING_DRIVEN=1 spends >6 HOURS inside one pass before its first
+  progress print: perf shows 85% of cycles in pdr::get_nearest_neighbors
+  -- the Steiner constructor is quadratic in pin count, and unpipelined
+  control nets (rst_n, the 1024-PE aclr/inject trees) carry tens of
+  thousands of pins. Mitigations: GPL_TIMING_DRIVEN=0 (used here), or
+  cap fanout at synthesis so no net reaches placement that large.
+- The GRT-stage journal handles the same million nets fine (~40-600
+  nets/s through the fanout monsters), because repair_design BUFFERS
+  each monster once instead of re-estimating it.
+
+os32p_ntd signoff (util 40, 1.00 ns target): **routed DRC-clean, 1M+
+cells, 16 macros. Setup violations confined to the 24-bit readout mux
+path (ra_q -> r_data 1024:1, -1.11 -- an architecturally STATIC path:
+the host reads after done); one -0.04 hold nick on adjacent-PE valid
+hops. NO fabric setup path among the violators at 1 GHz.**
+
+Conservative (as-signed-off) number: ~474 MHz x 2048 = ~0.97 TMAC/s
+~= 1.9 INT4 TOPS -- 2x os16p, ~22x the measured baseline. With the
+readout pipelined or declared multicycle (both legitimate; unbuilt)
+and one hold-buffer class, the fabric's own signoff says ~1 GHz:
+**~2 TMAC/s ~= 4 INT4 TOPS** -- Coral-class throughput from an open
+flow on a 45 nm teaching PDK. A timing-driven-GP control arm (the same
+design through the 6-hour pass) is in flight for the flow-time-vs-QoR
+comparison.
 
 ## Exact reproduction commands
 
