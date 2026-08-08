@@ -221,6 +221,37 @@ measured baseline's compute in a tenth of its silicon, and ~3x v13's
 sustained rate. Known next bottleneck (documented, unbuilt): the 64-bit
 host load port itself; a wider or burst-mode port is the natural v15.
 
+## sys16 (v2 arc, milestone 1): systolic array -- scale-invariance measured
+
+Every broadcast experiment said the same thing: the array's geometric
+span is the wall, and it grows with array size. sys16 (rtl/
+systolic_core16.v) is the weight-stationary answer: weights sit in PEs,
+activations lane-walk out of per-row word buffers (row skew = a rippling
+start pulse), psums flow south, bottom units accumulate -- every signal
+moves ONE PE pitch per cycle, fanout 1, zero broadcast. Same
+C[r][c] = sum_k A[k][r]*W[k][c] as every version; sim 20/20 bit-exact
+against the shared reference including residual-chunk zero-row gating,
+accum passes, restart.
+
+Two measured iterations at a 1.00 ns target (util 40, DRC-clean both):
+- First run: -0.18 (~847 MHz). Critical path was NOT the array -- it was
+  the bottom accumulator's indexed read-modify-write (index decode ->
+  16:1 mux -> 24b add -> decoded writeback).
+- Accesses are strictly sequential in r, so the indexed file became a
+  ROTATING RING (rotate each active cycle, add into the tail from the
+  fixed head; 16 rotations per window = identity). Result: **-0.07 ->
+  1.07 ns -> ~935 MHz**, critical path now wrow -> mult -> 12b add -> P
+  register, ENTIRELY INSIDE ONE PE. No wire crossing, no fanout, no
+  geometric term: a 64x64 array has the same worst path. That is the
+  scaling property no broadcast floorplan could buy, now measured.
+
+M1 is deliberately stop-and-load (~64 MACs/cycle sustained): it exists
+to measure the clock. The roadmap it unlocks: M2 = shadow weight regs +
+row prefetch (swap pulse rides the pipeline) -> zero stalls, 256
+MACs/cycle at ~935 MHz using the same 2 words/cycle the memories supply;
+M3 = paired PEs (512/cycle) and wider arrays (32x32 -> 2048/cycle at an
+unchanged critical path) -- the 10-100x axis.
+
 ## Exact reproduction commands
 
 Everything ran in the stock ORFS docker image (26Q2-era; any 26Q2 build
