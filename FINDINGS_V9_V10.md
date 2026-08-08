@@ -246,11 +246,51 @@ Two measured iterations at a 1.00 ns target (util 40, DRC-clean both):
   scaling property no broadcast floorplan could buy, now measured.
 
 M1 is deliberately stop-and-load (~64 MACs/cycle sustained): it exists
-to measure the clock. The roadmap it unlocks: M2 = shadow weight regs +
-row prefetch (swap pulse rides the pipeline) -> zero stalls, 256
-MACs/cycle at ~935 MHz using the same 2 words/cycle the memories supply;
-M3 = paired PEs (512/cycle) and wider arrays (32x32 -> 2048/cycle at an
-unchanged critical path) -- the 10-100x axis.
+to measure the clock.
+
+## os16 / os16p: zero stalls, then pairing -- the systolic line takes the crown
+
+M2 (rtl/systolic_os16.v) switches to OUTPUT-STATIONARY dataflow instead
+of shadow weight registers (whose swap window has an inherent staleness
+hazard): activations flow east, weights flow south, each PE accumulates
+its own C[r][c] in place, alignment is structural, and no weight-load
+phase exists. The PE is the verified v9 chunked MAC; the fold tag rides
+the wavefront. Two transpose buffers (16-deep circular, per-lane
+rotating taps) bridge k-major memory words to lane-major edges.
+Measured: K=700 in 747 cycles = 256 MACs/cycle sustained; -0.17 @
+1.00 ns -> ~855 MHz, DRC-clean. A restart-after-short-pass test caught
+a real bug worth naming: stale edge state against a freshly-latched
+k_pad fired a phantom operand wave during INIT whose east- and
+south-going halves met EXACTLY on the array diagonal, corrupting only
+C[r][r] by one product each. Injection is now gated on STREAM.
+
+A fast-chunk-path variant (early-operand muxes, int4_mac_v9f) measured
+IDENTICAL (-0.17): the unregistered mult+add cycle is the floor, not
+the mux -- a clean negative result.
+
+M3 stage 1 (rtl/systolic_os16p.v) applies the pairing trick: the
+wrapper hands over BOTH bank-group words per cycle (the 2 words/cycle
+the memories always supplied), dual transpose buffers, 8b/hop pipes,
+and the PE is int4_mac_v13f -- registered pair-product, so the two
+multiplies and the 13-bit chunk add sit in separate short stages.
+Sim 20/20 including odd-K and the phantom-restart case; K=700 in 397
+cycles = 512 MACs/cycle sustained through the real memory system.
+
+Measured (util 40, 1.00 ns target): **-0.09 -> 1.09 ns -> ~917 MHz,
+routed DRC-clean, critical path Wx -> prod_q INSIDE one PE.**
+
+| | v14 (best broadcast) | os16 (M2) | **os16p (M3.1)** |
+|---|---|---|---|
+| clock | 820 MHz | 855 MHz | **~917 MHz** |
+| MACs/cycle | 512 | 256 | **512** |
+| sustained | ~420 GMAC/s | ~219 GMAC/s | **~470 GMAC/s** |
+| critical path | geometric | PE-local | **PE-local** |
+
+The paired systolic core is the family champion -- ~470 GMAC/s
+(0.94 INT4 TOPS) continuous, ~11x the measured 43 GMAC/s baseline --
+and its worst path has no geometric term, so M3 stage 2 (32x32 = 2048
+MACs/cycle ~= 1.9 INT4 TOPS at this clock) is a wiring exercise, not a
+timing gamble.
 
 ## Exact reproduction commands
 
