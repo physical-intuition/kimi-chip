@@ -322,9 +322,18 @@ Conservative (as-signed-off) number: ~474 MHz x 2048 = ~0.97 TMAC/s
 readout pipelined or declared multicycle (both legitimate; unbuilt)
 and one hold-buffer class, the fabric's own signoff says ~1 GHz:
 **~2 TMAC/s ~= 4 INT4 TOPS** -- Coral-class throughput from an open
-flow on a 45 nm teaching PDK. A timing-driven-GP control arm (the same
-design through the 6-hour pass) is in flight for the flow-time-vs-QoR
-comparison.
+flow on a 45 nm teaching PDK.
+
+The timing-driven-GP control arm finished the A/B: same design,
+GPL_TIMING_DRIVEN=1, 11.3 h total (6.2 h inside the Steiner pass) vs
+6.4 h for the ntd arm. Result: **-0.54 vs -1.11** -- both limited by
+the SAME unpipelined readout mux, but timing-aware placement clustered
+that mux tree 0.57 ns tighter. As signed off, the timing-driven arm is
+the throughput champion: 1.54 ns -> **~649 MHz x 2048 = 1.33 TMAC/s
+~= 2.7 INT4 TOPS, routed DRC-clean**. Honest guidance at the 1M-net
+scale: timing-driven GP costs ~2x wall time for ~37% clock -- or cap
+synthesis fanout / pipeline the big control and readout structures and
+take both the fast flow and the clock.
 
 ## Exact reproduction commands
 
