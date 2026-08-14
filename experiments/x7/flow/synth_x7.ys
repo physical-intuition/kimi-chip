@@ -1,0 +1,24 @@
+# X7 corrected Y1, Nangate45 2.0 ns target
+read_verilog -lib rtl/fakeram45_512x64.v
+read_verilog rtl/weight_sram.v rtl/state_sram.v rtl/activation_sram.v rtl/intermediate_sram.v
+read_verilog rtl/requant.v rtl/mac_array_16x16.v rtl/conv_unit_serial.v rtl/state_update.v rtl/reduction_accum32.v rtl/norm_unit.v rtl/residual_unit.v rtl/x7_controller.v rtl/x7_top.v
+hierarchy -check -top x7_top
+proc
+# Preserve narrow addressed vector register files as $mem cells. Mapping these
+# multiported 128x8 files to explicit mux/DFF logic is not representative of a
+# compiled RF and exceeds the harness memory; ABC times surrounding logic.
+memory_collect
+opt -full
+check
+stat -top x7_top
+# Keep arithmetic modules hierarchical. Flattening all 32 state lanes and the
+# iterative norm at once exceeds this 6 GiB harness; ABC maps every selected
+# module independently and hierarchy is retained in the output netlist.
+opt_clean
+techmap
+opt_clean
+dfflibmap -liberty /home/kit/OpenROAD-flow-scripts/flow/platforms/nangate45/lib/NangateOpenCellLibrary_typical.lib
+abc -script flow/abc_fast_timing.script -liberty /home/kit/OpenROAD-flow-scripts/flow/platforms/nangate45/lib/NangateOpenCellLibrary_typical.lib -D 2000
+opt_clean
+stat -liberty /home/kit/OpenROAD-flow-scripts/flow/platforms/nangate45/lib/NangateOpenCellLibrary_typical.lib
+write_verilog -noattr artifacts/y1/x7_mapped.v
