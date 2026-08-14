@@ -8,14 +8,15 @@ module streaming_norm(
  output reg act_wr_en,output reg [8:0] act_wr_addr,output reg [127:0] act_wr_data,
  output reg done
 );
- localparam [20:0] IDLE=(21'd1<<0),ACC_REQ=(21'd1<<1),ACC_WAIT=(21'd1<<2),MEAN=(21'd1<<3),GUESS=(21'd1<<4),NR=(21'd1<<5),
-            LO_REQ=(21'd1<<6),LO_WAIT=(21'd1<<7),HI_REQ=(21'd1<<8),HI_WAIT=(21'd1<<9),X_REQ=(21'd1<<10),X_WAIT=(21'd1<<11),WRITE=(21'd1<<12),
-            ACC_PAIR=(21'd1<<13),ACC_HALF=(21'd1<<14),ACC_COMMIT=(21'd1<<15),ADD_RESIDUAL=(21'd1<<16),NR_PARTIAL=(21'd1<<17),NR_UPDATE=(21'd1<<18),NR_FACTOR=(21'd1<<19),SCALE_SETUP=(21'd1<<20);
- reg [20:0] st; reg [3:0] word; reg [2:0] beat,nr;
+ localparam [21:0] IDLE=(22'd1<<0),ACC_REQ=(22'd1<<1),ACC_WAIT=(22'd1<<2),MEAN=(22'd1<<3),GUESS=(22'd1<<4),NR=(22'd1<<5),
+            LO_REQ=(22'd1<<6),LO_WAIT=(22'd1<<7),HI_REQ=(22'd1<<8),HI_WAIT=(22'd1<<9),X_REQ=(22'd1<<10),X_WAIT=(22'd1<<11),WRITE=(22'd1<<12),
+            ACC_PAIR=(22'd1<<13),ACC_HALF=(22'd1<<14),ACC_COMMIT=(22'd1<<15),ADD_RESIDUAL=(22'd1<<16),NR_PARTIAL=(22'd1<<17),NR_UPDATE=(22'd1<<18),NR_FACTOR=(22'd1<<19),SCALE_SETUP=(22'd1<<20),SCALE_QUANT=(22'd1<<21);
+ reg [21:0] st; reg [3:0] word; reg [2:0] beat,nr;
  reg [20:0] sumsq; reg [13:0] mean;
  reg signed [8:0] r; reg signed [8:0] y2;
  reg [63:0] o_lo,o_hi; reg [127:0] pending_write,x_cache,scaled_cache;
  (* keep = "true" *) reg signed [8:0] scale_r[0:15];
+ reg signed [16:0] scale_product[0:15];
  reg [15:0] sq0,sq1,sq2,sq3,sq4,sq5,sq6,sq7;
  reg [16:0] pair0,pair1,pair2,pair3;
  reg [17:0] half0,half1;
@@ -101,9 +102,12 @@ module streaming_norm(
      x_cache<=act_rd_data;
      for(i=0;i<16;i=i+1) begin
       if(i<8) o=$signed(o_lo[i*8 +: 8]); else o=$signed(o_hi[(i-8)*8 +: 8]);
-      scaled=($signed(o)*$signed(scale_r[i]))>>>4;
-      scaled_cache[i*8 +: 8] <= sat8(scaled);
+      scale_product[i]<=$signed(o)*$signed(scale_r[i]);
      end
+     st<=SCALE_QUANT;
+    end
+    SCALE_QUANT: begin
+     for(i=0;i<16;i=i+1) scaled_cache[i*8 +: 8]<=sat8($signed(scale_product[i])>>>4);
      st<=ADD_RESIDUAL;
     end
     ADD_RESIDUAL: begin

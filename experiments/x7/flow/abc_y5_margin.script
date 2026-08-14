@@ -1,0 +1,10 @@
+strash
+dretime
+retime -o -D 950
+map -D 950
+topo
+buffer -p -N 8
+upsize -D 950
+dnsize -D 950
+topo
+stime
