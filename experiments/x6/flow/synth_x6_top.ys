@@ -1,0 +1,15 @@
+read_verilog -sv -DSYNTHESIS rtl/activation_crossbar.v
+read_verilog -sv -DSYNTHESIS rtl/conv_unit.v
+read_verilog -sv -DSYNTHESIS rtl/mac_array_16x16.v
+read_verilog -sv -DSYNTHESIS rtl/norm_unit.v
+read_verilog -sv -DSYNTHESIS rtl/residual_unit.v
+read_verilog -sv -DSYNTHESIS rtl/state_update.v
+read_verilog -sv -DSYNTHESIS rtl/weight_crossbar.v
+read_verilog -sv -DSYNTHESIS rtl/x6_top.v
+hierarchy -check -top x6_top
+synth -top x6_top
+dfflibmap -liberty /home/kit/OpenROAD-flow-scripts/flow/platforms/nangate45/lib/NangateOpenCellLibrary_typical.lib
+abc -liberty /home/kit/OpenROAD-flow-scripts/flow/platforms/nangate45/lib/NangateOpenCellLibrary_typical.lib -D 2000
+clean -purge
+stat -liberty /home/kit/OpenROAD-flow-scripts/flow/platforms/nangate45/lib/NangateOpenCellLibrary_typical.lib
+write_verilog -noattr -noexpr -nodec artifacts/y1/x6_top_mapped.v

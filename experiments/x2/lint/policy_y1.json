@@ -1,0 +1,22 @@
+{
+  "rtl_files": [
+    "experiments/x1/rtl/x1_y5_kimi.v",
+    "experiments/x2/rtl/x2_y1_kimi.v"
+  ],
+  "storage": {
+    "mode": "external_macro_interface",
+    "required_port_fragments": ["act_req", "act_addr", "act_rdata", "weight_req", "weight_addr", "weight_rdata"],
+    "forbid_behavioral_memory_names": ["mem", "sram", "ram"]
+  },
+  "arithmetic": {
+    "lane_width": 4,
+    "accumulator_width": 24,
+    "max_k": 4095
+  },
+  "response_control": {
+    "valid_signal": "read_valid",
+    "accumulation_guard": "state == S_RUN && read_valid",
+    "issue_guard": "act_req && weight_req",
+    "consume_counter": "consumed"
+  }
+}

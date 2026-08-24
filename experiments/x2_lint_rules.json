@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "source": "/home/kit/chirp x2-lint-rules:ri_factory/heuristics.json",
+  "rules": [
+    {"id":"behavioral_sram", "severity":"error", "check":"reject behavioral storage declarations matching reg [..] mem [0:..]; require a hard macro such as fakeram45_* for true SRAM", "rationale":"behavioral arrays synthesize to flops/muxes, not a real SRAM macro"},
+    {"id":"accumulator_overflow", "severity":"warning", "check":"prove accumulator width against K and signed INT4 product range; flag if insufficient", "rationale":"12-bit signed max 2047 cannot represent K=32 times product 64 = 2048"},
+    {"id":"double_accumulate", "severity":"error", "check":"trace mac enable against registered SRAM address/data and reject control that can reuse a response across multiple accumulation cycles", "rationale":"registered SRAM protocols can silently count elements twice"}
+  ]
+}

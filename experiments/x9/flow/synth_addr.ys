@@ -1,0 +1,8 @@
+read_verilog -sv -DSYNTHESIS rtl/weight_addr_gen.v
+hierarchy -check -top weight_addr_gen
+synth -top weight_addr_gen
+dfflibmap -liberty /home/kit/OpenROAD-flow-scripts/flow/platforms/nangate45/lib/NangateOpenCellLibrary_typical.lib
+abc -liberty /home/kit/OpenROAD-flow-scripts/flow/platforms/nangate45/lib/NangateOpenCellLibrary_typical.lib -D 2000 -script flow/abc_timing.script
+clean -purge
+stat -liberty /home/kit/OpenROAD-flow-scripts/flow/platforms/nangate45/lib/NangateOpenCellLibrary_typical.lib
+write_verilog -noattr -noexpr -nodec artifacts/weight_addr_gen_mapped.v

@@ -1,0 +1,34 @@
+Traceback (most recent call last):
+  File "/home/kit/kimi-chip/experiments/x3/regression/run_locked.py", line 46, in <module>
+    raise SystemExit(main())
+  File "/home/kit/kimi-chip/experiments/x3/regression/run_locked.py", line 33, in main
+    subprocess.run(compile_cmd, check=True)
+  File "/usr/lib/python3.10/subprocess.py", line 503, in run
+    with Popen(*popenargs, **kwargs) as process:
+  File "/usr/lib/python3.10/subprocess.py", line 971, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/lib/python3.10/subprocess.py", line 1863, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'iverilog'
+{
+  "status": "pass",
+  "policy": "experiments/x3/lint/policy_y1.json",
+  "results": [
+    {
+      "rule": "sram_macro_usage",
+      "status": "pass",
+      "message": "external SRAM macro boundary is explicit; no behavioral SRAM array inferred"
+    },
+    {
+      "rule": "accumulator_overflow",
+      "status": "pass",
+      "message": "24-bit signed accumulator covers [-229320,262080], minimum 19 bits"
+    },
+    {
+      "rule": "double_accumulation",
+      "status": "pass",
+      "message": "single accumulation site is gated by one-cycle response valid and consume tracking"
+    }
+  ]
+}
+bash: -c: line 8: unexpected EOF while looking for matching `"'

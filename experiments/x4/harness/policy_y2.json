@@ -1,0 +1,14 @@
+{
+  "y": 2,
+  "target_mhz": 760,
+  "target_basis": {
+    "source": "X4-Y1 final extracted timing",
+    "y1_fmax_mhz": 719.14,
+    "y1_wns_ns": -0.06075,
+    "next_clean_path_slack_ns": 0.03,
+    "estimated_next_path_fmax_mhz": 774,
+    "selected_target_mhz": 760
+  },
+  "rtl_change": "Remove redundant issued<k_dim_q predicate from S_REQ output decode; request outputs now depend only on registered state.",
+  "new_lint_rule": "request_decode_is_progress_independent"
+}

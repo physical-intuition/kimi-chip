@@ -1,0 +1,10 @@
+{
+  "name": "x3-y3-sparse-lane-identity-locked-functional-regression",
+  "locked_files": {
+    "experiments/x3/tb/tb_x3_y3.v": "97202c278fa933693ec81625ab294f1c99f141eea18635c102fa48cf66a610fc"
+  },
+  "required_cases": [7, 0, 13],
+  "required_outputs": 768,
+  "stimulus": "sparse two-point signed basis per K lane with distinct row and column strides",
+  "required_transcript": "PASS: X3-Y3 sparse lane-identity locked regression, K=7/0/13, 768 outputs verified"
+}

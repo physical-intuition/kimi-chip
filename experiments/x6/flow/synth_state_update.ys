@@ -1,0 +1,8 @@
+read_verilog -sv -DSYNTHESIS rtl/state_update.v
+hierarchy -check -top state_update
+synth -top state_update
+dfflibmap -liberty ../../../OpenROAD-flow-scripts/flow/platforms/nangate45/lib/NangateOpenCellLibrary_typical.lib
+abc -liberty ../../../OpenROAD-flow-scripts/flow/platforms/nangate45/lib/NangateOpenCellLibrary_typical.lib -D 2000 -script flow/abc_timing.script
+clean -purge
+stat -liberty ../../../OpenROAD-flow-scripts/flow/platforms/nangate45/lib/NangateOpenCellLibrary_typical.lib
+write_verilog -noattr -noexpr -nodec ../artifacts/netlists/state_update.v

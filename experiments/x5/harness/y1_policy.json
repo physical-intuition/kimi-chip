@@ -1,0 +1,50 @@
+{
+  "schema": "x5-y1-derived-policy-v1",
+  "generated_from_x4_only": true,
+  "baseline_extracted_fmax_mhz": 909.621,
+  "observed_top_setup_paths": [
+    {
+      "startpoint": "rst_n (input port clocked by core_clock)",
+      "endpoint": "out_wdata[22]$_DFFE_PN0P_",
+      "slack_ns": 0.71
+    },
+    {
+      "startpoint": "chunk_accum[156][1]$_SDFFE_PP0P_",
+      "endpoint": "wide_accum[156][11]$_SDFFE_PP0P_",
+      "slack_ns": 0.04
+    },
+    {
+      "startpoint": "rst_n (input port clocked by core_clock)",
+      "endpoint": "out_wdata[2]$_DFFE_PN0P_",
+      "slack_ns": 0.71
+    }
+  ],
+  "remaining_bottlenecks": [
+    {
+      "cone": "registered chunk_accum to low wide_accum fold",
+      "evidence": "X4-Y5 worst max setup path has 19 combinational cells from chunk_accum[156][1] to wide_accum[156][11]",
+      "repair": "split the remaining low 12-bit fold addition into registered 6-bit slices"
+    }
+  ],
+  "objective": "push_frequency_beyond_x4",
+  "prior_report_proven_fold_split_gain_ratio": 0.075502308,
+  "conservative_gain_fraction": 0.4,
+  "target_formula": "x4_y5_extracted_fmax * (1 + 0.40 * (x4_y4_fmax / x4_y3_fmax - 1))",
+  "derived_target_frequency_mhz": 937.092,
+  "derived_period_ns": 1.067131082,
+  "allowed_rtl_change": "split the remaining 12-bit low fold addition into registered low/high 6-bit updates; preserve all prior X4 repairs",
+  "provenance": {
+    "final_report": {
+      "path": "experiments/x4/artifacts/y5/reports/6_finish.rpt",
+      "sha256": "b75e53304fb72262cc1f370495e276002d3e6eff31164175cf77a38e90e536cc"
+    },
+    "y5_timing": {
+      "path": "experiments/x4/artifacts/y5/timing_analysis.json",
+      "sha256": "dc735169bda5a2dd5958383ada06e178440e4ec09ba21a58477c910e82ee82d5"
+    },
+    "y5_rtl": {
+      "path": "experiments/x4/rtl/x4_y5_kimi.v",
+      "sha256": "9e8a9e09d77daf275a108301dbb3f33033147c93ab33010ab3e2bc5f30d4c942"
+    }
+  }
+}

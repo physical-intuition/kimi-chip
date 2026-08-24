@@ -1,0 +1,2 @@
+PASS: X2-Y4 CAP_MARGIN=22 boundary refinement, K=7/0/13, 768 outputs verified
+experiments/x2/tb/tb_x2_y4.v:62: $finish called at 8016000 (1ps)

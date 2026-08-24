@@ -1,0 +1,14 @@
+strash
+&get -n
+&fraig -x
+&put
+scorr
+dc2
+dretime
+retime -o -D 2000
+strash
+&get -n
+&dch -f
+&nf -D 2000
+&put
+stime -p

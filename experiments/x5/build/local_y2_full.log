@@ -1,0 +1,39 @@
+{
+  "status": "pass",
+  "checks": {
+    "y1_terminal_evidence_ingested": true,
+    "target_held_at_y1_goal": true,
+    "observed_path_named": true,
+    "product_is_registered_8bit": true,
+    "response_valid_stage": true,
+    "product_valid_stage": true,
+    "mac_commit_stage": true,
+    "request_and_commit_overlap": true,
+    "request_not_serialized_by_mac": true,
+    "chunk_boundary_backpressure": true,
+    "signed_product_extension": true,
+    "inherited_three_stage_fold": true,
+    "no_y3_preplan": true
+  },
+  "failed": [],
+  "target_mhz": 937.092
+}
+PASS K=7 outputs=256
+PASS K=0 outputs=256
+PASS busy-start ignored and k_dim remained latched
+PASS K=13 outputs=256
+PASS K=15 outputs=256
+PASS K=16 outputs=256
+PASS K=17 outputs=256
+PASS K=31 outputs=256
+PASS K=32 outputs=256
+PASS K=33 outputs=256
+PASS K=17 outputs=256
+PASS signed-extrema fold regression
+PASS reset-abort quiescence
+PASS K=17 outputs=256
+PASS clean restart after reset-abort
+PASS K=65535 outputs=256
+PASS: X5-Y2 overlapped request-product-commit pipeline, hierarchical fold, tail flush, reset/restart, signed extrema, exactly-once, and K=65535 verified
+/home/kit/kimi-chip/experiments/x5/tb/tb_x5_y2.v:128: $finish called at 896146000 (1ps)
+LOCAL_X5_Y2_PASS

@@ -1,0 +1,8 @@
+{
+  "name": "x3-y5-reset-abort-locked-functional-regression",
+  "locked_files": {"experiments/x3/tb/tb_x3_y5.v": "f716ae9bab557248e00a528928caca7bd8969d111c8ed29f0ff3927d37acb5dc"},
+  "required_cases": [7, 0, 13],
+  "required_outputs": 768,
+  "stimulus": "mid-run asynchronous reset abort followed by quiescence checks and clean K=7/K=0/K=13 restart",
+  "required_transcript": "PASS: X3-Y5 reset-abort locked regression, K=7/0/13, 768 clean-restart outputs verified"
+}

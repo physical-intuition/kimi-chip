@@ -1,0 +1,19 @@
+%Warning-WIDTHEXPAND: experiments/x1/rtl/x1_y5_kimi.v:160:58: Operator ADD expects 24 bits on the RHS, but RHS's VARREF 'product' generates 8 bits.
+                                                            : ... note: In instance 'x2_y5_kimi.core'
+  160 |                     accum_bank[r][c] <= accum_bank[r][c] + product;
+      |                                                          ^
+                      ... For warning description see https://verilator.org/warn/WIDTHEXPAND?v=5.020
+                      ... Use "/* verilator lint_off WIDTHEXPAND */" and lint_on around source to disable this message.
+%Warning-BLKSEQ: experiments/x1/rtl/x1_y5_kimi.v:157:33: Blocking assignment '=' in sequential logic process
+                                                       : ... Suggest using delayed assignment '<='
+  157 |                     act_lane    = $signed(act_rdata[r*4 +: 4]);
+      |                                 ^
+%Warning-BLKSEQ: experiments/x1/rtl/x1_y5_kimi.v:158:33: Blocking assignment '=' in sequential logic process
+                                                       : ... Suggest using delayed assignment '<='
+  158 |                     weight_lane = $signed(weight_rdata[c*4 +: 4]);
+      |                                 ^
+%Warning-BLKSEQ: experiments/x1/rtl/x1_y5_kimi.v:159:33: Blocking assignment '=' in sequential logic process
+                                                       : ... Suggest using delayed assignment '<='
+  159 |                     product     = act_lane * weight_lane;
+      |                                 ^
+%Error: Exiting due to 4 warning(s)

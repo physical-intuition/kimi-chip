@@ -1,0 +1,3 @@
+PASS: X3-Y3 sparse lane-identity locked regression, K=7/0/13, 768 outputs verified
+/home/kit/kimi-chip/experiments/x3/tb/tb_x3_y3.v:72: $finish called at 8016000 (1ps)
+LOCK PASS: sparse lane-identity testbench hash and required 768-output transcript match

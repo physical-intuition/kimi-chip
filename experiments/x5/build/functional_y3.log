@@ -1,0 +1,18 @@
+PASS K=7 outputs=256
+PASS K=0 outputs=256
+PASS busy-start ignored and k_dim remained latched
+PASS K=13 outputs=256
+PASS K=15 outputs=256
+PASS K=16 outputs=256
+PASS K=17 outputs=256
+PASS K=31 outputs=256
+PASS K=32 outputs=256
+PASS K=33 outputs=256
+PASS K=17 outputs=256
+PASS signed-extrema fold regression
+PASS reset-abort quiescence
+PASS K=17 outputs=256
+PASS clean restart after reset-abort
+PASS K=65535 outputs=256
+PASS: X5-Y3 registered-request + MAC-pipeline request-product-commit pipeline, hierarchical fold, tail flush, reset/restart, signed extrema, exactly-once, and K=65535 verified
+/home/kit/kimi-chip/experiments/x5/tb/tb_x5_y3.v:128: $finish called at 896146000 (1ps)

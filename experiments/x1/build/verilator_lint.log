@@ -1,0 +1,88 @@
+%Warning-WIDTHEXPAND: experiments/x1/rtl/x1_y1_kimi.v:105:64: Operator ADD expects 24 bits on the RHS, but RHS's VARREF 'product' generates 8 bits.
+                                                            : ... note: In instance 'tb_x1_y1.dut'
+  105 |                                 accum[r*16+c] <= accum[r*16+c] + product;
+      |                                                                ^
+                      ... For warning description see https://verilator.org/warn/WIDTHEXPAND?v=5.020
+                      ... Use "/* verilator lint_off WIDTHEXPAND */" and lint_on around source to disable this message.
+%Warning-WIDTHTRUNC: experiments/x1/tb/tb_x1_y1.v:38:42: Bit extraction of array[7:0] requires 3 bit index, not 12 bits.
+                                                       : ... note: In instance 'tb_x1_y1'
+   38 |         if (act_req) act_rdata <= act_mem[act_addr];
+      |                                          ^
+%Warning-WIDTHTRUNC: experiments/x1/tb/tb_x1_y1.v:39:51: Bit extraction of array[7:0] requires 3 bit index, not 12 bits.
+                                                       : ... note: In instance 'tb_x1_y1'
+   39 |         if (weight_req) weight_rdata <= weight_mem[weight_addr];
+      |                                                   ^
+%Warning-WIDTHTRUNC: experiments/x1/tb/tb_x1_y1.v:46:54: Bit extraction of array[255:0] requires 8 bit index, not 14 bits.
+                                                       : ... note: In instance 'tb_x1_y1'
+   46 |                          $signed(out_wdata), expected[out_addr]);
+      |                                                      ^
+%Warning-WIDTHTRUNC: experiments/x1/tb/tb_x1_y1.v:44:48: Bit extraction of array[255:0] requires 8 bit index, not 14 bits.
+                                                       : ... note: In instance 'tb_x1_y1'
+   44 |             if ($signed(out_wdata) !== expected[out_addr]) begin
+      |                                                ^
+%Warning-WIDTHEXPAND: experiments/x1/tb/tb_x1_y1.v:44:36: Operator NEQCASE expects 32 bits on the LHS, but LHS's SIGNED generates 24 bits.
+                                                        : ... note: In instance 'tb_x1_y1'
+   44 |             if ($signed(out_wdata) !== expected[out_addr]) begin
+      |                                    ^~~
+%Warning-WIDTHEXPAND: experiments/x1/tb/tb_x1_y1.v:73:24: Operator ASSIGN expects 32 bits on the Assign RHS, but Assign RHS's SIGNED generates 4 bits.
+                                                        : ... note: In instance 'tb_x1_y1'
+   73 |                     av = $signed(act_mem[k][r*4 +: 4]);
+      |                        ^
+%Warning-WIDTHEXPAND: experiments/x1/tb/tb_x1_y1.v:74:24: Operator ASSIGN expects 32 bits on the Assign RHS, but Assign RHS's SIGNED generates 4 bits.
+                                                        : ... note: In instance 'tb_x1_y1'
+   74 |                     wv = $signed(weight_mem[k][c*4 +: 4]);
+      |                        ^
+%Warning-UNUSEDSIGNAL: experiments/x1/tb/tb_x1_y1.v:8:17: Bits of signal are not used: 'act_addr'[11:3]
+                                                        : ... note: In instance 'tb_x1_y1'
+    8 |     wire [11:0] act_addr;
+      |                 ^~~~~~~~
+%Warning-UNUSEDSIGNAL: experiments/x1/tb/tb_x1_y1.v:11:17: Bits of signal are not used: 'weight_addr'[11:3]
+                                                         : ... note: In instance 'tb_x1_y1'
+   11 |     wire [11:0] weight_addr;
+      |                 ^~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: experiments/x1/tb/tb_x1_y1.v:16:10: Signal is not used: 'busy'
+                                                         : ... note: In instance 'tb_x1_y1'
+   16 |     wire busy;
+      |          ^~~~
+%Warning-BLKSEQ: experiments/x1/tb/tb_x1_y1.v:34:19: Blocking assignment '=' in sequential logic process
+                                                   : ... Suggest using delayed assignment '<='
+   34 |     always #5 clk = ~clk;
+      |                   ^
+%Warning-INITIALDLY: experiments/x1/tb/tb_x1_y1.v:79:15: Non-blocking assignment '<=' in initial/final block
+                                                       : ... This will be executed as a blocking assignment '='!
+   79 |         rst_n <= 1;
+      |               ^~
+%Warning-INITIALDLY: experiments/x1/tb/tb_x1_y1.v:81:15: Non-blocking assignment '<=' in initial/final block
+                                                       : ... This will be executed as a blocking assignment '='!
+   81 |         k_dim <= 7;
+      |               ^~
+%Warning-INITIALDLY: experiments/x1/tb/tb_x1_y1.v:82:15: Non-blocking assignment '<=' in initial/final block
+                                                       : ... This will be executed as a blocking assignment '='!
+   82 |         start <= 1;
+      |               ^~
+%Warning-INITIALDLY: experiments/x1/tb/tb_x1_y1.v:84:15: Non-blocking assignment '<=' in initial/final block
+                                                       : ... This will be executed as a blocking assignment '='!
+   84 |         start <= 0;
+      |               ^~
+%Warning-BLKSEQ: experiments/x1/rtl/x1_y1_kimi.v:102:45: Blocking assignment '=' in sequential logic process
+                                                       : ... Suggest using delayed assignment '<='
+  102 |                                 act_lane    = $signed(act_rdata[r*4 +: 4]);
+      |                                             ^
+%Warning-BLKSEQ: experiments/x1/rtl/x1_y1_kimi.v:103:45: Blocking assignment '=' in sequential logic process
+                                                       : ... Suggest using delayed assignment '<='
+  103 |                                 weight_lane = $signed(weight_rdata[c*4 +: 4]);
+      |                                             ^
+%Warning-BLKSEQ: experiments/x1/rtl/x1_y1_kimi.v:104:45: Blocking assignment '=' in sequential logic process
+                                                       : ... Suggest using delayed assignment '<='
+  104 |                                 product     = act_lane * weight_lane;
+      |                                             ^
+%Error-BLKLOOPINIT: experiments/x1/rtl/x1_y1_kimi.v:85:38: Unsupported: Delayed assignment to array inside for loops (non-delayed is ok - see docs)
+   85 |                             accum[i] <= 24'sd0;
+      |                                      ^~
+%Error-BLKLOOPINIT: experiments/x1/rtl/x1_y1_kimi.v:124:34: Unsupported: Delayed assignment to array inside for loops (non-delayed is ok - see docs)
+  124 |                         accum[i] <= accum[i+1];
+      |                                  ^~
+%Error-BLKLOOPINIT: experiments/x1/rtl/x1_y1_kimi.v:72:26: Unsupported: Delayed assignment to array inside for loops (non-delayed is ok - see docs)
+   72 |                 accum[i] <= 24'sd0;
+      |                          ^~
+%Error: Exiting due to 3 error(s)

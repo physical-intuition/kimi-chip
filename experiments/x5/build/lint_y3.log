@@ -1,0 +1,19 @@
+{
+  "status": "pass",
+  "checks": {
+    "y2_terminal_evidence": true,
+    "target_derived_above_930": true,
+    "mac_pipeline_preserved": true,
+    "overlap_preserved": true,
+    "wide_request_comparator_removed": true,
+    "request_outputs_registered": true,
+    "local_five_bit_budget": true,
+    "fixed_16_request_backpressure": true,
+    "three_stage_fold_preserved": true,
+    "cap_margin_repair": true,
+    "source_hashes_recorded": true,
+    "no_y4_preplan": true
+  },
+  "failed": [],
+  "derived_target_mhz": 930.359
+}

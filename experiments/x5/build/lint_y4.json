@@ -1,0 +1,19 @@
+{
+  "status": "pass",
+  "checks": {
+    "y3_terminal_pass_ingested": true,
+    "target_derived_1ghz": true,
+    "critical_path_named": true,
+    "next_internal_path_named": true,
+    "busy_registered": true,
+    "mac_pipeline_preserved": true,
+    "request_fix_preserved": true,
+    "fold_preserved": true,
+    "cap_margin_preserved": true,
+    "physical_target": true,
+    "provenance_hashes": true,
+    "no_y5_preplan": true
+  },
+  "failed": [],
+  "target_mhz": 1000.0
+}

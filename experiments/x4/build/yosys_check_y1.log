@@ -1,0 +1,2 @@
+Warning: Replacing memory \wide_accum with list of registers. See experiments/x4/rtl/x4_y1_kimi.v:153
+Warning: Replacing memory \chunk_accum with list of registers. See experiments/x4/rtl/x4_y1_kimi.v:152

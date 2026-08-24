@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "source": "All 15 X1-X3 trials plus v9/v10 architecture evidence",
+  "rules": [
+    {
+      "id": "external_sram_boundary",
+      "check": "No behavioral SRAM arrays; expose paired registered SRAM request/response ports",
+      "evidence": "X1-Y1 and X2/X3 methodology"
+    },
+    {
+      "id": "hierarchical_accumulator_widths",
+      "check": "Per-cycle chunk is signed 12-bit and folded wide state is signed 24-bit",
+      "evidence": "v9/v10 overflow proof and X1-X3 ~468 MHz wide-add plateau"
+    },
+    {
+      "id": "fold_interval_bound",
+      "check": "Fold after no more than 16 signed INT4 products",
+      "evidence": "16*64=1024 <= signed-12 maximum 2047"
+    },
+    {
+      "id": "full_k_range_bound",
+      "check": "24-bit wide state supports every 16-bit k_dim value",
+      "evidence": "65535*64=4194240 <= signed-24 maximum 8388607"
+    },
+    {
+      "id": "exactly_once_registered_response",
+      "check": "One request produces exactly one accumulation event",
+      "evidence": "v4 double-count failure preserved by X2/X3 rules"
+    },
+    {
+      "id": "separate_fold_cycle",
+      "check": "24-bit fold cannot share the multiplier/chunk-add cycle",
+      "evidence": "v9/v10 critical-path architecture"
+    },
+    {
+      "id": "tail_fold_before_done",
+      "check": "Residual 1-15 products fold before output drain",
+      "evidence": "hierarchical accumulation correctness"
+    },
+    {
+      "id": "stationary_indexed_readout",
+      "check": "Do not shift the 256-word accumulator bank during drain",
+      "evidence": "X1-Y1 routing failure and X1-Y5 area win"
+    },
+    {
+      "id": "final_extracted_signoff",
+      "check": "Require zero final setup/hold/slew/fanout/cap, DRC, and antenna violations",
+      "evidence": "X1-Y3 and X2-Y1 extracted max-cap misses"
+    },
+    {
+      "id": "request_decode_is_progress_independent",
+      "check": "External paired requests may depend on registered request state, not issued/k_dim progress comparison",
+      "evidence": "X4-Y1 final extracted path issued[0] to weight_req, WNS -0.06075 ns, 15 combinational stages"
+    }
+  ]
+}

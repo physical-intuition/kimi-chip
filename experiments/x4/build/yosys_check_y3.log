@@ -1,0 +1,3 @@
+Warning: Replacing memory \drain_row_data with list of registers. See /home/kit/kimi-chip/experiments/x4/rtl/x4_y3_kimi.v:159
+Warning: Replacing memory \wide_accum with list of registers. See /home/kit/kimi-chip/experiments/x4/rtl/x4_y3_kimi.v:145
+Warning: Replacing memory \chunk_accum with list of registers. See /home/kit/kimi-chip/experiments/x4/rtl/x4_y3_kimi.v:144

@@ -1,0 +1,29 @@
+# ORFS outputs
+objects/
+reports/
+logs/
+
+# Large binary artifacts (use Git LFS or download separately)
+*.odb
+*.gds
+*.spef
+*.rtlil
+
+# Build artifacts
+*.vcd
+*.fst
+*.lxt
+*.pyc
+__pycache__/
+a.out
+
+# Editor
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+
+# Lock files
+*.lock

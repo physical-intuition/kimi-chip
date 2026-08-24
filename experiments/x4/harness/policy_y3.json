@@ -1,0 +1,17 @@
+{
+  "y": 3,
+  "target_mhz": 780,
+  "target_period_ns": 1.282051,
+  "target_basis": {
+    "source": "X4-Y2 final extracted timing",
+    "y2_target_mhz": 760,
+    "y2_fmax_mhz": 783.569,
+    "y2_wns_ns": 0.0395887,
+    "worst_path": "drain_col[0] to out_wdata[12] through 18 combinational cells",
+    "selected_target_mhz": 780,
+    "reason": "780 MHz is monotonically above 760 MHz while remaining just below Y2's measured 783.569 MHz extracted ceiling; the registered row stage removes the exact combined row/column selector that set that ceiling."
+  },
+  "rtl_change": "Register the selected accumulator row in S_DRAIN_LOAD, then select its column in S_DRAIN_WRITE.",
+  "latency_change": "Adds one row-load cycle for each of 16 output rows, 16 total cycles per operation; output count, order, interface, and mathematical result are unchanged.",
+  "new_lint_rules": ["registered_readout_split", "no_direct_combined_readout"]
+}

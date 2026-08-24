@@ -1,0 +1,7 @@
+Implement X1-Y5 only in /home/kit/kimi-chip/experiments/x1.
+
+Read experiments/KIMI_SPEC.md, DESIGN_Y3.md, DESIGN_Y4.md, rtl/x1_y3_kimi.v, and tb/tb_x1_y4.v first. Do not commit, push, modify Y1-Y4, modify the repository root, or run full ORFS.
+
+Create a physically credible interface-compatible Verilog design at rtl/x1_y5_kimi.v, testbench at tb/tb_x1_y5.v, flow/config_y5.mk, flow/constraint_y5.sdc, and run_y5.sh. Use a local indexed, non-shifting bank readout for the 16x16 signed INT4 outer-product accumulator result drain. Do not shift all 16 accumulator registers every drain cycle. Preserve exactly the existing module ports and one-cycle registered SRAM response protocol. Latch k_dim on accepted start, clear storage per operation without relying on async reset across accumulator bits, retain back-to-back K=7/0/13 verification, and accurately document PPA tradeoffs in code comments.
+
+Use Y4 physical configuration as the starting point, including 400 MHz, 20 percent utilization, CAP_MARGIN=20, NUM_CORES=4. Run local Icarus test and Verilator lint if available. In final output list changed files and test results only.

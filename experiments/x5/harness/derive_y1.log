@@ -1,0 +1,22 @@
+{
+  "records": 5,
+  "max_setup_paths": [
+    {
+      "startpoint": "rst_n (input port clocked by core_clock)",
+      "endpoint": "out_wdata[22]$_DFFE_PN0P_",
+      "slack_ns": 0.71
+    },
+    {
+      "startpoint": "chunk_accum[156][1]$_SDFFE_PP0P_",
+      "endpoint": "wide_accum[156][11]$_SDFFE_PP0P_",
+      "slack_ns": 0.04
+    },
+    {
+      "startpoint": "rst_n (input port clocked by core_clock)",
+      "endpoint": "out_wdata[2]$_DFFE_PN0P_",
+      "slack_ns": 0.71
+    }
+  ],
+  "prior_fold_gain_ratio": 0.0755023081523678,
+  "derived_target_mhz": 937.092
+}

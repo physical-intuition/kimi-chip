@@ -1,0 +1,42 @@
+{
+  "schema": "x5-y3-combined-evidence-policy-v1",
+  "source_iteration": "X5-Y2",
+  "source_fmax_mhz": 890.47,
+  "source_setup_wns_ns": -0.06,
+  "source_setup_tns_ns": -0.111804,
+  "source_setup_violations": 2,
+  "source_hold_violations": 0,
+  "combined_repairs": [
+    {
+      "evidence": "X5-Y2 MAC pipeline removed act_rdata->chunk_accum from max setup paths",
+      "preserve": "registered 8-bit product and overlapped response/product/MAC valid pipeline"
+    },
+    {
+      "evidence": "X5-Y2 worst max path is issued[10] through request decode to act_req at -0.06 ns",
+      "repair": "drive request outputs from request_active/request_addr registers; use a 5-bit chunk-local request counter"
+    },
+    {
+      "evidence": "X5-Y2 max-cap failures wire27208/Z 357.07/242.31 and wire27209/Z 282.15/242.31",
+      "repair": "raise CAP_MARGIN from 30 to 50 for earlier stronger buffering"
+    }
+  ],
+  "historical_request_comparator_removal_gain_ratio": 0.089591735,
+  "conservative_recovery_fraction": 0.5,
+  "target_formula": "x5_y2_fmax * (1 + 0.50 * (x4_y2_fmax/x4_y1_fmax - 1))",
+  "derived_target_frequency_mhz": 930.359,
+  "derived_period_ns": 1.074853466,
+  "provenance": {
+    "x5_y2_finish_report": {
+      "path": "experiments/x5/artifacts/y2_finish.rpt",
+      "sha256": "0f932c13847bdddb6d87c3d0d79c5d43543b35c27b0fd6b977d9593ee2a531f1"
+    },
+    "x5_y2_metrics": {
+      "path": "experiments/x5/artifacts/y2_report.json",
+      "sha256": "c3dde699e29c5b21d98b8dbcc39bffb1d9b89167d2aa37fef2a15be5f56bda63"
+    },
+    "x4_trials": {
+      "path": "experiments/x4/trials.jsonl",
+      "sha256": "38f572a1e5e724aadb5dc7cf8e2b46ae53656d120d58fc4bc74dda21ae18571c"
+    }
+  }
+}

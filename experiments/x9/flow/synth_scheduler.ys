@@ -1,0 +1,8 @@
+read_verilog -sv -DSYNTHESIS rtl/mac_scheduler.v
+hierarchy -check -top mac_scheduler
+synth -top mac_scheduler
+dfflibmap -liberty /home/kit/OpenROAD-flow-scripts/flow/platforms/nangate45/lib/NangateOpenCellLibrary_typical.lib
+abc -liberty /home/kit/OpenROAD-flow-scripts/flow/platforms/nangate45/lib/NangateOpenCellLibrary_typical.lib -D 2000 -script flow/abc_timing.script
+clean -purge
+stat -liberty /home/kit/OpenROAD-flow-scripts/flow/platforms/nangate45/lib/NangateOpenCellLibrary_typical.lib
+write_verilog -noattr -noexpr -nodec artifacts/mac_scheduler_mapped.v

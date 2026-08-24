@@ -1,0 +1,1433 @@
+
+ /----------------------------------------------------------------------------\
+ |                                                                            |
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |                                                                            |
+ |  Copyright (C) 2012 - 2020  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |                                                                            |
+ |  Permission to use, copy, modify, and/or distribute this software for any  |
+ |  purpose with or without fee is hereby granted, provided that the above    |
+ |  copyright notice and this permission notice appear in all copies.         |
+ |                                                                            |
+ |  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES  |
+ |  WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF          |
+ |  MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR   |
+ |  ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES    |
+ |  WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN     |
+ |  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF   |
+ |  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.            |
+ |                                                                            |
+ \----------------------------------------------------------------------------/
+
+ Yosys 0.33 (git sha1 2584903a060)
+
+
+-- Running command `read_verilog -sv experiments/x1/rtl/x1_y1_kimi.v; hierarchy -check -top x1_y1_kimi; proc; opt; memory; opt; stat' --
+
+1. Executing Verilog-2005 frontend: experiments/x1/rtl/x1_y1_kimi.v
+Parsing SystemVerilog input from `experiments/x1/rtl/x1_y1_kimi.v' to AST representation.
+Generating RTLIL representation for module `\x1_y1_kimi'.
+Warning: Replacing memory \accum with list of registers. See experiments/x1/rtl/x1_y1_kimi.v:72
+Successfully finished Verilog frontend.
+
+2. Executing HIERARCHY pass (managing design hierarchy).
+
+2.1. Analyzing design hierarchy..
+Top module:  \x1_y1_kimi
+
+2.2. Analyzing design hierarchy..
+Top module:  \x1_y1_kimi
+Removed 0 unused modules.
+
+3. Executing PROC pass (convert processes to netlists).
+
+3.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+3.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Removed 1 dead cases from process $proc$experiments/x1/rtl/x1_y1_kimi.v:60$11 in module x1_y1_kimi.
+Marked 7 switch rules as full_case in process $proc$experiments/x1/rtl/x1_y1_kimi.v:60$11 in module x1_y1_kimi.
+Marked 1 switch rules as full_case in process $proc$experiments/x1/rtl/x1_y1_kimi.v:49$7 in module x1_y1_kimi.
+Removed a total of 1 dead cases.
+
+3.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 2 redundant assignments.
+Promoted 12 assignments to connections.
+
+3.4. Executing PROC_INIT pass (extract init attributes).
+
+3.5. Executing PROC_ARST pass (detect async resets in processes).
+Found async reset \rst_n in `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+
+3.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+<suppressed ~9 debug messages>
+
+3.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+Creating decoders for process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+     1/288: $3$mem2reg_rd$\accum$experiments/x1/rtl/x1_y1_kimi.v:121$5_DATA[23:0]$538
+     2/288: $3\r[31:0]
+     3/288: $3\c[31:0]
+     4/288: $3\product[7:0]
+     5/288: $3\weight_lane[3:0]
+     6/288: $3\act_lane[3:0]
+     7/288: $3\i[31:0]
+     8/288: $2\i[31:0]
+     9/288: $2$mem2reg_rd$\accum$experiments/x1/rtl/x1_y1_kimi.v:121$5_DATA[23:0]$18
+    10/288: $2$mem2reg_rd$\accum$experiments/x1/rtl/x1_y1_kimi.v:121$5_ADDR[7:0]$17
+    11/288: $2\product[7:0]
+    12/288: $2\weight_lane[3:0]
+    13/288: $2\act_lane[3:0]
+    14/288: $2\c[31:0]
+    15/288: $2\r[31:0]
+    16/288: $1$mem2reg_rd$\accum$experiments/x1/rtl/x1_y1_kimi.v:121$5_DATA[23:0]$16
+    17/288: $1$mem2reg_rd$\accum$experiments/x1/rtl/x1_y1_kimi.v:121$5_ADDR[7:0]$15
+    18/288: $1\product[7:0]
+    19/288: $1\weight_lane[3:0]
+    20/288: $1\act_lane[3:0]
+    21/288: $1\i[31:0]
+    22/288: $1\c[31:0]
+    23/288: $1\r[31:0]
+    24/288: $0\done[0:0]
+    25/288: $0\out_we[0:0]
+    26/288: $0\accum[255][23:0]
+    27/288: $0\accum[254][23:0]
+    28/288: $0\accum[253][23:0]
+    29/288: $0\accum[252][23:0]
+    30/288: $0\accum[251][23:0]
+    31/288: $0\accum[250][23:0]
+    32/288: $0\accum[249][23:0]
+    33/288: $0\accum[248][23:0]
+    34/288: $0\accum[247][23:0]
+    35/288: $0\accum[246][23:0]
+    36/288: $0\accum[245][23:0]
+    37/288: $0\accum[244][23:0]
+    38/288: $0\accum[243][23:0]
+    39/288: $0\accum[242][23:0]
+    40/288: $0\accum[241][23:0]
+    41/288: $0\accum[240][23:0]
+    42/288: $0\accum[239][23:0]
+    43/288: $0\accum[238][23:0]
+    44/288: $0\accum[237][23:0]
+    45/288: $0\accum[236][23:0]
+    46/288: $0\accum[235][23:0]
+    47/288: $0\accum[234][23:0]
+    48/288: $0\accum[233][23:0]
+    49/288: $0\accum[232][23:0]
+    50/288: $0\accum[231][23:0]
+    51/288: $0\accum[230][23:0]
+    52/288: $0\accum[229][23:0]
+    53/288: $0\accum[228][23:0]
+    54/288: $0\accum[227][23:0]
+    55/288: $0\accum[226][23:0]
+    56/288: $0\accum[225][23:0]
+    57/288: $0\accum[224][23:0]
+    58/288: $0\accum[223][23:0]
+    59/288: $0\accum[222][23:0]
+    60/288: $0\accum[221][23:0]
+    61/288: $0\accum[220][23:0]
+    62/288: $0\accum[219][23:0]
+    63/288: $0\accum[218][23:0]
+    64/288: $0\accum[217][23:0]
+    65/288: $0\accum[216][23:0]
+    66/288: $0\accum[215][23:0]
+    67/288: $0\accum[214][23:0]
+    68/288: $0\accum[213][23:0]
+    69/288: $0\accum[212][23:0]
+    70/288: $0\accum[211][23:0]
+    71/288: $0\accum[210][23:0]
+    72/288: $0\accum[209][23:0]
+    73/288: $0\accum[208][23:0]
+    74/288: $0\accum[207][23:0]
+    75/288: $0\accum[206][23:0]
+    76/288: $0\accum[205][23:0]
+    77/288: $0\accum[204][23:0]
+    78/288: $0\accum[203][23:0]
+    79/288: $0\accum[202][23:0]
+    80/288: $0\accum[201][23:0]
+    81/288: $0\accum[200][23:0]
+    82/288: $0\accum[199][23:0]
+    83/288: $0\accum[198][23:0]
+    84/288: $0\accum[197][23:0]
+    85/288: $0\accum[196][23:0]
+    86/288: $0\accum[195][23:0]
+    87/288: $0\accum[194][23:0]
+    88/288: $0\accum[193][23:0]
+    89/288: $0\accum[192][23:0]
+    90/288: $0\accum[191][23:0]
+    91/288: $0\accum[190][23:0]
+    92/288: $0\accum[189][23:0]
+    93/288: $0\accum[188][23:0]
+    94/288: $0\accum[187][23:0]
+    95/288: $0\accum[186][23:0]
+    96/288: $0\accum[185][23:0]
+    97/288: $0\accum[184][23:0]
+    98/288: $0\accum[183][23:0]
+    99/288: $0\accum[182][23:0]
+   100/288: $0\accum[181][23:0]
+   101/288: $0\accum[180][23:0]
+   102/288: $0\accum[179][23:0]
+   103/288: $0\accum[178][23:0]
+   104/288: $0\accum[177][23:0]
+   105/288: $0\accum[176][23:0]
+   106/288: $0\accum[175][23:0]
+   107/288: $0\accum[174][23:0]
+   108/288: $0\accum[173][23:0]
+   109/288: $0\accum[172][23:0]
+   110/288: $0\accum[171][23:0]
+   111/288: $0\accum[170][23:0]
+   112/288: $0\accum[169][23:0]
+   113/288: $0\accum[168][23:0]
+   114/288: $0\accum[167][23:0]
+   115/288: $0\accum[166][23:0]
+   116/288: $0\accum[165][23:0]
+   117/288: $0\accum[164][23:0]
+   118/288: $0\accum[163][23:0]
+   119/288: $0\accum[162][23:0]
+   120/288: $0\accum[161][23:0]
+   121/288: $0\accum[160][23:0]
+   122/288: $0\accum[159][23:0]
+   123/288: $0\accum[158][23:0]
+   124/288: $0\accum[157][23:0]
+   125/288: $0\accum[156][23:0]
+   126/288: $0\accum[155][23:0]
+   127/288: $0\accum[154][23:0]
+   128/288: $0\accum[153][23:0]
+   129/288: $0\accum[152][23:0]
+   130/288: $0\accum[151][23:0]
+   131/288: $0\accum[150][23:0]
+   132/288: $0\accum[149][23:0]
+   133/288: $0\accum[148][23:0]
+   134/288: $0\accum[147][23:0]
+   135/288: $0\accum[146][23:0]
+   136/288: $0\accum[145][23:0]
+   137/288: $0\accum[144][23:0]
+   138/288: $0\accum[143][23:0]
+   139/288: $0\accum[142][23:0]
+   140/288: $0\accum[141][23:0]
+   141/288: $0\accum[140][23:0]
+   142/288: $0\accum[139][23:0]
+   143/288: $0\accum[138][23:0]
+   144/288: $0\accum[137][23:0]
+   145/288: $0\accum[136][23:0]
+   146/288: $0\accum[135][23:0]
+   147/288: $0\accum[134][23:0]
+   148/288: $0\accum[133][23:0]
+   149/288: $0\accum[132][23:0]
+   150/288: $0\accum[131][23:0]
+   151/288: $0\accum[130][23:0]
+   152/288: $0\accum[129][23:0]
+   153/288: $0\accum[128][23:0]
+   154/288: $0\accum[127][23:0]
+   155/288: $0\accum[126][23:0]
+   156/288: $0\accum[125][23:0]
+   157/288: $0\accum[124][23:0]
+   158/288: $0\accum[123][23:0]
+   159/288: $0\accum[122][23:0]
+   160/288: $0\accum[121][23:0]
+   161/288: $0\accum[120][23:0]
+   162/288: $0\accum[119][23:0]
+   163/288: $0\accum[118][23:0]
+   164/288: $0\accum[117][23:0]
+   165/288: $0\accum[116][23:0]
+   166/288: $0\accum[115][23:0]
+   167/288: $0\accum[114][23:0]
+   168/288: $0\accum[113][23:0]
+   169/288: $0\accum[112][23:0]
+   170/288: $0\accum[111][23:0]
+   171/288: $0\accum[110][23:0]
+   172/288: $0\accum[109][23:0]
+   173/288: $0\accum[108][23:0]
+   174/288: $0\accum[107][23:0]
+   175/288: $0\accum[106][23:0]
+   176/288: $0\accum[105][23:0]
+   177/288: $0\accum[104][23:0]
+   178/288: $0\accum[103][23:0]
+   179/288: $0\accum[102][23:0]
+   180/288: $0\accum[101][23:0]
+   181/288: $0\accum[100][23:0]
+   182/288: $0\accum[99][23:0]
+   183/288: $0\accum[98][23:0]
+   184/288: $0\accum[97][23:0]
+   185/288: $0\accum[96][23:0]
+   186/288: $0\accum[95][23:0]
+   187/288: $0\accum[94][23:0]
+   188/288: $0\accum[93][23:0]
+   189/288: $0\accum[92][23:0]
+   190/288: $0\accum[91][23:0]
+   191/288: $0\accum[90][23:0]
+   192/288: $0\accum[89][23:0]
+   193/288: $0\accum[88][23:0]
+   194/288: $0\accum[87][23:0]
+   195/288: $0\accum[86][23:0]
+   196/288: $0\accum[85][23:0]
+   197/288: $0\accum[84][23:0]
+   198/288: $0\accum[83][23:0]
+   199/288: $0\accum[82][23:0]
+   200/288: $0\accum[81][23:0]
+   201/288: $0\accum[80][23:0]
+   202/288: $0\accum[79][23:0]
+   203/288: $0\accum[78][23:0]
+   204/288: $0\accum[77][23:0]
+   205/288: $0\accum[76][23:0]
+   206/288: $0\accum[75][23:0]
+   207/288: $0\accum[74][23:0]
+   208/288: $0\accum[73][23:0]
+   209/288: $0\accum[72][23:0]
+   210/288: $0\accum[71][23:0]
+   211/288: $0\accum[70][23:0]
+   212/288: $0\accum[69][23:0]
+   213/288: $0\accum[68][23:0]
+   214/288: $0\accum[67][23:0]
+   215/288: $0\accum[66][23:0]
+   216/288: $0\accum[65][23:0]
+   217/288: $0\accum[64][23:0]
+   218/288: $0\accum[63][23:0]
+   219/288: $0\accum[62][23:0]
+   220/288: $0\accum[61][23:0]
+   221/288: $0\accum[60][23:0]
+   222/288: $0\accum[59][23:0]
+   223/288: $0\accum[58][23:0]
+   224/288: $0\accum[57][23:0]
+   225/288: $0\accum[56][23:0]
+   226/288: $0\accum[55][23:0]
+   227/288: $0\accum[54][23:0]
+   228/288: $0\accum[53][23:0]
+   229/288: $0\accum[52][23:0]
+   230/288: $0\accum[51][23:0]
+   231/288: $0\accum[50][23:0]
+   232/288: $0\accum[49][23:0]
+   233/288: $0\accum[48][23:0]
+   234/288: $0\accum[47][23:0]
+   235/288: $0\accum[46][23:0]
+   236/288: $0\accum[45][23:0]
+   237/288: $0\accum[44][23:0]
+   238/288: $0\accum[43][23:0]
+   239/288: $0\accum[42][23:0]
+   240/288: $0\accum[41][23:0]
+   241/288: $0\accum[40][23:0]
+   242/288: $0\accum[39][23:0]
+   243/288: $0\accum[38][23:0]
+   244/288: $0\accum[37][23:0]
+   245/288: $0\accum[36][23:0]
+   246/288: $0\accum[35][23:0]
+   247/288: $0\accum[34][23:0]
+   248/288: $0\accum[33][23:0]
+   249/288: $0\accum[32][23:0]
+   250/288: $0\accum[31][23:0]
+   251/288: $0\accum[30][23:0]
+   252/288: $0\accum[29][23:0]
+   253/288: $0\accum[28][23:0]
+   254/288: $0\accum[27][23:0]
+   255/288: $0\accum[26][23:0]
+   256/288: $0\accum[25][23:0]
+   257/288: $0\accum[24][23:0]
+   258/288: $0\accum[23][23:0]
+   259/288: $0\accum[22][23:0]
+   260/288: $0\accum[21][23:0]
+   261/288: $0\accum[20][23:0]
+   262/288: $0\accum[19][23:0]
+   263/288: $0\accum[18][23:0]
+   264/288: $0\accum[17][23:0]
+   265/288: $0\accum[16][23:0]
+   266/288: $0\accum[15][23:0]
+   267/288: $0\accum[14][23:0]
+   268/288: $0\accum[13][23:0]
+   269/288: $0\accum[12][23:0]
+   270/288: $0\accum[11][23:0]
+   271/288: $0\accum[10][23:0]
+   272/288: $0\accum[9][23:0]
+   273/288: $0\accum[8][23:0]
+   274/288: $0\accum[7][23:0]
+   275/288: $0\accum[6][23:0]
+   276/288: $0\accum[5][23:0]
+   277/288: $0\accum[4][23:0]
+   278/288: $0\accum[3][23:0]
+   279/288: $0\accum[2][23:0]
+   280/288: $0\accum[1][23:0]
+   281/288: $0\accum[0][23:0]
+   282/288: $0\drain_index[7:0]
+   283/288: $0\read_valid[0:0]
+   284/288: $0\consumed[11:0]
+   285/288: $0\issued[11:0]
+   286/288: $0\state[1:0]
+   287/288: $0\out_wdata[23:0]
+   288/288: $0\out_addr[13:0]
+Creating decoders for process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:49$7'.
+     1/2: $1\weight_req[0:0]
+     2/2: $1\act_req[0:0]
+
+3.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+No latch inferred for signal `\x1_y1_kimi.\act_req' from process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:49$7'.
+No latch inferred for signal `\x1_y1_kimi.\act_addr' from process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:49$7'.
+No latch inferred for signal `\x1_y1_kimi.\weight_req' from process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:49$7'.
+No latch inferred for signal `\x1_y1_kimi.\weight_addr' from process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:49$7'.
+
+3.9. Executing PROC_DFF pass (convert process syncs to FFs).
+Creating register for signal `\x1_y1_kimi.\out_we' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3778' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\out_addr' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3779' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\out_wdata' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3780' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\done' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3781' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\state' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3782' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\issued' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3783' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\consumed' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3784' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\read_valid' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3785' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\drain_index' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3786' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\r' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $dff cell `$procdff$3789' with positive edge clock.
+Creating register for signal `\x1_y1_kimi.\c' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $dff cell `$procdff$3792' with positive edge clock.
+Creating register for signal `\x1_y1_kimi.\i' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3793' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\act_lane' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $dff cell `$procdff$3796' with positive edge clock.
+Creating register for signal `\x1_y1_kimi.\weight_lane' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $dff cell `$procdff$3799' with positive edge clock.
+Creating register for signal `\x1_y1_kimi.\product' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $dff cell `$procdff$3802' with positive edge clock.
+Creating register for signal `\x1_y1_kimi.\accum[0]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3803' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[1]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3804' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[2]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3805' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[3]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3806' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[4]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3807' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[5]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3808' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[6]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3809' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[7]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3810' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[8]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3811' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[9]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3812' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[10]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3813' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[11]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3814' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[12]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3815' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[13]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3816' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[14]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3817' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[15]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3818' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[16]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3819' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[17]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3820' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[18]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3821' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[19]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3822' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[20]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3823' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[21]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3824' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[22]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3825' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[23]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3826' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[24]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3827' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[25]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3828' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[26]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3829' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[27]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3830' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[28]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3831' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[29]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3832' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[30]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3833' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[31]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3834' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[32]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3835' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[33]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3836' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[34]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3837' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[35]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3838' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[36]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3839' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[37]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3840' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[38]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3841' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[39]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3842' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[40]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3843' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[41]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3844' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[42]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3845' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[43]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3846' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[44]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3847' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[45]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3848' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[46]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3849' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[47]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3850' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[48]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3851' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[49]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3852' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[50]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3853' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[51]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3854' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[52]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3855' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[53]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3856' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[54]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3857' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[55]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3858' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[56]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3859' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[57]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3860' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[58]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3861' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[59]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3862' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[60]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3863' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[61]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3864' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[62]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3865' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[63]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3866' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[64]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3867' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[65]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3868' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[66]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3869' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[67]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3870' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[68]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3871' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[69]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3872' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[70]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3873' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[71]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3874' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[72]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3875' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[73]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3876' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[74]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3877' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[75]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3878' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[76]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3879' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[77]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3880' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[78]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3881' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[79]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3882' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[80]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3883' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[81]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3884' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[82]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3885' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[83]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3886' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[84]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3887' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[85]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3888' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[86]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3889' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[87]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3890' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[88]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3891' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[89]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3892' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[90]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3893' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[91]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3894' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[92]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3895' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[93]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3896' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[94]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3897' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[95]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3898' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[96]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3899' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[97]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3900' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[98]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3901' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[99]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3902' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[100]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3903' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[101]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3904' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[102]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3905' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[103]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3906' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[104]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3907' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[105]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3908' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[106]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3909' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[107]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3910' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[108]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3911' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[109]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3912' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[110]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3913' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[111]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3914' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[112]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3915' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[113]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3916' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[114]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3917' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[115]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3918' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[116]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3919' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[117]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3920' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[118]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3921' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[119]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3922' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[120]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3923' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[121]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3924' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[122]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3925' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[123]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3926' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[124]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3927' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[125]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3928' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[126]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3929' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[127]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3930' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[128]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3931' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[129]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3932' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[130]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3933' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[131]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3934' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[132]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3935' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[133]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3936' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[134]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3937' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[135]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3938' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[136]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3939' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[137]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3940' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[138]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3941' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[139]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3942' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[140]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3943' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[141]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3944' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[142]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3945' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[143]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3946' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[144]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3947' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[145]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3948' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[146]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3949' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[147]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3950' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[148]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3951' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[149]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3952' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[150]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3953' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[151]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3954' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[152]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3955' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[153]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3956' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[154]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3957' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[155]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3958' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[156]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3959' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[157]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3960' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[158]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3961' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[159]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3962' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[160]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3963' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[161]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3964' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[162]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3965' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[163]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3966' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[164]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3967' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[165]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3968' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[166]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3969' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[167]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3970' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[168]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3971' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[169]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3972' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[170]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3973' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[171]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3974' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[172]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3975' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[173]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3976' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[174]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3977' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[175]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3978' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[176]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3979' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[177]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3980' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[178]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3981' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[179]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3982' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[180]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3983' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[181]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3984' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[182]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3985' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[183]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3986' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[184]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3987' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[185]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3988' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[186]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3989' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[187]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3990' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[188]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3991' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[189]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3992' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[190]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3993' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[191]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3994' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[192]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3995' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[193]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3996' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[194]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3997' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[195]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3998' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[196]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$3999' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[197]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4000' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[198]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4001' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[199]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4002' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[200]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4003' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[201]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4004' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[202]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4005' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[203]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4006' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[204]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4007' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[205]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4008' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[206]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4009' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[207]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4010' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[208]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4011' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[209]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4012' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[210]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4013' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[211]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4014' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[212]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4015' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[213]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4016' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[214]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4017' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[215]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4018' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[216]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4019' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[217]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4020' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[218]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4021' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[219]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4022' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[220]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4023' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[221]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4024' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[222]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4025' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[223]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4026' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[224]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4027' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[225]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4028' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[226]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4029' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[227]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4030' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[228]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4031' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[229]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4032' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[230]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4033' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[231]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4034' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[232]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4035' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[233]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4036' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[234]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4037' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[235]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4038' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[236]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4039' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[237]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4040' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[238]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4041' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[239]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4042' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[240]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4043' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[241]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4044' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[242]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4045' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[243]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4046' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[244]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4047' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[245]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4048' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[246]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4049' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[247]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4050' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[248]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4051' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[249]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4052' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[250]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4053' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[251]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4054' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[252]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4055' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[253]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4056' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[254]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4057' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.\accum[255]' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4058' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.$mem2reg_rd$\accum$experiments/x1/rtl/x1_y1_kimi.v:121$5_ADDR' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4059' with positive edge clock and negative level reset.
+Creating register for signal `\x1_y1_kimi.$mem2reg_rd$\accum$experiments/x1/rtl/x1_y1_kimi.v:121$5_DATA' using process `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+  created $adff cell `$procdff$4060' with positive edge clock and negative level reset.
+
+3.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+3.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Found and cleaned up 8 empty switches in `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+Removing empty process `x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:60$11'.
+Found and cleaned up 1 empty switch in `\x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:49$7'.
+Removing empty process `x1_y1_kimi.$proc$experiments/x1/rtl/x1_y1_kimi.v:49$7'.
+Cleaned up 9 empty switches.
+
+3.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module x1_y1_kimi.
+<suppressed ~266 debug messages>
+
+4. Executing OPT pass (performing simple optimizations).
+
+4.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module x1_y1_kimi.
+
+4.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\x1_y1_kimi'.
+<suppressed ~1632 debug messages>
+Removed a total of 544 cells.
+
+4.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \x1_y1_kimi..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+    dead port 1/2 on $mux $procmux$853.
+    dead port 2/2 on $mux $procmux$853.
+    dead port 1/2 on $mux $procmux$850.
+    dead port 2/2 on $mux $procmux$850.
+    dead port 2/2 on $mux $procmux$842.
+    dead port 2/2 on $mux $procmux$834.
+    dead port 2/2 on $mux $procmux$827.
+    dead port 2/2 on $mux $procmux$820.
+    dead port 2/2 on $mux $procmux$813.
+    dead port 2/2 on $mux $procmux$806.
+    dead port 2/2 on $mux $procmux$799.
+Removed 11 multiplexer ports.
+<suppressed ~274 debug messages>
+
+4.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \x1_y1_kimi.
+Performed a total of 0 changes.
+
+4.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\x1_y1_kimi'.
+<suppressed ~3 debug messages>
+Removed a total of 1 cells.
+
+4.6. Executing OPT_DFF pass (perform DFF optimizations).
+Adding EN signal on $procdff$3959 ($adff) from module x1_y1_kimi (D = $procmux$1978_Y, Q = \accum[156]).
+Adding EN signal on $procdff$3960 ($adff) from module x1_y1_kimi (D = $procmux$1967_Y, Q = \accum[157]).
+Adding EN signal on $procdff$3955 ($adff) from module x1_y1_kimi (D = $procmux$2022_Y, Q = \accum[152]).
+Adding EN signal on $procdff$3961 ($adff) from module x1_y1_kimi (D = $procmux$1956_Y, Q = \accum[158]).
+Adding EN signal on $procdff$3956 ($adff) from module x1_y1_kimi (D = $procmux$2011_Y, Q = \accum[153]).
+Adding EN signal on $procdff$3962 ($adff) from module x1_y1_kimi (D = $procmux$1945_Y, Q = \accum[159]).
+Adding EN signal on $procdff$3957 ($adff) from module x1_y1_kimi (D = $procmux$2000_Y, Q = \accum[154]).
+Adding EN signal on $procdff$3963 ($adff) from module x1_y1_kimi (D = $procmux$1934_Y, Q = \accum[160]).
+Adding EN signal on $procdff$3958 ($adff) from module x1_y1_kimi (D = $procmux$1989_Y, Q = \accum[155]).
+Adding EN signal on $procdff$3964 ($adff) from module x1_y1_kimi (D = $procmux$1923_Y, Q = \accum[161]).
+Adding EN signal on $procdff$3965 ($adff) from module x1_y1_kimi (D = $procmux$1912_Y, Q = \accum[162]).
+Adding EN signal on $procdff$3966 ($adff) from module x1_y1_kimi (D = $procmux$1901_Y, Q = \accum[163]).
+Adding EN signal on $procdff$3967 ($adff) from module x1_y1_kimi (D = $procmux$1890_Y, Q = \accum[164]).
+Adding EN signal on $procdff$3968 ($adff) from module x1_y1_kimi (D = $procmux$1879_Y, Q = \accum[165]).
+Adding EN signal on $procdff$3969 ($adff) from module x1_y1_kimi (D = $procmux$1868_Y, Q = \accum[166]).
+Adding EN signal on $procdff$3970 ($adff) from module x1_y1_kimi (D = $procmux$1857_Y, Q = \accum[167]).
+Adding EN signal on $procdff$3971 ($adff) from module x1_y1_kimi (D = $procmux$1846_Y, Q = \accum[168]).
+Adding EN signal on $procdff$3972 ($adff) from module x1_y1_kimi (D = $procmux$1835_Y, Q = \accum[169]).
+Adding EN signal on $procdff$3973 ($adff) from module x1_y1_kimi (D = $procmux$1824_Y, Q = \accum[170]).
+Adding EN signal on $procdff$3974 ($adff) from module x1_y1_kimi (D = $procmux$1813_Y, Q = \accum[171]).
+Adding EN signal on $procdff$3975 ($adff) from module x1_y1_kimi (D = $procmux$1802_Y, Q = \accum[172]).
+Adding EN signal on $procdff$3976 ($adff) from module x1_y1_kimi (D = $procmux$1791_Y, Q = \accum[173]).
+Adding EN signal on $procdff$3977 ($adff) from module x1_y1_kimi (D = $procmux$1780_Y, Q = \accum[174]).
+Adding EN signal on $procdff$3978 ($adff) from module x1_y1_kimi (D = $procmux$1769_Y, Q = \accum[175]).
+Adding EN signal on $procdff$3979 ($adff) from module x1_y1_kimi (D = $procmux$1758_Y, Q = \accum[176]).
+Adding EN signal on $procdff$3980 ($adff) from module x1_y1_kimi (D = $procmux$1747_Y, Q = \accum[177]).
+Adding EN signal on $procdff$3981 ($adff) from module x1_y1_kimi (D = $procmux$1736_Y, Q = \accum[178]).
+Adding EN signal on $procdff$3982 ($adff) from module x1_y1_kimi (D = $procmux$1725_Y, Q = \accum[179]).
+Adding EN signal on $procdff$3983 ($adff) from module x1_y1_kimi (D = $procmux$1714_Y, Q = \accum[180]).
+Adding EN signal on $procdff$3984 ($adff) from module x1_y1_kimi (D = $procmux$1703_Y, Q = \accum[181]).
+Adding EN signal on $procdff$3985 ($adff) from module x1_y1_kimi (D = $procmux$1692_Y, Q = \accum[182]).
+Adding EN signal on $procdff$3986 ($adff) from module x1_y1_kimi (D = $procmux$1681_Y, Q = \accum[183]).
+Adding EN signal on $procdff$3987 ($adff) from module x1_y1_kimi (D = $procmux$1670_Y, Q = \accum[184]).
+Adding EN signal on $procdff$3988 ($adff) from module x1_y1_kimi (D = $procmux$1659_Y, Q = \accum[185]).
+Adding EN signal on $procdff$3989 ($adff) from module x1_y1_kimi (D = $procmux$1648_Y, Q = \accum[186]).
+Adding EN signal on $procdff$3990 ($adff) from module x1_y1_kimi (D = $procmux$1637_Y, Q = \accum[187]).
+Adding EN signal on $procdff$3991 ($adff) from module x1_y1_kimi (D = $procmux$1626_Y, Q = \accum[188]).
+Adding EN signal on $procdff$3992 ($adff) from module x1_y1_kimi (D = $procmux$1615_Y, Q = \accum[189]).
+Adding EN signal on $procdff$3993 ($adff) from module x1_y1_kimi (D = $procmux$1604_Y, Q = \accum[190]).
+Adding EN signal on $procdff$3994 ($adff) from module x1_y1_kimi (D = $procmux$1593_Y, Q = \accum[191]).
+Adding EN signal on $procdff$3995 ($adff) from module x1_y1_kimi (D = $procmux$1582_Y, Q = \accum[192]).
+Adding EN signal on $procdff$3996 ($adff) from module x1_y1_kimi (D = $procmux$1571_Y, Q = \accum[193]).
+Adding EN signal on $procdff$3997 ($adff) from module x1_y1_kimi (D = $procmux$1560_Y, Q = \accum[194]).
+Adding EN signal on $procdff$3998 ($adff) from module x1_y1_kimi (D = $procmux$1549_Y, Q = \accum[195]).
+Adding EN signal on $procdff$3999 ($adff) from module x1_y1_kimi (D = $procmux$1538_Y, Q = \accum[196]).
+Adding EN signal on $procdff$4000 ($adff) from module x1_y1_kimi (D = $procmux$1527_Y, Q = \accum[197]).
+Adding EN signal on $procdff$4001 ($adff) from module x1_y1_kimi (D = $procmux$1516_Y, Q = \accum[198]).
+Adding EN signal on $procdff$4002 ($adff) from module x1_y1_kimi (D = $procmux$1505_Y, Q = \accum[199]).
+Adding EN signal on $procdff$4003 ($adff) from module x1_y1_kimi (D = $procmux$1494_Y, Q = \accum[200]).
+Adding EN signal on $procdff$4004 ($adff) from module x1_y1_kimi (D = $procmux$1483_Y, Q = \accum[201]).
+Adding EN signal on $procdff$4005 ($adff) from module x1_y1_kimi (D = $procmux$1472_Y, Q = \accum[202]).
+Adding EN signal on $procdff$4006 ($adff) from module x1_y1_kimi (D = $procmux$1461_Y, Q = \accum[203]).
+Adding EN signal on $procdff$4007 ($adff) from module x1_y1_kimi (D = $procmux$1450_Y, Q = \accum[204]).
+Adding EN signal on $procdff$4008 ($adff) from module x1_y1_kimi (D = $procmux$1439_Y, Q = \accum[205]).
+Adding EN signal on $procdff$4009 ($adff) from module x1_y1_kimi (D = $procmux$1428_Y, Q = \accum[206]).
+Adding EN signal on $procdff$4010 ($adff) from module x1_y1_kimi (D = $procmux$1417_Y, Q = \accum[207]).
+Adding EN signal on $procdff$4011 ($adff) from module x1_y1_kimi (D = $procmux$1406_Y, Q = \accum[208]).
+Adding EN signal on $procdff$4012 ($adff) from module x1_y1_kimi (D = $procmux$1395_Y, Q = \accum[209]).
+Adding EN signal on $procdff$4013 ($adff) from module x1_y1_kimi (D = $procmux$1384_Y, Q = \accum[210]).
+Adding EN signal on $procdff$4014 ($adff) from module x1_y1_kimi (D = $procmux$1373_Y, Q = \accum[211]).
+Adding EN signal on $procdff$4015 ($adff) from module x1_y1_kimi (D = $procmux$1362_Y, Q = \accum[212]).
+Adding EN signal on $procdff$4016 ($adff) from module x1_y1_kimi (D = $procmux$1351_Y, Q = \accum[213]).
+Adding EN signal on $procdff$4017 ($adff) from module x1_y1_kimi (D = $procmux$1340_Y, Q = \accum[214]).
+Adding EN signal on $procdff$4018 ($adff) from module x1_y1_kimi (D = $procmux$1329_Y, Q = \accum[215]).
+Adding EN signal on $procdff$4019 ($adff) from module x1_y1_kimi (D = $procmux$1318_Y, Q = \accum[216]).
+Adding EN signal on $procdff$4020 ($adff) from module x1_y1_kimi (D = $procmux$1307_Y, Q = \accum[217]).
+Adding EN signal on $procdff$4021 ($adff) from module x1_y1_kimi (D = $procmux$1296_Y, Q = \accum[218]).
+Adding EN signal on $procdff$4022 ($adff) from module x1_y1_kimi (D = $procmux$1285_Y, Q = \accum[219]).
+Adding EN signal on $procdff$4023 ($adff) from module x1_y1_kimi (D = $procmux$1274_Y, Q = \accum[220]).
+Adding EN signal on $procdff$4024 ($adff) from module x1_y1_kimi (D = $procmux$1263_Y, Q = \accum[221]).
+Adding EN signal on $procdff$4025 ($adff) from module x1_y1_kimi (D = $procmux$1252_Y, Q = \accum[222]).
+Adding EN signal on $procdff$4026 ($adff) from module x1_y1_kimi (D = $procmux$1241_Y, Q = \accum[223]).
+Adding EN signal on $procdff$4027 ($adff) from module x1_y1_kimi (D = $procmux$1230_Y, Q = \accum[224]).
+Adding EN signal on $procdff$4028 ($adff) from module x1_y1_kimi (D = $procmux$1219_Y, Q = \accum[225]).
+Adding EN signal on $procdff$4029 ($adff) from module x1_y1_kimi (D = $procmux$1208_Y, Q = \accum[226]).
+Adding EN signal on $procdff$4030 ($adff) from module x1_y1_kimi (D = $procmux$1197_Y, Q = \accum[227]).
+Adding EN signal on $procdff$4031 ($adff) from module x1_y1_kimi (D = $procmux$1186_Y, Q = \accum[228]).
+Adding EN signal on $procdff$4032 ($adff) from module x1_y1_kimi (D = $procmux$1175_Y, Q = \accum[229]).
+Adding EN signal on $procdff$4033 ($adff) from module x1_y1_kimi (D = $procmux$1164_Y, Q = \accum[230]).
+Adding EN signal on $procdff$4034 ($adff) from module x1_y1_kimi (D = $procmux$1153_Y, Q = \accum[231]).
+Adding EN signal on $procdff$4035 ($adff) from module x1_y1_kimi (D = $procmux$1142_Y, Q = \accum[232]).
+Adding EN signal on $procdff$4036 ($adff) from module x1_y1_kimi (D = $procmux$1131_Y, Q = \accum[233]).
+Adding EN signal on $procdff$4037 ($adff) from module x1_y1_kimi (D = $procmux$1120_Y, Q = \accum[234]).
+Adding EN signal on $procdff$4038 ($adff) from module x1_y1_kimi (D = $procmux$1109_Y, Q = \accum[235]).
+Adding EN signal on $procdff$4039 ($adff) from module x1_y1_kimi (D = $procmux$1098_Y, Q = \accum[236]).
+Adding EN signal on $procdff$4040 ($adff) from module x1_y1_kimi (D = $procmux$1087_Y, Q = \accum[237]).
+Adding EN signal on $procdff$4041 ($adff) from module x1_y1_kimi (D = $procmux$1076_Y, Q = \accum[238]).
+Adding EN signal on $procdff$4042 ($adff) from module x1_y1_kimi (D = $procmux$1065_Y, Q = \accum[239]).
+Adding EN signal on $procdff$4043 ($adff) from module x1_y1_kimi (D = $procmux$1054_Y, Q = \accum[240]).
+Adding EN signal on $procdff$4044 ($adff) from module x1_y1_kimi (D = $procmux$1043_Y, Q = \accum[241]).
+Adding EN signal on $procdff$4045 ($adff) from module x1_y1_kimi (D = $procmux$1032_Y, Q = \accum[242]).
+Adding EN signal on $procdff$4046 ($adff) from module x1_y1_kimi (D = $procmux$1021_Y, Q = \accum[243]).
+Adding EN signal on $procdff$4047 ($adff) from module x1_y1_kimi (D = $procmux$1010_Y, Q = \accum[244]).
+Adding EN signal on $procdff$4048 ($adff) from module x1_y1_kimi (D = $procmux$999_Y, Q = \accum[245]).
+Adding EN signal on $procdff$4049 ($adff) from module x1_y1_kimi (D = $procmux$988_Y, Q = \accum[246]).
+Adding EN signal on $procdff$4050 ($adff) from module x1_y1_kimi (D = $procmux$977_Y, Q = \accum[247]).
+Adding EN signal on $procdff$4051 ($adff) from module x1_y1_kimi (D = $procmux$966_Y, Q = \accum[248]).
+Adding EN signal on $procdff$4052 ($adff) from module x1_y1_kimi (D = $procmux$955_Y, Q = \accum[249]).
+Adding EN signal on $procdff$4053 ($adff) from module x1_y1_kimi (D = $procmux$944_Y, Q = \accum[250]).
+Adding EN signal on $procdff$4054 ($adff) from module x1_y1_kimi (D = $procmux$933_Y, Q = \accum[251]).
+Adding EN signal on $procdff$4055 ($adff) from module x1_y1_kimi (D = $procmux$922_Y, Q = \accum[252]).
+Adding EN signal on $procdff$4056 ($adff) from module x1_y1_kimi (D = $procmux$911_Y, Q = \accum[253]).
+Adding EN signal on $procdff$4057 ($adff) from module x1_y1_kimi (D = $procmux$900_Y, Q = \accum[254]).
+Adding EN signal on $procdff$4058 ($adff) from module x1_y1_kimi (D = $procmux$889_Y, Q = \accum[255]).
+Adding EN signal on $procdff$3779 ($adff) from module x1_y1_kimi (D = { 6'000000 \drain_index }, Q = \out_addr).
+Adding EN signal on $procdff$3780 ($adff) from module x1_y1_kimi (D = $3$mem2reg_rd$\accum$experiments/x1/rtl/x1_y1_kimi.v:121$5_DATA[23:0]$538, Q = \out_wdata).
+Adding EN signal on $procdff$3782 ($adff) from module x1_y1_kimi (D = $procmux$3751_Y, Q = \state).
+Adding EN signal on $procdff$3783 ($adff) from module x1_y1_kimi (D = $procmux$3741_Y, Q = \issued).
+Adding EN signal on $procdff$3784 ($adff) from module x1_y1_kimi (D = $procmux$3731_Y, Q = \consumed).
+Adding EN signal on $procdff$3785 ($adff) from module x1_y1_kimi (D = $procmux$3723_Y, Q = \read_valid).
+Adding EN signal on $procdff$3786 ($adff) from module x1_y1_kimi (D = $procmux$3704_Y, Q = \drain_index).
+Adding EN signal on $procdff$3789 ($dff) from module x1_y1_kimi (D = $3\r[31:0], Q = \r).
+Adding EN signal on $procdff$3792 ($dff) from module x1_y1_kimi (D = $3\c[31:0], Q = \c).
+Adding EN signal on $procdff$3793 ($adff) from module x1_y1_kimi (D = $3\i[31:0], Q = \i).
+Adding EN signal on $procdff$3796 ($dff) from module x1_y1_kimi (D = $3\act_lane[3:0], Q = \act_lane).
+Adding EN signal on $procdff$3799 ($dff) from module x1_y1_kimi (D = $3\weight_lane[3:0], Q = \weight_lane).
+Adding EN signal on $procdff$3802 ($dff) from module x1_y1_kimi (D = $3\product[7:0], Q = \product).
+Adding EN signal on $procdff$3803 ($adff) from module x1_y1_kimi (D = $procmux$3694_Y, Q = \accum[0]).
+Adding EN signal on $procdff$3804 ($adff) from module x1_y1_kimi (D = $procmux$3683_Y, Q = \accum[1]).
+Adding EN signal on $procdff$3805 ($adff) from module x1_y1_kimi (D = $procmux$3672_Y, Q = \accum[2]).
+Adding EN signal on $procdff$3806 ($adff) from module x1_y1_kimi (D = $procmux$3661_Y, Q = \accum[3]).
+Adding EN signal on $procdff$3807 ($adff) from module x1_y1_kimi (D = $procmux$3650_Y, Q = \accum[4]).
+Adding EN signal on $procdff$3808 ($adff) from module x1_y1_kimi (D = $procmux$3639_Y, Q = \accum[5]).
+Adding EN signal on $procdff$3809 ($adff) from module x1_y1_kimi (D = $procmux$3628_Y, Q = \accum[6]).
+Adding EN signal on $procdff$3810 ($adff) from module x1_y1_kimi (D = $procmux$3617_Y, Q = \accum[7]).
+Adding EN signal on $procdff$3811 ($adff) from module x1_y1_kimi (D = $procmux$3606_Y, Q = \accum[8]).
+Adding EN signal on $procdff$3812 ($adff) from module x1_y1_kimi (D = $procmux$3595_Y, Q = \accum[9]).
+Adding EN signal on $procdff$3813 ($adff) from module x1_y1_kimi (D = $procmux$3584_Y, Q = \accum[10]).
+Adding EN signal on $procdff$3814 ($adff) from module x1_y1_kimi (D = $procmux$3573_Y, Q = \accum[11]).
+Adding EN signal on $procdff$3815 ($adff) from module x1_y1_kimi (D = $procmux$3562_Y, Q = \accum[12]).
+Adding EN signal on $procdff$3816 ($adff) from module x1_y1_kimi (D = $procmux$3551_Y, Q = \accum[13]).
+Adding EN signal on $procdff$3817 ($adff) from module x1_y1_kimi (D = $procmux$3540_Y, Q = \accum[14]).
+Adding EN signal on $procdff$3818 ($adff) from module x1_y1_kimi (D = $procmux$3529_Y, Q = \accum[15]).
+Adding EN signal on $procdff$3819 ($adff) from module x1_y1_kimi (D = $procmux$3518_Y, Q = \accum[16]).
+Adding EN signal on $procdff$3820 ($adff) from module x1_y1_kimi (D = $procmux$3507_Y, Q = \accum[17]).
+Adding EN signal on $procdff$3821 ($adff) from module x1_y1_kimi (D = $procmux$3496_Y, Q = \accum[18]).
+Adding EN signal on $procdff$3822 ($adff) from module x1_y1_kimi (D = $procmux$3485_Y, Q = \accum[19]).
+Adding EN signal on $procdff$3823 ($adff) from module x1_y1_kimi (D = $procmux$3474_Y, Q = \accum[20]).
+Adding EN signal on $procdff$3824 ($adff) from module x1_y1_kimi (D = $procmux$3463_Y, Q = \accum[21]).
+Adding EN signal on $procdff$3825 ($adff) from module x1_y1_kimi (D = $procmux$3452_Y, Q = \accum[22]).
+Adding EN signal on $procdff$3826 ($adff) from module x1_y1_kimi (D = $procmux$3441_Y, Q = \accum[23]).
+Adding EN signal on $procdff$3827 ($adff) from module x1_y1_kimi (D = $procmux$3430_Y, Q = \accum[24]).
+Adding EN signal on $procdff$3828 ($adff) from module x1_y1_kimi (D = $procmux$3419_Y, Q = \accum[25]).
+Adding EN signal on $procdff$3829 ($adff) from module x1_y1_kimi (D = $procmux$3408_Y, Q = \accum[26]).
+Adding EN signal on $procdff$3830 ($adff) from module x1_y1_kimi (D = $procmux$3397_Y, Q = \accum[27]).
+Adding EN signal on $procdff$3831 ($adff) from module x1_y1_kimi (D = $procmux$3386_Y, Q = \accum[28]).
+Adding EN signal on $procdff$3832 ($adff) from module x1_y1_kimi (D = $procmux$3375_Y, Q = \accum[29]).
+Adding EN signal on $procdff$3833 ($adff) from module x1_y1_kimi (D = $procmux$3364_Y, Q = \accum[30]).
+Adding EN signal on $procdff$3834 ($adff) from module x1_y1_kimi (D = $procmux$3353_Y, Q = \accum[31]).
+Adding EN signal on $procdff$3835 ($adff) from module x1_y1_kimi (D = $procmux$3342_Y, Q = \accum[32]).
+Adding EN signal on $procdff$3836 ($adff) from module x1_y1_kimi (D = $procmux$3331_Y, Q = \accum[33]).
+Adding EN signal on $procdff$3837 ($adff) from module x1_y1_kimi (D = $procmux$3320_Y, Q = \accum[34]).
+Adding EN signal on $procdff$3838 ($adff) from module x1_y1_kimi (D = $procmux$3309_Y, Q = \accum[35]).
+Adding EN signal on $procdff$3839 ($adff) from module x1_y1_kimi (D = $procmux$3298_Y, Q = \accum[36]).
+Adding EN signal on $procdff$3840 ($adff) from module x1_y1_kimi (D = $procmux$3287_Y, Q = \accum[37]).
+Adding EN signal on $procdff$3841 ($adff) from module x1_y1_kimi (D = $procmux$3276_Y, Q = \accum[38]).
+Adding EN signal on $procdff$3842 ($adff) from module x1_y1_kimi (D = $procmux$3265_Y, Q = \accum[39]).
+Adding EN signal on $procdff$3843 ($adff) from module x1_y1_kimi (D = $procmux$3254_Y, Q = \accum[40]).
+Adding EN signal on $procdff$3844 ($adff) from module x1_y1_kimi (D = $procmux$3243_Y, Q = \accum[41]).
+Adding EN signal on $procdff$3845 ($adff) from module x1_y1_kimi (D = $procmux$3232_Y, Q = \accum[42]).
+Adding EN signal on $procdff$3846 ($adff) from module x1_y1_kimi (D = $procmux$3221_Y, Q = \accum[43]).
+Adding EN signal on $procdff$3847 ($adff) from module x1_y1_kimi (D = $procmux$3210_Y, Q = \accum[44]).
+Adding EN signal on $procdff$3848 ($adff) from module x1_y1_kimi (D = $procmux$3199_Y, Q = \accum[45]).
+Adding EN signal on $procdff$3849 ($adff) from module x1_y1_kimi (D = $procmux$3188_Y, Q = \accum[46]).
+Adding EN signal on $procdff$3850 ($adff) from module x1_y1_kimi (D = $procmux$3177_Y, Q = \accum[47]).
+Adding EN signal on $procdff$3851 ($adff) from module x1_y1_kimi (D = $procmux$3166_Y, Q = \accum[48]).
+Adding EN signal on $procdff$3852 ($adff) from module x1_y1_kimi (D = $procmux$3155_Y, Q = \accum[49]).
+Adding EN signal on $procdff$3853 ($adff) from module x1_y1_kimi (D = $procmux$3144_Y, Q = \accum[50]).
+Adding EN signal on $procdff$3854 ($adff) from module x1_y1_kimi (D = $procmux$3133_Y, Q = \accum[51]).
+Adding EN signal on $procdff$3855 ($adff) from module x1_y1_kimi (D = $procmux$3122_Y, Q = \accum[52]).
+Adding EN signal on $procdff$3856 ($adff) from module x1_y1_kimi (D = $procmux$3111_Y, Q = \accum[53]).
+Adding EN signal on $procdff$3857 ($adff) from module x1_y1_kimi (D = $procmux$3100_Y, Q = \accum[54]).
+Adding EN signal on $procdff$3858 ($adff) from module x1_y1_kimi (D = $procmux$3089_Y, Q = \accum[55]).
+Adding EN signal on $procdff$3859 ($adff) from module x1_y1_kimi (D = $procmux$3078_Y, Q = \accum[56]).
+Adding EN signal on $procdff$3860 ($adff) from module x1_y1_kimi (D = $procmux$3067_Y, Q = \accum[57]).
+Adding EN signal on $procdff$3861 ($adff) from module x1_y1_kimi (D = $procmux$3056_Y, Q = \accum[58]).
+Adding EN signal on $procdff$3862 ($adff) from module x1_y1_kimi (D = $procmux$3045_Y, Q = \accum[59]).
+Adding EN signal on $procdff$3863 ($adff) from module x1_y1_kimi (D = $procmux$3034_Y, Q = \accum[60]).
+Adding EN signal on $procdff$3864 ($adff) from module x1_y1_kimi (D = $procmux$3023_Y, Q = \accum[61]).
+Adding EN signal on $procdff$3865 ($adff) from module x1_y1_kimi (D = $procmux$3012_Y, Q = \accum[62]).
+Adding EN signal on $procdff$3866 ($adff) from module x1_y1_kimi (D = $procmux$3001_Y, Q = \accum[63]).
+Adding EN signal on $procdff$3867 ($adff) from module x1_y1_kimi (D = $procmux$2990_Y, Q = \accum[64]).
+Adding EN signal on $procdff$3868 ($adff) from module x1_y1_kimi (D = $procmux$2979_Y, Q = \accum[65]).
+Adding EN signal on $procdff$3869 ($adff) from module x1_y1_kimi (D = $procmux$2968_Y, Q = \accum[66]).
+Adding EN signal on $procdff$3870 ($adff) from module x1_y1_kimi (D = $procmux$2957_Y, Q = \accum[67]).
+Adding EN signal on $procdff$3871 ($adff) from module x1_y1_kimi (D = $procmux$2946_Y, Q = \accum[68]).
+Adding EN signal on $procdff$3872 ($adff) from module x1_y1_kimi (D = $procmux$2935_Y, Q = \accum[69]).
+Adding EN signal on $procdff$3873 ($adff) from module x1_y1_kimi (D = $procmux$2924_Y, Q = \accum[70]).
+Adding EN signal on $procdff$3874 ($adff) from module x1_y1_kimi (D = $procmux$2913_Y, Q = \accum[71]).
+Adding EN signal on $procdff$3875 ($adff) from module x1_y1_kimi (D = $procmux$2902_Y, Q = \accum[72]).
+Adding EN signal on $procdff$3876 ($adff) from module x1_y1_kimi (D = $procmux$2891_Y, Q = \accum[73]).
+Adding EN signal on $procdff$3877 ($adff) from module x1_y1_kimi (D = $procmux$2880_Y, Q = \accum[74]).
+Adding EN signal on $procdff$3878 ($adff) from module x1_y1_kimi (D = $procmux$2869_Y, Q = \accum[75]).
+Adding EN signal on $procdff$3879 ($adff) from module x1_y1_kimi (D = $procmux$2858_Y, Q = \accum[76]).
+Adding EN signal on $procdff$3880 ($adff) from module x1_y1_kimi (D = $procmux$2847_Y, Q = \accum[77]).
+Adding EN signal on $procdff$3881 ($adff) from module x1_y1_kimi (D = $procmux$2836_Y, Q = \accum[78]).
+Adding EN signal on $procdff$3882 ($adff) from module x1_y1_kimi (D = $procmux$2825_Y, Q = \accum[79]).
+Adding EN signal on $procdff$3883 ($adff) from module x1_y1_kimi (D = $procmux$2814_Y, Q = \accum[80]).
+Adding EN signal on $procdff$3884 ($adff) from module x1_y1_kimi (D = $procmux$2803_Y, Q = \accum[81]).
+Adding EN signal on $procdff$3885 ($adff) from module x1_y1_kimi (D = $procmux$2792_Y, Q = \accum[82]).
+Adding EN signal on $procdff$3886 ($adff) from module x1_y1_kimi (D = $procmux$2781_Y, Q = \accum[83]).
+Adding EN signal on $procdff$3887 ($adff) from module x1_y1_kimi (D = $procmux$2770_Y, Q = \accum[84]).
+Adding EN signal on $procdff$3888 ($adff) from module x1_y1_kimi (D = $procmux$2759_Y, Q = \accum[85]).
+Adding EN signal on $procdff$3889 ($adff) from module x1_y1_kimi (D = $procmux$2748_Y, Q = \accum[86]).
+Adding EN signal on $procdff$3890 ($adff) from module x1_y1_kimi (D = $procmux$2737_Y, Q = \accum[87]).
+Adding EN signal on $procdff$3891 ($adff) from module x1_y1_kimi (D = $procmux$2726_Y, Q = \accum[88]).
+Adding EN signal on $procdff$3892 ($adff) from module x1_y1_kimi (D = $procmux$2715_Y, Q = \accum[89]).
+Adding EN signal on $procdff$3893 ($adff) from module x1_y1_kimi (D = $procmux$2704_Y, Q = \accum[90]).
+Adding EN signal on $procdff$3894 ($adff) from module x1_y1_kimi (D = $procmux$2693_Y, Q = \accum[91]).
+Adding EN signal on $procdff$3895 ($adff) from module x1_y1_kimi (D = $procmux$2682_Y, Q = \accum[92]).
+Adding EN signal on $procdff$3896 ($adff) from module x1_y1_kimi (D = $procmux$2671_Y, Q = \accum[93]).
+Adding EN signal on $procdff$3897 ($adff) from module x1_y1_kimi (D = $procmux$2660_Y, Q = \accum[94]).
+Adding EN signal on $procdff$3898 ($adff) from module x1_y1_kimi (D = $procmux$2649_Y, Q = \accum[95]).
+Adding EN signal on $procdff$3899 ($adff) from module x1_y1_kimi (D = $procmux$2638_Y, Q = \accum[96]).
+Adding EN signal on $procdff$3900 ($adff) from module x1_y1_kimi (D = $procmux$2627_Y, Q = \accum[97]).
+Adding EN signal on $procdff$3901 ($adff) from module x1_y1_kimi (D = $procmux$2616_Y, Q = \accum[98]).
+Adding EN signal on $procdff$3902 ($adff) from module x1_y1_kimi (D = $procmux$2605_Y, Q = \accum[99]).
+Adding EN signal on $procdff$3903 ($adff) from module x1_y1_kimi (D = $procmux$2594_Y, Q = \accum[100]).
+Adding EN signal on $procdff$3904 ($adff) from module x1_y1_kimi (D = $procmux$2583_Y, Q = \accum[101]).
+Adding EN signal on $procdff$3905 ($adff) from module x1_y1_kimi (D = $procmux$2572_Y, Q = \accum[102]).
+Adding EN signal on $procdff$3906 ($adff) from module x1_y1_kimi (D = $procmux$2561_Y, Q = \accum[103]).
+Adding EN signal on $procdff$3907 ($adff) from module x1_y1_kimi (D = $procmux$2550_Y, Q = \accum[104]).
+Adding EN signal on $procdff$3908 ($adff) from module x1_y1_kimi (D = $procmux$2539_Y, Q = \accum[105]).
+Adding EN signal on $procdff$3909 ($adff) from module x1_y1_kimi (D = $procmux$2528_Y, Q = \accum[106]).
+Adding EN signal on $procdff$3910 ($adff) from module x1_y1_kimi (D = $procmux$2517_Y, Q = \accum[107]).
+Adding EN signal on $procdff$3911 ($adff) from module x1_y1_kimi (D = $procmux$2506_Y, Q = \accum[108]).
+Adding EN signal on $procdff$3912 ($adff) from module x1_y1_kimi (D = $procmux$2495_Y, Q = \accum[109]).
+Adding EN signal on $procdff$3913 ($adff) from module x1_y1_kimi (D = $procmux$2484_Y, Q = \accum[110]).
+Adding EN signal on $procdff$3914 ($adff) from module x1_y1_kimi (D = $procmux$2473_Y, Q = \accum[111]).
+Adding EN signal on $procdff$3915 ($adff) from module x1_y1_kimi (D = $procmux$2462_Y, Q = \accum[112]).
+Adding EN signal on $procdff$3916 ($adff) from module x1_y1_kimi (D = $procmux$2451_Y, Q = \accum[113]).
+Adding EN signal on $procdff$3917 ($adff) from module x1_y1_kimi (D = $procmux$2440_Y, Q = \accum[114]).
+Adding EN signal on $procdff$3918 ($adff) from module x1_y1_kimi (D = $procmux$2429_Y, Q = \accum[115]).
+Adding EN signal on $procdff$3919 ($adff) from module x1_y1_kimi (D = $procmux$2418_Y, Q = \accum[116]).
+Adding EN signal on $procdff$3920 ($adff) from module x1_y1_kimi (D = $procmux$2407_Y, Q = \accum[117]).
+Adding EN signal on $procdff$3921 ($adff) from module x1_y1_kimi (D = $procmux$2396_Y, Q = \accum[118]).
+Adding EN signal on $procdff$3922 ($adff) from module x1_y1_kimi (D = $procmux$2385_Y, Q = \accum[119]).
+Adding EN signal on $procdff$3923 ($adff) from module x1_y1_kimi (D = $procmux$2374_Y, Q = \accum[120]).
+Adding EN signal on $procdff$3924 ($adff) from module x1_y1_kimi (D = $procmux$2363_Y, Q = \accum[121]).
+Adding EN signal on $procdff$3925 ($adff) from module x1_y1_kimi (D = $procmux$2352_Y, Q = \accum[122]).
+Adding EN signal on $procdff$3926 ($adff) from module x1_y1_kimi (D = $procmux$2341_Y, Q = \accum[123]).
+Adding EN signal on $procdff$3927 ($adff) from module x1_y1_kimi (D = $procmux$2330_Y, Q = \accum[124]).
+Adding EN signal on $procdff$3928 ($adff) from module x1_y1_kimi (D = $procmux$2319_Y, Q = \accum[125]).
+Adding EN signal on $procdff$3929 ($adff) from module x1_y1_kimi (D = $procmux$2308_Y, Q = \accum[126]).
+Adding EN signal on $procdff$3930 ($adff) from module x1_y1_kimi (D = $procmux$2297_Y, Q = \accum[127]).
+Adding EN signal on $procdff$3931 ($adff) from module x1_y1_kimi (D = $procmux$2286_Y, Q = \accum[128]).
+Adding EN signal on $procdff$3932 ($adff) from module x1_y1_kimi (D = $procmux$2275_Y, Q = \accum[129]).
+Adding EN signal on $procdff$3933 ($adff) from module x1_y1_kimi (D = $procmux$2264_Y, Q = \accum[130]).
+Adding EN signal on $procdff$3934 ($adff) from module x1_y1_kimi (D = $procmux$2253_Y, Q = \accum[131]).
+Adding EN signal on $procdff$3935 ($adff) from module x1_y1_kimi (D = $procmux$2242_Y, Q = \accum[132]).
+Adding EN signal on $procdff$3936 ($adff) from module x1_y1_kimi (D = $procmux$2231_Y, Q = \accum[133]).
+Adding EN signal on $procdff$3937 ($adff) from module x1_y1_kimi (D = $procmux$2220_Y, Q = \accum[134]).
+Adding EN signal on $procdff$3938 ($adff) from module x1_y1_kimi (D = $procmux$2209_Y, Q = \accum[135]).
+Adding EN signal on $procdff$3939 ($adff) from module x1_y1_kimi (D = $procmux$2198_Y, Q = \accum[136]).
+Adding EN signal on $procdff$3940 ($adff) from module x1_y1_kimi (D = $procmux$2187_Y, Q = \accum[137]).
+Adding EN signal on $procdff$3941 ($adff) from module x1_y1_kimi (D = $procmux$2176_Y, Q = \accum[138]).
+Adding EN signal on $procdff$3942 ($adff) from module x1_y1_kimi (D = $procmux$2165_Y, Q = \accum[139]).
+Adding EN signal on $procdff$3943 ($adff) from module x1_y1_kimi (D = $procmux$2154_Y, Q = \accum[140]).
+Adding EN signal on $procdff$3944 ($adff) from module x1_y1_kimi (D = $procmux$2143_Y, Q = \accum[141]).
+Adding EN signal on $procdff$3945 ($adff) from module x1_y1_kimi (D = $procmux$2132_Y, Q = \accum[142]).
+Adding EN signal on $procdff$3946 ($adff) from module x1_y1_kimi (D = $procmux$2121_Y, Q = \accum[143]).
+Adding EN signal on $procdff$3947 ($adff) from module x1_y1_kimi (D = $procmux$2110_Y, Q = \accum[144]).
+Adding EN signal on $procdff$3948 ($adff) from module x1_y1_kimi (D = $procmux$2099_Y, Q = \accum[145]).
+Adding EN signal on $procdff$3949 ($adff) from module x1_y1_kimi (D = $procmux$2088_Y, Q = \accum[146]).
+Adding EN signal on $procdff$3950 ($adff) from module x1_y1_kimi (D = $procmux$2077_Y, Q = \accum[147]).
+Adding EN signal on $procdff$3951 ($adff) from module x1_y1_kimi (D = $procmux$2066_Y, Q = \accum[148]).
+Adding EN signal on $procdff$3952 ($adff) from module x1_y1_kimi (D = $procmux$2055_Y, Q = \accum[149]).
+Adding EN signal on $procdff$3953 ($adff) from module x1_y1_kimi (D = $procmux$2044_Y, Q = \accum[150]).
+Adding EN signal on $procdff$3954 ($adff) from module x1_y1_kimi (D = $procmux$2033_Y, Q = \accum[151]).
+Setting constant 0-bit at position 8 on $auto$ff.cc:266:slice$4997 ($adffe) from module x1_y1_kimi.
+Setting constant 0-bit at position 9 on $auto$ff.cc:266:slice$4997 ($adffe) from module x1_y1_kimi.
+Setting constant 0-bit at position 10 on $auto$ff.cc:266:slice$4997 ($adffe) from module x1_y1_kimi.
+Setting constant 0-bit at position 11 on $auto$ff.cc:266:slice$4997 ($adffe) from module x1_y1_kimi.
+Setting constant 0-bit at position 12 on $auto$ff.cc:266:slice$4997 ($adffe) from module x1_y1_kimi.
+Setting constant 0-bit at position 13 on $auto$ff.cc:266:slice$4997 ($adffe) from module x1_y1_kimi.
+Setting constant 1-bit at position 0 on $procdff$4060 ($adff) from module x1_y1_kimi.
+Setting constant 1-bit at position 1 on $procdff$4060 ($adff) from module x1_y1_kimi.
+Setting constant 1-bit at position 2 on $procdff$4060 ($adff) from module x1_y1_kimi.
+Setting constant 1-bit at position 3 on $procdff$4060 ($adff) from module x1_y1_kimi.
+Setting constant 1-bit at position 4 on $procdff$4060 ($adff) from module x1_y1_kimi.
+Setting constant 1-bit at position 5 on $procdff$4060 ($adff) from module x1_y1_kimi.
+Setting constant 1-bit at position 6 on $procdff$4060 ($adff) from module x1_y1_kimi.
+Setting constant 1-bit at position 7 on $procdff$4060 ($adff) from module x1_y1_kimi.
+Setting constant 1-bit at position 8 on $procdff$4060 ($adff) from module x1_y1_kimi.
+Setting constant 1-bit at position 9 on $procdff$4060 ($adff) from module x1_y1_kimi.
+Setting constant 1-bit at position 10 on $procdff$4060 ($adff) from module x1_y1_kimi.
+Setting constant 1-bit at position 11 on $procdff$4060 ($adff) from module x1_y1_kimi.
+Setting constant 1-bit at position 12 on $procdff$4060 ($adff) from module x1_y1_kimi.
+Setting constant 1-bit at position 13 on $procdff$4060 ($adff) from module x1_y1_kimi.
+Setting constant 1-bit at position 14 on $procdff$4060 ($adff) from module x1_y1_kimi.
+Setting constant 1-bit at position 15 on $procdff$4060 ($adff) from module x1_y1_kimi.
+Setting constant 1-bit at position 16 on $procdff$4060 ($adff) from module x1_y1_kimi.
+Setting constant 1-bit at position 17 on $procdff$4060 ($adff) from module x1_y1_kimi.
+Setting constant 1-bit at position 18 on $procdff$4060 ($adff) from module x1_y1_kimi.
+Setting constant 1-bit at position 19 on $procdff$4060 ($adff) from module x1_y1_kimi.
+Setting constant 1-bit at position 20 on $procdff$4060 ($adff) from module x1_y1_kimi.
+Setting constant 1-bit at position 21 on $procdff$4060 ($adff) from module x1_y1_kimi.
+Setting constant 1-bit at position 22 on $procdff$4060 ($adff) from module x1_y1_kimi.
+Setting constant 1-bit at position 23 on $procdff$4060 ($adff) from module x1_y1_kimi.
+Setting constant 1-bit at position 0 on $procdff$4059 ($adff) from module x1_y1_kimi.
+Setting constant 1-bit at position 1 on $procdff$4059 ($adff) from module x1_y1_kimi.
+Setting constant 1-bit at position 2 on $procdff$4059 ($adff) from module x1_y1_kimi.
+Setting constant 1-bit at position 3 on $procdff$4059 ($adff) from module x1_y1_kimi.
+Setting constant 1-bit at position 4 on $procdff$4059 ($adff) from module x1_y1_kimi.
+Setting constant 1-bit at position 5 on $procdff$4059 ($adff) from module x1_y1_kimi.
+Setting constant 1-bit at position 6 on $procdff$4059 ($adff) from module x1_y1_kimi.
+Setting constant 1-bit at position 7 on $procdff$4059 ($adff) from module x1_y1_kimi.
+
+4.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \x1_y1_kimi..
+Removed 31 unused cells and 1427 unused wires.
+<suppressed ~38 debug messages>
+
+4.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module x1_y1_kimi.
+<suppressed ~261 debug messages>
+
+4.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+4.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \x1_y1_kimi..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~265 debug messages>
+
+4.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \x1_y1_kimi.
+Performed a total of 0 changes.
+
+4.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\x1_y1_kimi'.
+<suppressed ~3864 debug messages>
+Removed a total of 1288 cells.
+
+4.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \x1_y1_kimi..
+Removed 0 unused cells and 1289 unused wires.
+<suppressed ~1 debug messages>
+
+4.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module x1_y1_kimi.
+
+4.16. Rerunning OPT passes. (Maybe there is more to do..)
+
+4.17. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \x1_y1_kimi..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~267 debug messages>
+
+4.18. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \x1_y1_kimi.
+Performed a total of 0 changes.
+
+4.19. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\x1_y1_kimi'.
+Removed a total of 0 cells.
+
+4.20. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.21. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \x1_y1_kimi..
+
+4.22. Executing OPT_EXPR pass (perform const folding).
+Optimizing module x1_y1_kimi.
+
+4.23. Finished OPT passes. (There is nothing left to do.)
+
+5. Executing MEMORY pass.
+
+5.1. Executing OPT_MEM pass (optimize memories).
+Performed a total of 0 transformations.
+
+5.2. Executing OPT_MEM_PRIORITY pass (removing unnecessary memory write priority relations).
+Performed a total of 0 transformations.
+
+5.3. Executing OPT_MEM_FEEDBACK pass (finding memory read-to-write feedback paths).
+
+5.4. Executing MEMORY_BMUX2ROM pass (converting muxes to ROMs).
+
+5.5. Executing MEMORY_DFF pass (merging $dff cells to $memrd).
+
+5.6. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \x1_y1_kimi..
+
+5.7. Executing MEMORY_SHARE pass (consolidating $memrd/$memwr cells).
+
+5.8. Executing OPT_MEM_WIDEN pass (optimize memories where all ports are wide).
+Performed a total of 0 transformations.
+
+5.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \x1_y1_kimi..
+
+5.10. Executing MEMORY_COLLECT pass (generating $mem cells).
+
+5.11. Executing MEMORY_MAP pass (converting memories to logic and flip-flops).
+
+6. Executing OPT pass (performing simple optimizations).
+
+6.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module x1_y1_kimi.
+
+6.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\x1_y1_kimi'.
+Removed a total of 0 cells.
+
+6.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \x1_y1_kimi..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~267 debug messages>
+
+6.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \x1_y1_kimi.
+Performed a total of 0 changes.
+
+6.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\x1_y1_kimi'.
+Removed a total of 0 cells.
+
+6.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+6.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \x1_y1_kimi..
+
+6.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module x1_y1_kimi.
+
+6.9. Finished OPT passes. (There is nothing left to do.)
+
+7. Printing statistics.
+
+=== x1_y1_kimi ===
+
+   Number of wires:               1602
+   Number of wire bits:          27342
+   Number of public wires:         276
+   Number of public wire bits:    6389
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:               1593
+     $add                          259
+     $adff                           2
+     $adffe                        263
+     $eq                           258
+     $logic_and                      1
+     $logic_not                      3
+     $lt                             1
+     $mul                          256
+     $mux                          275
+     $ne                             6
+     $pmux                         262
+     $reduce_and                     4
+     $reduce_bool                    3
+
+Warnings: 1 unique messages, 1 total
+End of script. Logfile hash: aaabe427f1, CPU: user 1.54s system 0.05s, MEM: 46.96 MB peak
+Yosys 0.33 (git sha1 2584903a060)
+Time spent: 16% 7x opt_expr (0 sec), 14% 6x opt_clean (0 sec), ...

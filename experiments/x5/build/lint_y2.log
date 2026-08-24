@@ -1,0 +1,20 @@
+{
+  "status": "pass",
+  "checks": {
+    "y1_terminal_evidence_ingested": true,
+    "target_held_at_y1_goal": true,
+    "observed_path_named": true,
+    "product_is_registered_8bit": true,
+    "response_valid_stage": true,
+    "product_valid_stage": true,
+    "mac_commit_stage": true,
+    "request_and_commit_overlap": true,
+    "request_not_serialized_by_mac": true,
+    "chunk_boundary_backpressure": true,
+    "signed_product_extension": true,
+    "inherited_three_stage_fold": true,
+    "no_y3_preplan": true
+  },
+  "failed": [],
+  "target_mhz": 937.092
+}

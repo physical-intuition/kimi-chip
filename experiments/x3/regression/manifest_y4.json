@@ -1,0 +1,8 @@
+{
+  "name": "x3-y4-control-plane-locked-functional-regression",
+  "locked_files": {"experiments/x3/tb/tb_x3_y4.v": "bfe593f229177c371c01a99d7e9a04d960befc1c761e1c874cb5b41997ba7352"},
+  "required_cases": [7, 0, 13],
+  "required_outputs": 768,
+  "stimulus": "dense nonlinear signed pattern plus paired-request, unique-address, k_dim-latch, and busy-start assertions",
+  "required_transcript": "PASS: X3-Y4 control-plane locked regression, K=7/0/13, 768 unique outputs verified"
+}

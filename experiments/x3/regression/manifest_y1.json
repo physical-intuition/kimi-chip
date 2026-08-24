@@ -1,0 +1,9 @@
+{
+  "name": "x3-y1-locked-functional-regression",
+  "locked_files": {
+    "experiments/x3/tb/tb_x3_y1.v": "7b9d62e6d4e080fce97eb1bc28bcddf477bc94da83e5a9aa267e9a48572c97fc"
+  },
+  "required_cases": [7, 0, 13],
+  "required_outputs": 768,
+  "required_transcript": "PASS: X3-Y1 locked regression baseline, K=7/0/13, 768 outputs verified"
+}

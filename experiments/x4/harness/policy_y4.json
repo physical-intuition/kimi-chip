@@ -1,0 +1,17 @@
+{
+  "y": 4,
+  "target_mhz": 820,
+  "target_period_ns": 1.219512,
+  "target_basis": {
+    "source": "X4-Y3 final extracted timing",
+    "y3_target_mhz": 780,
+    "y3_fmax_mhz": 837.683,
+    "y3_wns_ns": 0.0883312,
+    "worst_path": "chunk_accum[57][1] to wide_accum[57][16] through 21 combinational cells",
+    "selected_target_mhz": 820,
+    "reason": "820 MHz is monotonically above 780 MHz while retaining margin below Y3's measured 837.683 MHz ceiling; a two-cycle low/high 12-bit fold removes the report-proven 24-bit carry chain."
+  },
+  "rtl_change": "Split each signed 24-bit fold into registered low-12 and high-12 additions with an explicit carry register.",
+  "latency_change": "Adds one cycle per fold; SRAM requests, products consumed, output count/order, interface, and mathematical result are unchanged.",
+  "new_lint_rules": ["registered_two_slice_fold", "no_direct_24bit_fold"]
+}

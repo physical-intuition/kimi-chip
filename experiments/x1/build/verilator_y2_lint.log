@@ -1,0 +1,82 @@
+%Warning-WIDTHEXPAND: rtl/x1_y2_kimi.v:112:70: Operator ADD expects 24 bits on the RHS, but RHS's VARREF 'product' generates 8 bits.
+                                             : ... note: In instance 'tb_x1_y2.dut'
+  112 |                                 accum_bank[r][c] <= accum_bank[r][c] + product;
+      |                                                                      ^
+                      ... For warning description see https://verilator.org/warn/WIDTHEXPAND?v=5.020
+                      ... Use "/* verilator lint_off WIDTHEXPAND */" and lint_on around source to disable this message.
+%Warning-WIDTHTRUNC: tb/tb_x1_y2.v:37:42: Bit extraction of array[15:0] requires 4 bit index, not 12 bits.
+                                        : ... note: In instance 'tb_x1_y2'
+   37 |         if (act_req) act_rdata <= act_mem[act_addr];
+      |                                          ^
+%Warning-WIDTHTRUNC: tb/tb_x1_y2.v:38:51: Bit extraction of array[15:0] requires 4 bit index, not 12 bits.
+                                        : ... note: In instance 'tb_x1_y2'
+   38 |         if (weight_req) weight_rdata <= weight_mem[weight_addr];
+      |                                                   ^
+%Warning-WIDTHTRUNC: tb/tb_x1_y2.v:49:54: Bit extraction of array[255:0] requires 8 bit index, not 14 bits.
+                                        : ... note: In instance 'tb_x1_y2'
+   49 |                          $signed(out_wdata), expected[out_addr]);
+      |                                                      ^
+%Warning-WIDTHTRUNC: tb/tb_x1_y2.v:47:48: Bit extraction of array[255:0] requires 8 bit index, not 14 bits.
+                                        : ... note: In instance 'tb_x1_y2'
+   47 |             if ($signed(out_wdata) !== expected[out_addr]) begin
+      |                                                ^
+%Warning-WIDTHEXPAND: tb/tb_x1_y2.v:47:36: Operator NEQCASE expects 32 bits on the LHS, but LHS's SIGNED generates 24 bits.
+                                         : ... note: In instance 'tb_x1_y2'
+   47 |             if ($signed(out_wdata) !== expected[out_addr]) begin
+      |                                    ^~~
+%Warning-WIDTHEXPAND: tb/tb_x1_y2.v:64:28: Operator ASSIGN expects 32 bits on the Assign RHS, but Assign RHS's SIGNED generates 4 bits.
+                                         : ... note: In instance 'tb_x1_y2'
+   64 |                         av = $signed(act_mem[k][r*4 +: 4]);
+      |                            ^
+%Warning-WIDTHEXPAND: tb/tb_x1_y2.v:65:28: Operator ASSIGN expects 32 bits on the Assign RHS, but Assign RHS's SIGNED generates 4 bits.
+                                         : ... note: In instance 'tb_x1_y2'
+   65 |                         wv = $signed(weight_mem[k][c*4 +: 4]);
+      |                            ^
+%Warning-WIDTHTRUNC: tb/tb_x1_y2.v:70:19: Operator ASSIGNDLY expects 12 bits on the Assign RHS, but Assign RHS's VARREF 'count' generates 32 bits.
+                                        : ... note: In instance 'tb_x1_y2'
+   70 |             k_dim <= count;
+      |                   ^~
+%Warning-UNUSEDSIGNAL: tb/tb_x1_y2.v:8:17: Bits of signal are not used: 'act_addr'[11:4]
+                                         : ... note: In instance 'tb_x1_y2'
+    8 |     wire [11:0] act_addr;
+      |                 ^~~~~~~~
+%Warning-UNUSEDSIGNAL: tb/tb_x1_y2.v:11:17: Bits of signal are not used: 'weight_addr'[11:4]
+                                          : ... note: In instance 'tb_x1_y2'
+   11 |     wire [11:0] weight_addr;
+      |                 ^~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: tb/tb_x1_y2.v:16:10: Signal is not used: 'busy'
+                                          : ... note: In instance 'tb_x1_y2'
+   16 |     wire busy;
+      |          ^~~~
+%Warning-BLKSEQ: tb/tb_x1_y2.v:34:19: Blocking assignment '=' in sequential logic process
+                                    : ... Suggest using delayed assignment '<='
+   34 |     always #5 clk = ~clk;
+      |                   ^
+%Warning-INITIALDLY: tb/tb_x1_y2.v:102:15: Non-blocking assignment '<=' in initial/final block
+                                         : ... This will be executed as a blocking assignment '='!
+  102 |         rst_n <= 1;
+      |               ^~
+%Warning-INITIALDLY: tb/tb_x1_y2.v:70:19: Non-blocking assignment '<=' in initial/final block
+                                        : ... This will be executed as a blocking assignment '='!
+   70 |             k_dim <= count;
+      |                   ^~
+%Warning-INITIALDLY: tb/tb_x1_y2.v:71:19: Non-blocking assignment '<=' in initial/final block
+                                        : ... This will be executed as a blocking assignment '='!
+   71 |             start <= 1;
+      |                   ^~
+%Warning-INITIALDLY: tb/tb_x1_y2.v:73:19: Non-blocking assignment '<=' in initial/final block
+                                        : ... This will be executed as a blocking assignment '='!
+   73 |             start <= 0;
+      |                   ^~
+%Warning-BLKSEQ: rtl/x1_y2_kimi.v:109:45: Blocking assignment '=' in sequential logic process
+                                        : ... Suggest using delayed assignment '<='
+  109 |                                 act_lane    = $signed(act_rdata[r*4 +: 4]);
+      |                                             ^
+%Warning-BLKSEQ: rtl/x1_y2_kimi.v:110:45: Blocking assignment '=' in sequential logic process
+                                        : ... Suggest using delayed assignment '<='
+  110 |                                 weight_lane = $signed(weight_rdata[c*4 +: 4]);
+      |                                             ^
+%Warning-BLKSEQ: rtl/x1_y2_kimi.v:111:45: Blocking assignment '=' in sequential logic process
+                                        : ... Suggest using delayed assignment '<='
+  111 |                                 product     = act_lane * weight_lane;
+      |                                             ^

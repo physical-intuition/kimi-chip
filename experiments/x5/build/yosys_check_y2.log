@@ -1,0 +1,6 @@
+Warning: Replacing memory \drain_row_data with list of registers. See /home/kit/kimi-chip/experiments/x5/rtl/x5_y2_kimi.v:193
+Warning: Replacing memory \fold_carry12 with list of registers. See /home/kit/kimi-chip/experiments/x5/rtl/x5_y2_kimi.v:167
+Warning: Replacing memory \fold_carry6 with list of registers. See /home/kit/kimi-chip/experiments/x5/rtl/x5_y2_kimi.v:166
+Warning: Replacing memory \wide_accum with list of registers. See /home/kit/kimi-chip/experiments/x5/rtl/x5_y2_kimi.v:165
+Warning: Replacing memory \chunk_accum with list of registers. See /home/kit/kimi-chip/experiments/x5/rtl/x5_y2_kimi.v:164
+Warning: Replacing memory \product_pipe with list of registers. See /home/kit/kimi-chip/experiments/x5/rtl/x5_y2_kimi.v:163

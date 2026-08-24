@@ -1,0 +1,31 @@
+{
+  "status": "pass",
+  "checks": {
+    "external_sram_boundary": true,
+    "chunk_width_12": true,
+    "wide_width_24": true,
+    "fold_interval_16": true,
+    "separate_fold_state": true,
+    "registered_two_slice_fold": true,
+    "no_direct_24bit_fold": true,
+    "tail_flush": true,
+    "max_k_65535_interface": true,
+    "single_accumulation_site": true,
+    "resetless_datapath": true,
+    "request_decode_is_progress_independent": true,
+    "registered_readout_split": true,
+    "no_direct_combined_readout": true,
+    "chunk_range_proof": true,
+    "wide_range_proof": true
+  },
+  "proof": {
+    "chunk_max_magnitude": 1024,
+    "signed_12_max": 2047,
+    "wide_max_positive": 4194240,
+    "signed_24_max": 8388607
+  },
+  "evidence": {
+    "registered_readout_split": "X4-Y2 final extracted path drain_col[0] to out_wdata[12], 18 combinational cells, experiments/x4/artifacts/y2/reports/6_finish.rpt",
+    "registered_two_slice_fold": "X4-Y3 final extracted path chunk_accum[57][1] to wide_accum[57][16], 21 combinational cells, experiments/x4/artifacts/y3/reports/6_finish.rpt"
+  }
+}

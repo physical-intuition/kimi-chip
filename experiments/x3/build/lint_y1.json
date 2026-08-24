@@ -1,0 +1,21 @@
+{
+  "status": "pass",
+  "policy": "experiments/x3/lint/policy_y1.json",
+  "results": [
+    {
+      "rule": "sram_macro_usage",
+      "status": "pass",
+      "message": "external SRAM macro boundary is explicit; no behavioral SRAM array inferred"
+    },
+    {
+      "rule": "accumulator_overflow",
+      "status": "pass",
+      "message": "24-bit signed accumulator covers [-229320,262080], minimum 19 bits"
+    },
+    {
+      "rule": "double_accumulation",
+      "status": "pass",
+      "message": "single accumulation site is gated by one-cycle response valid and consume tracking"
+    }
+  ]
+}

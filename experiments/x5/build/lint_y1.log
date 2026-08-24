@@ -1,0 +1,31 @@
+{
+  "status": "pass",
+  "checks": {
+    "x4_all_five_ingested": true,
+    "target_emerged_from_policy": true,
+    "x4_sources_hashed": true,
+    "external_sram_boundary": true,
+    "chunk_width_12": true,
+    "wide_width_24": true,
+    "fold_interval_16": true,
+    "three_stage_fold": true,
+    "registered_6bit_slices": true,
+    "no_remaining_12bit_low_add": true,
+    "no_direct_24bit_fold": true,
+    "tail_flush": true,
+    "max_k_65535_interface": true,
+    "request_comparator_stays_removed": true,
+    "registered_readout_preserved": true,
+    "x5_only_y1_exists": true,
+    "chunk_range_proof": true,
+    "wide_range_proof": true
+  },
+  "derived_target_mhz": 937.092,
+  "evidence": [
+    {
+      "cone": "registered chunk_accum to low wide_accum fold",
+      "evidence": "X4-Y5 worst max setup path has 19 combinational cells from chunk_accum[156][1] to wide_accum[156][11]",
+      "repair": "split the remaining low 12-bit fold addition into registered 6-bit slices"
+    }
+  ]
+}

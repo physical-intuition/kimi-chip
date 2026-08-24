@@ -1,0 +1,23 @@
+{
+  "schema": "x5-y2-evidence-policy-v1",
+  "source_iteration": "X5-Y1",
+  "source_target_mhz": 937.092,
+  "source_extracted_fmax_mhz": 911.455,
+  "source_setup_wns_ns": -0.03,
+  "source_setup_tns_ns": -0.0754784,
+  "source_setup_violations": 5,
+  "source_hold_violations": 0,
+  "worst_path": {
+    "startpoint": "act_rdata[28]",
+    "endpoint": "chunk_accum[121][11]",
+    "interpretation": "input buffering plus 4x4 signed multiply plus accumulator add remained in one cycle"
+  },
+  "repair": "register each 8-bit product, commit it on the following stage, and overlap request, response/product capture, and MAC commit with valid bits",
+  "target_policy": "hold the failed X5-Y1 target constant; do not move the goalpost while testing the observed bottleneck",
+  "target_frequency_mhz": 937.092,
+  "target_period_ns": 1.067131082,
+  "provenance": {
+    "finish_report_sha256": "76d74ba71425042ff1000b384e5c44c9a6808c1a59b815574fdf65385cbbbd9f",
+    "metrics_sha256": "ca4e47e63d4d0b1d4f1425577102db4b89e0fc8593f5da5d4a8e2aa30edc86d1"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "status": "pass",
+  "trials": 15,
+  "patterns": 8,
+  "output": "/home/kit/kimi-chip/experiments/x4/harness/history_patterns.json"
+}

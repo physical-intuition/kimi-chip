@@ -1,0 +1,96 @@
+UC Berkeley, ABC 1.01 (compiled Apr  1 2024 04:53:45)
+abc 01> read_lib -w /home/kit/OpenROAD-flow-scripts/flow/platforms/nangate45/lib/NangateOpenCellLibrary_typical.lib
+Parsing finished successfully.  Parsing time =     0.03 sec
+Scl_LibertyReadGenlib() skipped cell "ANTENNA_X1" due to dont_use attribute.
+Scl_LibertyReadGenlib() skipped cell "CLKGATETST_X1" without logic function.
+Scl_LibertyReadGenlib() skipped cell "CLKGATETST_X2" without logic function.
+Scl_LibertyReadGenlib() skipped cell "CLKGATETST_X4" without logic function.
+Scl_LibertyReadGenlib() skipped cell "CLKGATETST_X8" without logic function.
+Scl_LibertyReadGenlib() skipped cell "CLKGATE_X1" without logic function.
+Scl_LibertyReadGenlib() skipped cell "CLKGATE_X2" without logic function.
+Scl_LibertyReadGenlib() skipped cell "CLKGATE_X4" without logic function.
+Scl_LibertyReadGenlib() skipped cell "CLKGATE_X8" without logic function.
+Scl_LibertyReadGenlib() skipped sequential cell "DFFRS_X1".
+Scl_LibertyReadGenlib() skipped sequential cell "DFFRS_X2".
+Scl_LibertyReadGenlib() skipped sequential cell "DFFR_X1".
+Scl_LibertyReadGenlib() skipped sequential cell "DFFR_X2".
+Scl_LibertyReadGenlib() skipped sequential cell "DFFS_X1".
+Scl_LibertyReadGenlib() skipped sequential cell "DFFS_X2".
+Scl_LibertyReadGenlib() skipped sequential cell "DFF_X1".
+Scl_LibertyReadGenlib() skipped sequential cell "DFF_X2".
+Scl_LibertyReadGenlib() skipped sequential cell "DLH_X1".
+Scl_LibertyReadGenlib() skipped sequential cell "DLH_X2".
+Scl_LibertyReadGenlib() skipped sequential cell "DLL_X1".
+Scl_LibertyReadGenlib() skipped sequential cell "DLL_X2".
+Scl_LibertyReadGenlib() skipped cell "FILLCELL_X1" due to dont_use attribute.
+Scl_LibertyReadGenlib() skipped cell "TAPCELL_X1" due to dont_use attribute.
+Scl_LibertyReadGenlib() skipped cell "FILLCELL_X2" due to dont_use attribute.
+Scl_LibertyReadGenlib() skipped cell "FILLCELL_X4" due to dont_use attribute.
+Scl_LibertyReadGenlib() skipped cell "FILLCELL_X8" due to dont_use attribute.
+Scl_LibertyReadGenlib() skipped cell "FILLCELL_X16" due to dont_use attribute.
+Scl_LibertyReadGenlib() skipped cell "FILLCELL_X32" due to dont_use attribute.
+Scl_LibertyReadGenlib() skipped cell "LOGIC0_X1" due to dont_use attribute.
+Scl_LibertyReadGenlib() skipped cell "LOGIC1_X1" due to dont_use attribute.
+Scl_LibertyReadGenlib() skipped sequential cell "SDFFRS_X1".
+Scl_LibertyReadGenlib() skipped sequential cell "SDFFRS_X2".
+Scl_LibertyReadGenlib() skipped sequential cell "SDFFR_X1".
+Scl_LibertyReadGenlib() skipped sequential cell "SDFFR_X2".
+Scl_LibertyReadGenlib() skipped sequential cell "SDFFS_X1".
+Scl_LibertyReadGenlib() skipped sequential cell "SDFFS_X2".
+Scl_LibertyReadGenlib() skipped sequential cell "SDFF_X1".
+Scl_LibertyReadGenlib() skipped sequential cell "SDFF_X2".
+Scl_LibertyReadGenlib() skipped three-state cell "TBUF_X1".
+Scl_LibertyReadGenlib() skipped three-state cell "TBUF_X2".
+Scl_LibertyReadGenlib() skipped three-state cell "TBUF_X4".
+Scl_LibertyReadGenlib() skipped three-state cell "TBUF_X8".
+Scl_LibertyReadGenlib() skipped three-state cell "TBUF_X16".
+Scl_LibertyReadGenlib() skipped three-state cell "TINV_X1".
+Scl_LibertyReadGenlib() skipped sequential cell "TLAT_X1".
+Library "NangateOpenCellLibrary" from "/home/kit/OpenROAD-flow-scripts/flow/platforms/nangate45/lib/NangateOpenCellLibrary_typical.lib" has 90 cells (35 skipped: 21 seq; 6 tri-state; 8 no func; 10 dont_use).  Time =     0.05 sec
+Memory =   11.38 MB. Time =     0.05 sec
+Warning: Detected 2 multi-output gates (for example, "FA_X1").
+abc 01> read_blif _tmp_yosys-abc-4mC5hC/output.blif
+abc 02> topo
+abc 03> stime -p
+WireLoad = "none"  [1;33mGates =  25274[0m (  8.9 %)   [1;32mCap =  3.6 ff[0m (  0.0 %)   [1;36mArea =    28279.26[0m (100.0 %)   [1;35mDelay =  2858.37 ps[0m  (  0.9 %)               
+Path  0 --    1457 : 0    1 pi       A =   0.00  Df =   0.0   -0.0 ps  S =   0.0 ps  Cin =  0.0 ff  Cout =   1.7 ff  Cmax =   0.0 ff  G =    0  
+Path  1 --    3900 : 2  594 NAND2_X1 A =   0.80  Df =2333.8 -377.8 ps  S =2218.8 ps  Cin =  1.6 ff  Cout = 969.0 ff  Cmax =  59.4 ff  G =60596  
+Path  2 --   12790 : 3    1 MUX2_X1  A =   1.86  Df =2858.4 -394.8 ps  S =  82.2 ps  Cin =  1.2 ff  Cout =   0.0 ff  Cmax =  60.5 ff  G =    0  
+Start-point = pi1456.  End-point = po0380.
+abc 03> print_delay
+Critical path from PI "ys__n597" to PO "ys__n1420":
+Level   0 : Primary input "ys__n597".   Arrival time =   0.0. 
+Level   1 :     n11953/A    (INV_X1)      Arrival =   1.0.   I/O times: (0.0 -> 1.0)
+Level   2 :     n11954/A1   (NOR2_X1)     Arrival =   2.0.   I/O times: (1.0, 1.0 -> 2.0)
+Level   3 :     n12049/A1   (NAND2_X1)    Arrival =   3.0.   I/O times: (2.0, 2.0 -> 3.0)
+Level   4 :     n12050/A    (INV_X1)      Arrival =   4.0.   I/O times: (3.0 -> 4.0)
+Level   5 :     n12051/A    (AOI21_X1)    Arrival =   5.0.   I/O times: (4.0, 3.0, 2.0 -> 5.0)
+Level   6 :     n12052/B    (XOR2_X1)     Arrival =   6.0.   I/O times: (4.0, 5.0 -> 6.0)
+Level   7 :     n12108/A1   (NAND2_X1)    Arrival =   7.0.   I/O times: (6.0, 3.0 -> 7.0)
+Level   8 :     n12109/A    (OAI21_X1)    Arrival =   8.0.   I/O times: (7.0, 4.0, 5.0 -> 8.0)
+Level   9 :     n12110/B    (XNOR2_X1)    Arrival =   9.0.   I/O times: (7.0, 8.0 -> 9.0)
+Level  10 :     n12174/A1   (NAND2_X1)    Arrival =  10.0.   I/O times: (9.0, 6.0 -> 10.0)
+Level  11 :     n12177/A1   (NAND2_X1)    Arrival =  11.0.   I/O times: (10.0, 9.0 -> 11.0)
+Level  12 :     n12178/B    (XNOR2_X1)    Arrival =  12.0.   I/O times: (9.0, 11.0 -> 12.0)
+Level  13 :     n12247/A1   (NAND2_X1)    Arrival =  13.0.   I/O times: (12.0, 8.0 -> 13.0)
+Level  14 :     n12249/A    (OAI21_X1)    Arrival =  14.0.   I/O times: (13.0, 9.0, 12.0 -> 14.0)
+Level  15 :     n12250/B    (XNOR2_X1)    Arrival =  15.0.   I/O times: (12.0, 14.0 -> 15.0)
+Level  16 :     n12308/A1   (NAND2_X1)    Arrival =  16.0.   I/O times: (15.0, 8.0 -> 16.0)
+Level  17 :     n12311/A1   (NAND2_X1)    Arrival =  17.0.   I/O times: (16.0, 15.0 -> 17.0)
+Level  18 :     n12312/B    (XOR2_X1)     Arrival =  18.0.   I/O times: (15.0, 17.0 -> 18.0)
+Level  19 :     n12314/A    (XNOR2_X1)    Arrival =  19.0.   I/O times: (18.0, 17.0 -> 19.0)
+Level  20 :     n12323/A1   (NOR2_X1)     Arrival =  20.0.   I/O times: (19.0, 18.0 -> 20.0)
+Level  21 :     n12324/A    (AOI21_X1)    Arrival =  21.0.   I/O times: (20.0, 20.0, 19.0 -> 21.0)
+Level  22 :     n12325/A    (INV_X1)      Arrival =  22.0.   I/O times: (21.0 -> 22.0)
+Level  23 :     n12430/A1   (NAND3_X1)    Arrival =  23.0.   I/O times: (22.0, 20.0, 20.0 -> 23.0)
+Level  24 :     n12431/A4   (NAND4_X1)    Arrival =  24.0.   I/O times: (22.0, 21.0, 21.0, 23.0 -> 24.0)
+Level  25 :     n12614/A1   (NAND4_X1)    Arrival =  25.0.   I/O times: (24.0, 21.0, 21.0, 22.0 -> 25.0)
+Level  26 :     n12617/A    (OAI211_X1)   Arrival =  26.0.   I/O times: (25.0, 21.0, 23.0, 21.0 -> 26.0)
+Level  27 :     n12692/A1   (AND3_X1)     Arrival =  27.0.   I/O times: (26.0, 20.0, 20.0 -> 27.0)
+Level  28 :     n12734/B1   (OAI21_X1)    Arrival =  28.0.   I/O times: (21.0, 27.0, 22.0 -> 28.0)
+Level  29 :     n12736/A    (OAI21_X1)    Arrival =  29.0.   I/O times: (28.0, 20.0, 20.0 -> 29.0)
+Level  30 :     n12782/A    (XNOR2_X1)    Arrival =  30.0.   I/O times: (29.0, 21.0 -> 30.0)
+Level  31 :     n12783/A1   (NAND2_X1)    Arrival =  31.0.   I/O times: (30.0, 0.0 -> 31.0)
+Level  32 :     n12785/B1   (AOI21_X1)    Arrival =  32.0.   I/O times: (1.0, 31.0, 2.0 -> 32.0)
+Level  33 : Primary output "ys__n1420".   Required time = -1000000000.0.  Path slack = -1000000000.0.
+abc 03> quit

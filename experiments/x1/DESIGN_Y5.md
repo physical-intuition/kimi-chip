@@ -1,0 +1,11 @@
+# X1-Y5 Design Notes
+
+Y5 replaces Y2 through Y4's selected-bank shift drain with a non-shifting indexed readout. The 16 row-local banks remain unchanged during accumulation, but DRAIN addresses one row and column at a time through a local case-selected mux. This preserves one output write per cycle and the external SRAM/output contract while removing repeated movement across the 384-bit selected bank. Y4's 2.5 ns constraint, 20% target utilization, and `CAP_MARGIN=20` remain in place so final electrical closure is still mandatory.
+
+The local Icarus regression passed K=7, K=0, and K=13 back-to-back operations, verifying all 768 output writes. Activation, weight, and output SRAMs remain external interfaces, so the specification's 96 KiB SRAM area is excluded from reported standard-cell and core area.
+
+The full Nangate45 ORFS flow completed on the four-core, 16 GiB GCS routing VM with `FLOW_RC=0`. Final extracted STA is clean at 455.449 MHz estimated fmax, 0.304364 ns setup worst slack, 0.00111722 ns hold worst slack, zero setup and hold TNS, and zero setup, hold, max-slew, max-fanout, and max-capacitance violations. Detailed routing reduced 28,866 initial violations to zero in four repair iterations. Final DRC is zero, and antenna checks report zero violating nets and pins.
+
+Synthesis reports 165,979.744 um² and 131,415 cells. The final route has 132,824 non-filler standard cells, 167,356 um² design area, 369,355 total instances including 236,531 fillers, and 3,582 tap cells inside an 828,710 um² core at 20.1947% utilization. Detailed routing took 2,529 seconds and peaked at 4,774.73 MB. Final routing uses 3,110,173 um of wire and 924,862 vias. The complete remote flow took 4,525 seconds. Power analysis estimates 268.435 mW total power, with 6.36307 mV worst VDD drop and 5.46681 mV worst VSS drop.
+
+Compared with Y4, indexed readout reduces final routed area by 5.72% and improves extracted fmax by 0.88%. It also cuts via count while wire length rises slightly. This is a useful physical result: local indexed muxing is better here than shifting the selected bank, despite the mux cone becoming the final critical path. X2 should preserve this topology as its initial baseline while adding executable lint gates for SRAM macro use, accumulator overflow, and double accumulation.

@@ -1,0 +1,10 @@
+export DESIGN_NICKNAME = x6_y5
+export DESIGN_NAME = x6_top
+export PLATFORM = nangate45
+export VERILOG_FILES = /home/kit/kimi-chip/experiments/x6/rtl/activation_crossbar.v /home/kit/kimi-chip/experiments/x6/rtl/conv_unit.v /home/kit/kimi-chip/experiments/x6/rtl/mac_array_16x16.v /home/kit/kimi-chip/experiments/x6/rtl/norm_unit.v /home/kit/kimi-chip/experiments/x6/rtl/residual_unit.v /home/kit/kimi-chip/experiments/x6/rtl/state_update.v /home/kit/kimi-chip/experiments/x6/rtl/weight_crossbar.v /home/kit/kimi-chip/experiments/x6/rtl/x6_top.v
+export SDC_FILE = /home/kit/kimi-chip/experiments/x6/flow/x6_constraint.sdc
+export CORE_UTILIZATION = 25
+export PLACE_DENSITY_LB_ADDON = 0.15
+export TNS_END_PERCENT = 100
+export SYNTH_REPEATABLE_BUILD = 1
+export ABC_AREA = 1

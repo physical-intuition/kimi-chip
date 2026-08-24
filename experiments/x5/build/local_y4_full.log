@@ -1,0 +1,74 @@
+{
+  "schema": "x5-y4-y3-slack-derived-policy-v1",
+  "source_iteration": "X5-Y3",
+  "source_target_mhz": 930.359,
+  "source_extracted_fmax_mhz": 988.581,
+  "source_setup_wns_ns": 0.0633,
+  "source_setup_tns_ns": 0,
+  "observed_critical_path": {
+    "startpoint": "state[1]",
+    "endpoint": "busy",
+    "slack_ns": 0.0633,
+    "repair": "register busy protocol output instead of combinational state decode"
+  },
+  "next_internal_path": {
+    "startpoint": "product_pipe[140][3]",
+    "endpoint": "chunk_accum[140][11]",
+    "slack_ns": 0.14,
+    "estimated_ceiling_mhz": 1069.686
+  },
+  "target_formula": "min(1000, y3_extracted_fmax + 0.5 * (next_internal_estimated_ceiling - y3_extracted_fmax))",
+  "unclamped_target_mhz": 1029.134,
+  "derived_target_frequency_mhz": 1000.0,
+  "derived_period_ns": 1.0,
+  "rationale": "Y3 external busy decode limited extracted fmax to 988.581 MHz. Removing it exposes a reg-to-reg MAC-commit path whose measured slack implies about 1069.686 MHz; halfway recovery exceeds 1 GHz, so cap this progressive iteration at 1 GHz.",
+  "preserve": [
+    "registered request outputs",
+    "5-bit request burst budget",
+    "registered 8-bit product/MAC pipeline",
+    "three-stage hierarchical fold",
+    "CAP_MARGIN=50"
+  ],
+  "provenance": {
+    "finish_report_sha256": "bc4c9b3d329d25e57713433cdf8540eacacd44b88c76c55489d617b8da678540",
+    "metrics_sha256": "c56462cab8464477bc6afd5a929daa0c7d8c66da8df6694440206e1d4af8369f"
+  }
+}
+{
+  "status": "pass",
+  "checks": {
+    "y3_terminal_pass_ingested": true,
+    "target_derived_1ghz": true,
+    "critical_path_named": true,
+    "next_internal_path_named": true,
+    "busy_registered": true,
+    "mac_pipeline_preserved": true,
+    "request_fix_preserved": true,
+    "fold_preserved": true,
+    "cap_margin_preserved": true,
+    "physical_target": true,
+    "provenance_hashes": true,
+    "no_y5_preplan": true
+  },
+  "failed": [],
+  "target_mhz": 1000.0
+}
+PASS K=7 outputs=256
+PASS K=0 outputs=256
+PASS busy-start ignored and k_dim remained latched
+PASS K=13 outputs=256
+PASS K=15 outputs=256
+PASS K=16 outputs=256
+PASS K=17 outputs=256
+PASS K=31 outputs=256
+PASS K=32 outputs=256
+PASS K=33 outputs=256
+PASS K=17 outputs=256
+PASS signed-extrema fold regression
+PASS reset-abort quiescence
+PASS K=17 outputs=256
+PASS clean restart after reset-abort
+PASS K=65535 outputs=256
+PASS: X5-Y4 registered-busy + request + MAC-pipeline request-product-commit pipeline, hierarchical fold, tail flush, reset/restart, signed extrema, exactly-once, and K=65535 verified
+/home/kit/kimi-chip/experiments/x5/tb/tb_x5_y4.v:128: $finish called at 896146000 (1ps)
+LOCAL_X5_Y4_PASS

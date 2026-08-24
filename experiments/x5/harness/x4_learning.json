@@ -1,0 +1,243 @@
+{
+  "schema": "x5-x4-evidence-v1",
+  "sources": [
+    {
+      "path": "experiments/x4/trials.jsonl",
+      "sha256": "38f572a1e5e724aadb5dc7cf8e2b46ae53656d120d58fc4bc74dda21ae18571c"
+    },
+    {
+      "path": "experiments/x4/X4_SUMMARY.md",
+      "sha256": "fa855fa7fc5b2f48c95876ea6da8a10d993fc57a3dd2739c84aa6ace23dbeba1"
+    },
+    {
+      "path": "experiments/x4/artifacts/y5/reports/6_finish.rpt",
+      "sha256": "b75e53304fb72262cc1f370495e276002d3e6eff31164175cf77a38e90e536cc"
+    }
+  ],
+  "x4_cells": [
+    {
+      "y": 1,
+      "result": "fail",
+      "target_mhz": 752.0,
+      "extracted_fmax_mhz": 719.14,
+      "gain_from_previous_mhz": null,
+      "goal": "Validate the signed 12-to-24-bit hierarchical fold architecture at 752 MHz with exactly-once registered-SRAM consumption and full 16-bit k_dim support.",
+      "rtl_change": null,
+      "physical_design_change": null,
+      "bugs_found": [
+        "The accumulator architecture is no longer the critical path. A redundant issued<k_dim_q comparison was synthesized into a 15-stage control cone from issued[0] to both external request outputs, causing two setup violations."
+      ],
+      "learnings": "The hierarchical fold moved the bottleneck from arithmetic to request control. Remove the redundant progress comparator from the S_REQ output decode before Y2. The next clean data path has about 30 ps slack at 752 MHz, implying about 774 MHz headroom under the same 20% I/O budget; choose 760 MHz for Y2 after the control repair.",
+      "worst_startpoint": "issued[0]$_DFFE_PN0P_",
+      "worst_endpoint": "weight_req",
+      "setup_wns_ns": -0.06075,
+      "max_cap_violations": 0,
+      "provenance": {
+        "trial": {
+          "path": "experiments/x4/trials.jsonl",
+          "sha256": "38f572a1e5e724aadb5dc7cf8e2b46ae53656d120d58fc4bc74dda21ae18571c"
+        },
+        "timing": {
+          "path": "experiments/x4/artifacts/y1/timing_analysis.json",
+          "sha256": "da9d7a1414f517e947c856da21f8d025b4ef6f080cdfd03d0c0bb8cc47c70bd0"
+        },
+        "design": {
+          "path": "experiments/x4/DESIGN_Y1.md",
+          "sha256": "8505da0ade0f597afbc2ec4fe723967f070a89c23d35d5d0cd1af5d746b99c47"
+        },
+        "rtl": {
+          "path": "experiments/x4/rtl/x4_y1_kimi.v",
+          "sha256": "2dd16388fe3dfd316d150e69fefef827705927c5126b593606cb0f1939c85262"
+        },
+        "rtl_diff_sources": []
+      },
+      "rtl_diff": ""
+    },
+    {
+      "y": 2,
+      "result": "pass",
+      "target_mhz": 760.0,
+      "extracted_fmax_mhz": 783.569,
+      "gain_from_previous_mhz": 64.429,
+      "goal": "Remove Y1 request-control comparator cone and close strictly above 752 MHz at 760 MHz.",
+      "rtl_change": "removed redundant issued<k_dim_q predicate from state-qualified paired request decode",
+      "physical_design_change": null,
+      "bugs_found": [
+        "Y2 launch wrapper copied x4_y1 artifact paths after completion; independent preservation and a final direct copy from the live x4_y2 ORFS tree recovered canonical Y2 evidence before cleanup."
+      ],
+      "learnings": "Removing the request comparator closes 760 MHz. The new worst path is drain_col[0] to out_wdata[12] through an 18-cell combined row/column readout cone. Split readout selection across registered stages before raising the target.",
+      "worst_startpoint": "drain_col[0]$_DFFE_PN0P_",
+      "worst_endpoint": "out_wdata[12]$_DFFE_PN0P_",
+      "setup_wns_ns": 0.0395887,
+      "max_cap_violations": 0,
+      "provenance": {
+        "trial": {
+          "path": "experiments/x4/trials.jsonl",
+          "sha256": "38f572a1e5e724aadb5dc7cf8e2b46ae53656d120d58fc4bc74dda21ae18571c"
+        },
+        "timing": {
+          "path": "experiments/x4/artifacts/y2/timing_analysis.json",
+          "sha256": "dda1402ee0d8ee79ca2d230c969c45c8a59517b151c1daeb519626df94468512"
+        },
+        "design": {
+          "path": "experiments/x4/DESIGN_Y2.md",
+          "sha256": "943205eab7cb82475951c9686758f4e1b35a786ad919d93a09601ec639e82d03"
+        },
+        "rtl": {
+          "path": "experiments/x4/rtl/x4_y2_kimi.v",
+          "sha256": "f5b6cdaa52e3ac7ea052e5d9134232051ce57650c88807c11c2cce481fde111e"
+        },
+        "rtl_diff_sources": [
+          {
+            "path": "experiments/x4/rtl/x4_y1_kimi.v",
+            "sha256": "2dd16388fe3dfd316d150e69fefef827705927c5126b593606cb0f1939c85262"
+          },
+          {
+            "path": "experiments/x4/rtl/x4_y2_kimi.v",
+            "sha256": "f5b6cdaa52e3ac7ea052e5d9134232051ce57650c88807c11c2cce481fde111e"
+          }
+        ]
+      },
+      "rtl_diff": "--- experiments/x4/rtl/x4_y1_kimi.v\n+++ experiments/x4/rtl/x4_y2_kimi.v\n@@ -1,10 +1,10 @@\n `timescale 1ns/1ps\n \n-// X4-Y1: v9/v10-derived hierarchical accumulation baseline.\n+// X4-Y2: remove the report-proven redundant progress comparator from request decode.\n // The multiply path updates only a signed 12-bit chunk. Every 16 valid\n // products, a separate FOLD cycle transfers that chunk into a signed 24-bit\n // accumulator. This keeps the 24-bit carry chain out of the per-product path.\n-module x4_y1_kimi (\n+module x4_y2_kimi (\n     input  wire         clk,\n     input  wire         rst_n,\n     input  wire         start,\n@@ -47,7 +47,9 @@\n         weight_req = 1'b0;\n         act_addr = issued;\n         weight_addr = issued;\n-        if (state == S_REQ && issued < k_dim_q) begin\n+        // State sequencing guarantees S_REQ only while one element remains.\n+        // Keeping issued<k_dim_q here created Y1s 15-stage setup-critical cone.\n+        if (state == S_REQ) begin\n             act_req = 1'b1;\n             weight_req = 1'b1;\n         end\n"
+    },
+    {
+      "y": 3,
+      "result": "pass",
+      "target_mhz": 780.0,
+      "extracted_fmax_mhz": 837.683,
+      "gain_from_previous_mhz": 54.114,
+      "goal": "Split Y2 combined row/column readout selector and close strictly at 780 MHz.",
+      "rtl_change": "registered selected accumulator row in S_DRAIN_LOAD before column selection in S_DRAIN_WRITE",
+      "physical_design_change": null,
+      "bugs_found": [],
+      "learnings": "The registered readout split raised extracted fmax from 783.569 to 837.683 MHz. The new worst path is chunk_accum[57][1] to wide_accum[57][16] through 21 cells in the signed 24-bit fold carry chain. Split the fold into registered low/high 12-bit slices before Y4.",
+      "worst_startpoint": "chunk_accum[57][1]$_SDFFE_PP0P_",
+      "worst_endpoint": "wide_accum[57][16]$_SDFFE_PP0P_",
+      "setup_wns_ns": 0.0883312,
+      "max_cap_violations": 0,
+      "provenance": {
+        "trial": {
+          "path": "experiments/x4/trials.jsonl",
+          "sha256": "38f572a1e5e724aadb5dc7cf8e2b46ae53656d120d58fc4bc74dda21ae18571c"
+        },
+        "timing": {
+          "path": "experiments/x4/artifacts/y3/timing_analysis.json",
+          "sha256": "05c12d566a427ce782f99787821176286ebd3e3d070ccdf96c8f600453eede71"
+        },
+        "design": {
+          "path": "experiments/x4/DESIGN_Y3.md",
+          "sha256": "1d8208ceb5d7b319212614bd9d43119ee550e8ad570b56a29323d5b71479bd80"
+        },
+        "rtl": {
+          "path": "experiments/x4/rtl/x4_y3_kimi.v",
+          "sha256": "eaed624126a03b98b10774186b5665f4c8d89adb1ec288ab8196179094340cac"
+        },
+        "rtl_diff_sources": [
+          {
+            "path": "experiments/x4/rtl/x4_y2_kimi.v",
+            "sha256": "f5b6cdaa52e3ac7ea052e5d9134232051ce57650c88807c11c2cce481fde111e"
+          },
+          {
+            "path": "experiments/x4/rtl/x4_y3_kimi.v",
+            "sha256": "eaed624126a03b98b10774186b5665f4c8d89adb1ec288ab8196179094340cac"
+          }
+        ]
+      },
+      "rtl_diff": "--- experiments/x4/rtl/x4_y2_kimi.v\n+++ experiments/x4/rtl/x4_y3_kimi.v\n@@ -1,10 +1,10 @@\n `timescale 1ns/1ps\n \n-// X4-Y2: remove the report-proven redundant progress comparator from request decode.\n-// The multiply path updates only a signed 12-bit chunk. Every 16 valid\n-// products, a separate FOLD cycle transfers that chunk into a signed 24-bit\n-// accumulator. This keeps the 24-bit carry chain out of the per-product path.\n-module x4_y2_kimi (\n+// X4-Y3: split the Y2 report-proven combined row/column readout selector.\n+// S_DRAIN_LOAD registers one selected accumulator row. S_DRAIN_WRITE then\n+// selects a column from that registered row, so drain_row and drain_col no\n+// longer feed the same out_wdata register-to-register path.\n+module x4_y3_kimi (\n     input  wire         clk,\n     input  wire         rst_n,\n     input  wire         start,\n@@ -21,11 +21,12 @@\n     output wire         busy,\n     output reg          done\n );\n-    localparam S_IDLE  = 3'd0;\n-    localparam S_REQ   = 3'd1;\n-    localparam S_ACCUM = 3'd2;\n-    localparam S_FOLD  = 3'd3;\n-    localparam S_DRAIN = 3'd4;\n+    localparam S_IDLE        = 3'd0;\n+    localparam S_REQ         = 3'd1;\n+    localparam S_ACCUM       = 3'd2;\n+    localparam S_FOLD        = 3'd3;\n+    localparam S_DRAIN_LOAD  = 3'd4;\n+    localparam S_DRAIN_WRITE = 3'd5;\n \n     reg [2:0] state;\n     reg [15:0] k_dim_q;\n@@ -37,6 +38,7 @@\n \n     reg signed [11:0] chunk_accum [0:15][0:15];\n     reg signed [23:0] wide_accum  [0:15][0:15];\n+    reg signed [23:0] drain_row_data [0:15];\n \n     genvar gr, gc;\n \n@@ -47,8 +49,6 @@\n         weight_req = 1'b0;\n         act_addr = issued;\n         weight_addr = issued;\n-        // State sequencing guarantees S_REQ only while one element remains.\n-        // Keeping issued<k_dim_q here created Y1s 15-stage setup-critical cone.\n         if (state == S_REQ) begin\n             act_req = 1'b1;\n             weight_req = 1'b1;\n@@ -81,7 +81,7 @@\n                     fold_finishes_run <= 1'b0;\n                     drain_row <= 4'd0;\n                     drain_col <= 4'd0;\n-                    state <= (k_dim == 0) ? S_DRAIN : S_REQ;\n+                    state <= (k_dim == 0) ? S_DRAIN_LOAD : S_REQ;\n                 end\n                 S_REQ: begin\n                     issued <= issued + 1'b1;\n@@ -102,47 +102,37 @@\n                     if (fold_finishes_run) begin\n                         drain_row <= 4'd0;\n                         drain_col <= 4'd0;\n-                        state <= S_DRAIN;\n+                        state <= S_DRAIN_LOAD;\n                     end else begin\n                         state <= S_REQ;\n                     end\n                 end\n-                S_DRAIN: begin\n+                S_DRAIN_LOAD: begin\n+                    drain_col <= 4'd0;\n+                    state <= S_DRAIN_WRITE;\n+                end\n+                S_DRAIN_WRITE: begin\n                     out_we <= 1'b1;\n                     out_addr <= {6'd0, drain_row, drain_col};\n-                    case (drain_row)\n-                        4'd0: out_wdata <= wide_accum[0][drain_col];\n-                        4'd1: out_wdata <= wide_accum[1][drain_col];\n-                        4'd2: out_wdata <= wide_accum[2][drain_col];\n-                        4'd3: out_wdata <= wide_accum[3][drain_col];\n-                        4'd4: out_wdata <= wide_accum[4][drain_col];\n-                        4'd5: out_wdata <= wide_accum[5][drain_col];\n-                        4'd6: out_wdata <= wide_accum[6][drain_col];\n-                        4'd7: out_wdata <= wide_accum[7][drain_col];\n-                        4'd8: out_wdata <= wide_accum[8][drain_col];\n-                        4'd9: out_wdata <= wide_accum[9][drain_col];\n-                        4'd10: out_wdata <= wide_accum[10][drain_col];\n-                        4'd11: out_wdata <= wide_accum[11][drain_col];\n-                        4'd12: out_wdata <= wide_accum[12][drain_col];\n-                        4'd13: out_wdata <= wide_accum[13][drain_col];\n-                        4'd14: out_wdata <= wide_accum[14][drain_col];\n-                        default: out_wdata <= wide_accum[15][drain_col];\n-                    endcase\n+                    out_wdata <= drain_row_data[drain_col];\n                     if (drain_col == 4'd15) begin\n                         drain_col <= 4'd0;\n                         if (drain_row == 4'd15) begin\n                             state <= S_IDLE;\n                             done <= 1'b1;\n-                        end else drain_row <= drain_row + 1'b1;\n-                    end else drain_col <= drain_col + 1'b1;\n+                        end else begin\n+                            drain_row <= drain_row + 1'b1;\n+                            state <= S_DRAIN_LOAD;\n+                        end\n+                    end else begin\n+                        drain_col <= drain_col + 1'b1;\n+                    end\n                 end\n                 default: state <= S_IDLE;\n             endcase\n         end\n     end\n \n-    // Resetless datapath storage avoids a reset tree across 9216 accumulator\n-    // bits. Every accepted operation synchronously initializes all cells.\n     generate\n         for (gr = 0; gr < 16; gr = gr + 1) begin : g_row\n             for (gc = 0; gc < 16; gc = gc + 1) begin : g_col\n@@ -162,5 +152,29 @@\n                 end\n             end\n         end\n+        for (gc = 0; gc < 16; gc = gc + 1) begin : g_drain_stage\n+            always @(posedge clk) begin\n+                if (state == S_DRAIN_LOAD) begin\n+                    case (drain_row)\n+                        4'd0: drain_row_data[gc] <= wide_accum[0][gc];\n+                        4'd1: drain_row_data[gc] <= wide_accum[1][gc];\n+                        4'd2: drain_row_data[gc] <= wide_accum[2][gc];\n+                        4'd3: drain_row_data[gc] <= wide_accum[3][gc];\n+                        4'd4: drain_row_data[gc] <= wide_accum[4][gc];\n+                        4'd5: drain_row_data[gc] <= wide_accum[5][gc];\n+                        4'd6: drain_row_data[gc] <= wide_accum[6][gc];\n+                        4'd7: drain_row_data[gc] <= wide_accum[7][gc];\n+                        4'd8: drain_row_data[gc] <= wide_accum[8][gc];\n+                        4'd9: drain_row_data[gc] <= wide_accum[9][gc];\n+                        4'd10: drain_row_data[gc] <= wide_accum[10][gc];\n+                        4'd11: drain_row_data[gc] <= wide_accum[11][gc];\n+                        4'd12: drain_row_data[gc] <= wide_accum[12][gc];\n+                        4'd13: drain_row_data[gc] <= wide_accum[13][gc];\n+                        4'd14: drain_row_data[gc] <= wide_accum[14][gc];\n+                        default: drain_row_data[gc] <= wide_accum[15][gc];\n+                    endcase\n+                end\n+            end\n+        end\n     endgenerate\n endmodule\n"
+    },
+    {
+      "y": 4,
+      "result": "fail",
+      "target_mhz": 820.0,
+      "extracted_fmax_mhz": 900.93,
+      "gain_from_previous_mhz": 63.247,
+      "goal": "Split the Y3 24-bit fold carry chain into registered 12-bit slices and close at 820 MHz.",
+      "rtl_change": "split signed 24-bit fold into registered low/high 12-bit additions with explicit carry",
+      "physical_design_change": null,
+      "bugs_found": [
+        "Two extracted max-capacitance violations remain despite clean timing, routing, DRC, antenna, slew, and fanout checks."
+      ],
+      "learnings": "The registered fold split raised extracted fmax from 837.683 to 900.93 MHz and moved the worst setup path to the 12-bit per-cycle chunk accumulator. Y5 must preserve this architecture, strengthen report-driven capacitance repair beyond CAP_MARGIN=22, and select a target below the measured 900.93 MHz ceiling.",
+      "worst_startpoint": "chunk_accum[186][0]$_SDFFE_PP0P_",
+      "worst_endpoint": "chunk_accum[186][11]$_SDFFE_PP0P_",
+      "setup_wns_ns": 0.109536,
+      "max_cap_violations": 2,
+      "provenance": {
+        "trial": {
+          "path": "experiments/x4/trials.jsonl",
+          "sha256": "38f572a1e5e724aadb5dc7cf8e2b46ae53656d120d58fc4bc74dda21ae18571c"
+        },
+        "timing": {
+          "path": "experiments/x4/artifacts/y4/timing_analysis.json",
+          "sha256": "f139aabcd5302fd2cf68a2f26a6dcdb8481d9d52a9e49a52980e07db73f9bd69"
+        },
+        "design": {
+          "path": "experiments/x4/DESIGN_Y4.md",
+          "sha256": "03561cdacdebb937646e98c840af970515b8232985a97e076dc16082ba47d83f"
+        },
+        "rtl": {
+          "path": "experiments/x4/rtl/x4_y4_kimi.v",
+          "sha256": "6ddd1a194d8a9d730e017806cf22ac4522c35e50bb457b1ce3cb05222f931cb9"
+        },
+        "rtl_diff_sources": [
+          {
+            "path": "experiments/x4/rtl/x4_y3_kimi.v",
+            "sha256": "eaed624126a03b98b10774186b5665f4c8d89adb1ec288ab8196179094340cac"
+          },
+          {
+            "path": "experiments/x4/rtl/x4_y4_kimi.v",
+            "sha256": "6ddd1a194d8a9d730e017806cf22ac4522c35e50bb457b1ce3cb05222f931cb9"
+          }
+        ]
+      },
+      "rtl_diff": "--- experiments/x4/rtl/x4_y3_kimi.v\n+++ experiments/x4/rtl/x4_y4_kimi.v\n@@ -1,10 +1,10 @@\n `timescale 1ns/1ps\n \n-// X4-Y3: split the Y2 report-proven combined row/column readout selector.\n+// X4-Y4: split the Y2 report-proven combined row/column readout selector.\n // S_DRAIN_LOAD registers one selected accumulator row. S_DRAIN_WRITE then\n // selects a column from that registered row, so drain_row and drain_col no\n // longer feed the same out_wdata register-to-register path.\n-module x4_y3_kimi (\n+module x4_y4_kimi (\n     input  wire         clk,\n     input  wire         rst_n,\n     input  wire         start,\n@@ -21,14 +21,15 @@\n     output wire         busy,\n     output reg          done\n );\n-    localparam S_IDLE        = 3'd0;\n-    localparam S_REQ         = 3'd1;\n-    localparam S_ACCUM       = 3'd2;\n-    localparam S_FOLD        = 3'd3;\n-    localparam S_DRAIN_LOAD  = 3'd4;\n-    localparam S_DRAIN_WRITE = 3'd5;\n+    localparam S_IDLE        = 4'd0;\n+    localparam S_REQ         = 4'd1;\n+    localparam S_ACCUM       = 4'd2;\n+    localparam S_FOLD_LO     = 4'd3;\n+    localparam S_FOLD_HI     = 4'd4;\n+    localparam S_DRAIN_LOAD  = 4'd5;\n+    localparam S_DRAIN_WRITE = 4'd6;\n \n-    reg [2:0] state;\n+    reg [3:0] state;\n     reg [15:0] k_dim_q;\n     reg [15:0] issued;\n     reg [15:0] consumed;\n@@ -38,6 +39,7 @@\n \n     reg signed [11:0] chunk_accum [0:15][0:15];\n     reg signed [23:0] wide_accum  [0:15][0:15];\n+    reg fold_carry [0:15][0:15];\n     reg signed [23:0] drain_row_data [0:15];\n \n     genvar gr, gc;\n@@ -92,13 +94,16 @@\n                     if ((chunk_count == 5'd15) || (consumed + 1'b1 == k_dim_q)) begin\n                         fold_finishes_run <= (consumed + 1'b1 == k_dim_q);\n                         chunk_count <= 5'd0;\n-                        state <= S_FOLD;\n+                        state <= S_FOLD_LO;\n                     end else begin\n                         chunk_count <= chunk_count + 1'b1;\n                         state <= S_REQ;\n                     end\n                 end\n-                S_FOLD: begin\n+                S_FOLD_LO: begin\n+                    state <= S_FOLD_HI;\n+                end\n+                S_FOLD_HI: begin\n                     if (fold_finishes_run) begin\n                         drain_row <= 4'd0;\n                         drain_col <= 4'd0;\n@@ -143,10 +148,15 @@\n                     if (state == S_IDLE && start) begin\n                         chunk_accum[gr][gc] <= 12'sd0;\n                         wide_accum[gr][gc] <= 24'sd0;\n+                        fold_carry[gr][gc] <= 1'b0;\n                     end else if (state == S_ACCUM) begin\n                         chunk_accum[gr][gc] <= chunk_accum[gr][gc] + {{4{product[7]}}, product};\n-                    end else if (state == S_FOLD) begin\n-                        wide_accum[gr][gc] <= wide_accum[gr][gc] + {{12{chunk_accum[gr][gc][11]}}, chunk_accum[gr][gc]};\n+                    end else if (state == S_FOLD_LO) begin\n+                        {fold_carry[gr][gc], wide_accum[gr][gc][11:0]} <=\n+                            {1'b0, wide_accum[gr][gc][11:0]} + {1'b0, chunk_accum[gr][gc]};\n+                    end else if (state == S_FOLD_HI) begin\n+                        wide_accum[gr][gc][23:12] <= wide_accum[gr][gc][23:12] +\n+                            {12{chunk_accum[gr][gc][11]}} + {{11{1'b0}}, fold_carry[gr][gc]};\n                         chunk_accum[gr][gc] <= 12'sd0;\n                     end\n                 end\n"
+    },
+    {
+      "y": 5,
+      "result": "pass",
+      "target_mhz": 880.0,
+      "extracted_fmax_mhz": 909.621,
+      "gain_from_previous_mhz": 8.691,
+      "goal": "Repair Y4's extracted max-capacitance failures with report-driven CAP_MARGIN=30 and close monotonically higher at 880 MHz.",
+      "rtl_change": "preserved Y4 registered two-slice fold",
+      "physical_design_change": "raised CAP_MARGIN from 22 to 30 based on Y4's two extracted max-capacitance violations",
+      "bugs_found": [
+        "The first Y5 launch synced RTL to the wrong remote directory and failed before synthesis; the corrected launch produced the canonical physical result."
+      ],
+      "learnings": "CAP_MARGIN=30 removed Y4's two extracted capacitance violations while preserving the registered fold architecture and closing 880 MHz. X4 finishes at 909.621 MHz extracted fmax; the remaining worst path is a 19-cell chunk-to-low-wide-accumulator path. X5 remains pending by protocol.",
+      "worst_startpoint": "chunk_accum[156][1]$_SDFFE_PP0P_",
+      "worst_endpoint": "wide_accum[156][11]$_SDFFE_PP0P_",
+      "setup_wns_ns": 0.037041,
+      "max_cap_violations": 0,
+      "provenance": {
+        "trial": {
+          "path": "experiments/x4/trials.jsonl",
+          "sha256": "38f572a1e5e724aadb5dc7cf8e2b46ae53656d120d58fc4bc74dda21ae18571c"
+        },
+        "timing": {
+          "path": "experiments/x4/artifacts/y5/timing_analysis.json",
+          "sha256": "dc735169bda5a2dd5958383ada06e178440e4ec09ba21a58477c910e82ee82d5"
+        },
+        "design": {
+          "path": "experiments/x4/DESIGN_Y5.md",
+          "sha256": "32c25dccb4432a10988a5b03c15b96e1810bdc14fe580f59597ba66733e83c8d"
+        },
+        "rtl": {
+          "path": "experiments/x4/rtl/x4_y5_kimi.v",
+          "sha256": "9e8a9e09d77daf275a108301dbb3f33033147c93ab33010ab3e2bc5f30d4c942"
+        },
+        "rtl_diff_sources": [
+          {
+            "path": "experiments/x4/rtl/x4_y4_kimi.v",
+            "sha256": "6ddd1a194d8a9d730e017806cf22ac4522c35e50bb457b1ce3cb05222f931cb9"
+          },
+          {
+            "path": "experiments/x4/rtl/x4_y5_kimi.v",
+            "sha256": "9e8a9e09d77daf275a108301dbb3f33033147c93ab33010ab3e2bc5f30d4c942"
+          }
+        ]
+      },
+      "rtl_diff": "--- experiments/x4/rtl/x4_y4_kimi.v\n+++ experiments/x4/rtl/x4_y5_kimi.v\n@@ -1,10 +1,9 @@\n `timescale 1ns/1ps\n \n-// X4-Y4: split the Y2 report-proven combined row/column readout selector.\n-// S_DRAIN_LOAD registers one selected accumulator row. S_DRAIN_WRITE then\n-// selects a column from that registered row, so drain_row and drain_col no\n-// longer feed the same out_wdata register-to-register path.\n-module x4_y4_kimi (\n+// X4-Y5: preserve Y4's report-proven registered readout and two-slice fold.\n+// The Y5 improvement is physical-design capacitance repair driven by Y4's\n+// two final extracted max-capacitance violations.\n+module x4_y5_kimi (\n     input  wire         clk,\n     input  wire         rst_n,\n     input  wire         start,\n"
+    }
+  ]
+}

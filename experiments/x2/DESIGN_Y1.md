@@ -1,0 +1,11 @@
+# X2-Y1 Design Notes
+
+X2-Y1 preserves X1-Y5's 16 row-local accumulator banks and non-shifting indexed row/column readout, then puts that baseline behind executable lint gates. The SRAM gate requires an explicit external macro boundary and rejects inferred behavioral arrays. The arithmetic gate proves that the 24-bit signed accumulator covers the configured signed INT4 range through K=4095. The response-control gate requires one response-valid-gated accumulation site with consume tracking, preventing a registered SRAM response from being counted twice.
+
+The local regression passed K=7, K=0, and K=13 back-to-back operations with all 768 output writes verified. All three X2 policy gates passed. The full Nangate45 ORFS flow completed with `FLOW_RC=0`, detailed routing reached zero DRC after five repair iterations, and antenna analysis found zero violating nets and pins.
+
+Final extracted timing meets the 400 MHz target at 469.734 MHz estimated fmax. Setup worst slack is 0.371137 ns, hold worst slack is 0.00353068 ns, and setup and hold TNS are both zero. Setup, hold, max-slew, and max-fanout violation counts are zero. Final extraction nevertheless reports one max-capacitance violation at `place19247/Z`, with 63.89 fF load against a 60.65 fF limit and -3.23 fF slack. Under the matrix's strict electrical-clean criterion, X2-Y1 is therefore a failure rather than a pass.
+
+Synthesis reports 169,577.128 um² and 134,135 standard cells. The final route has 135,432 non-filler standard cells, 170,467 um² design area, and 376,446 total instances including 241,014 fillers and 3,620 tap cells inside an 846,722 um² core at 20.1326% utilization. Detailed routing took 2,778.05 seconds, peaked at 4,920.85 MB, used 3,275,717 um of wire and 958,188 vias, and reduced 30,633 initial violations to zero. The complete remote flow took 4,857 seconds. Power analysis estimates 225.47 mW total power, with 4.94027 mV worst VDD drop and 3.83586 mV worst VSS drop.
+
+The useful result is that the X2 lint layer itself is sound, but it does not replace final physical checks. X2-Y2 should keep the same verified logical architecture and executable policy gates, add a conservative capacitance repair margin, and require zero extracted max-capacitance violations before passing.

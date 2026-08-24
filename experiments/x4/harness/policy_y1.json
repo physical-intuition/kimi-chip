@@ -1,0 +1,48 @@
+{
+  "rtl_files": ["experiments/x4/rtl/x4_y1_kimi.v"],
+  "testbench_files": ["experiments/x4/tb/tb_x4_y1.v"],
+  "flow_files": ["experiments/x4/flow/config_y1.mk", "experiments/x4/flow/constraint_y1.sdc"],
+  "launch_files": ["experiments/x4/launch_remote_y1.sh"],
+  "history_patterns": "experiments/x4/harness/history_patterns.json",
+  "postroute_parser": "experiments/x4/harness/parse_timing.py",
+  "required_regression_fragments": [
+    "run_case(7)", "run_case(0)", "run_case(13)",
+    "run_case(15)", "run_case(16)", "run_case(17)",
+    "run_case(65535)", "signed-extrema", "busy-start",
+    "reset-abort", "clean restart", "act_req !== weight_req"
+  ],
+  "rules": {
+    "localized_stationary_drain": {
+      "evidence_pattern_ids": ["global_shift_drain_congestion"],
+      "executable_check": "Reject global accumulator shifts; require stationary row/column indexed drain."
+    },
+    "strict_extracted_electrical": {
+      "evidence_pattern_ids": ["final_extracted_max_capacitance"],
+      "executable_check": "Require CAP_MARGIN >= 21 before launch and parse final extracted setup/hold/slew/fanout/cap counts."
+    },
+    "external_sram_boundary": {
+      "evidence_pattern_ids": ["external_sram_boundary"],
+      "executable_check": "Require external SRAM interface ports and reject behavioral SRAM-like arrays."
+    },
+    "hierarchical_width_proof": {
+      "evidence_pattern_ids": ["accumulator_overflow"],
+      "executable_check": "Require signed 12-bit chunk, signed 24-bit wide state, fold at 16, fold-boundary tests, and K=65535."
+    },
+    "exactly_once_registered_response": {
+      "evidence_pattern_ids": ["exactly_once_registered_response"],
+      "executable_check": "Require one chunk update site, paired requests, and separate accumulation/fold states."
+    },
+    "control_plane_regression": {
+      "evidence_pattern_ids": ["control_plane_regression"],
+      "executable_check": "Require k_dim latching plus busy-start, reset-abort, clean-restart, signed-extrema, and tail tests."
+    },
+    "disk_preflight": {
+      "evidence_pattern_ids": ["artifact_disk_capacity"],
+      "executable_check": "Require launch-time df preflight with a fixed minimum free-space threshold."
+    },
+    "marker_exit_integrity": {
+      "evidence_pattern_ids": ["marker_exit_code_integrity"],
+      "executable_check": "Require PIPESTATUS capture and parseable FLOW_RC marker."
+    }
+  }
+}

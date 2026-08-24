@@ -1,0 +1,4 @@
+norm_mean_square=13274
+norm_scale_q14=181
+conv_max_sigmoid_error=0.062845
+conv_max_tanh_error=0.216271

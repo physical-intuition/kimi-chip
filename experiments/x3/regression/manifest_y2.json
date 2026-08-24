@@ -1,0 +1,10 @@
+{
+  "name": "x3-y2-signed-extrema-locked-functional-regression",
+  "locked_files": {
+    "experiments/x3/tb/tb_x3_y2.v": "f93450db7156ad7e41cbdf99c74e07b77c3a535d7a48a3474d9997a51279004f"
+  },
+  "required_cases": [7, 0, 13],
+  "required_outputs": 768,
+  "stimulus": "alternating signed INT4 extrema -8 and +7 across every lane",
+  "required_transcript": "PASS: X3-Y2 signed-extrema locked regression, K=7/0/13, 768 outputs verified"
+}

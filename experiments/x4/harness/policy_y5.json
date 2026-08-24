@@ -1,0 +1,17 @@
+{
+  "y": 5,
+  "target_mhz": 880,
+  "target_period_ns": 1.136364,
+  "target_basis": {
+    "source": "X4-Y4 final extracted timing and electrical reports",
+    "y4_target_mhz": 820,
+    "y4_fmax_mhz": 900.93,
+    "y4_wns_ns": 0.109536,
+    "y4_max_cap_violations": 2,
+    "selected_target_mhz": 880,
+    "reason": "880 MHz is monotonically above 820 MHz while retaining 20.93 MHz below Y4's measured ceiling. Y4 failed only two extracted max-capacitance checks, so Y5 raises CAP_MARGIN from 22 to the historically proven-clean 30."
+  },
+  "pd_change": "Raise CAP_MARGIN from 22 to 30 so placement and routing repair add sufficient buffering or resize the two report-proven overloaded nets.",
+  "latency_change": "None; Y4 RTL, SRAM behavior, output order/count, and mathematical result are preserved.",
+  "new_lint_rules": ["y4_max_cap_failure_is_actioned", "cap_margin_30"]
+}

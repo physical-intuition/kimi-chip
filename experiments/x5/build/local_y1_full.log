@@ -1,0 +1,73 @@
+{
+  "records": 5,
+  "max_setup_paths": [
+    {
+      "startpoint": "rst_n (input port clocked by core_clock)",
+      "endpoint": "out_wdata[22]$_DFFE_PN0P_",
+      "slack_ns": 0.71
+    },
+    {
+      "startpoint": "chunk_accum[156][1]$_SDFFE_PP0P_",
+      "endpoint": "wide_accum[156][11]$_SDFFE_PP0P_",
+      "slack_ns": 0.04
+    },
+    {
+      "startpoint": "rst_n (input port clocked by core_clock)",
+      "endpoint": "out_wdata[2]$_DFFE_PN0P_",
+      "slack_ns": 0.71
+    }
+  ],
+  "prior_fold_gain_ratio": 0.0755023081523678,
+  "derived_target_mhz": 937.092
+}
+DERIVED_FLOW target_mhz=937.092 period_ns=1.067131082 abc_ps=1068
+{
+  "status": "pass",
+  "checks": {
+    "x4_all_five_ingested": true,
+    "target_emerged_from_policy": true,
+    "x4_sources_hashed": true,
+    "external_sram_boundary": true,
+    "chunk_width_12": true,
+    "wide_width_24": true,
+    "fold_interval_16": true,
+    "three_stage_fold": true,
+    "registered_6bit_slices": true,
+    "no_remaining_12bit_low_add": true,
+    "no_direct_24bit_fold": true,
+    "tail_flush": true,
+    "max_k_65535_interface": true,
+    "request_comparator_stays_removed": true,
+    "registered_readout_preserved": true,
+    "x5_only_y1_exists": true,
+    "chunk_range_proof": true,
+    "wide_range_proof": true
+  },
+  "derived_target_mhz": 937.092,
+  "evidence": [
+    {
+      "cone": "registered chunk_accum to low wide_accum fold",
+      "evidence": "X4-Y5 worst max setup path has 19 combinational cells from chunk_accum[156][1] to wide_accum[156][11]",
+      "repair": "split the remaining low 12-bit fold addition into registered 6-bit slices"
+    }
+  ]
+}
+PASS K=7 outputs=256
+PASS K=0 outputs=256
+PASS busy-start ignored and k_dim remained latched
+PASS K=13 outputs=256
+PASS K=15 outputs=256
+PASS K=16 outputs=256
+PASS K=17 outputs=256
+PASS K=31 outputs=256
+PASS K=32 outputs=256
+PASS K=33 outputs=256
+PASS K=17 outputs=256
+PASS signed-extrema fold regression
+PASS reset-abort quiescence
+PASS K=17 outputs=256
+PASS clean restart after reset-abort
+PASS K=65535 outputs=256
+PASS: X4-Y5 registered two-slice fold, hierarchical fold, tail flush, reset/restart, signed extrema, exactly-once, and K=65535 verified
+/home/kit/kimi-chip/experiments/x5/tb/tb_x5_y1.v:128: $finish called at 1471216000 (1ps)
+LOCAL_X5_Y1_PASS
