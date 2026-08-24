@@ -8,6 +8,7 @@ logs/
 *.gds
 *.spef
 *.rtlil
+*.def
 
 # Build artifacts
 *.vcd

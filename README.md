@@ -45,7 +45,6 @@ kimi-chip/
 ├── tb/               # Testbenches
 ├── flow/             # ORFS configs and constraints
 ├── scripts/          # Rendering, screenshots, synthesis
-├── docs/             # Blog drafts, iteration notes
 ├── results/          # Layout images, netlists
 └── experiments/      # X1-X7 meta-harness experiments
     ├── x5/           # Best MAC array (1047 MHz)
