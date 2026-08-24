@@ -1,0 +1,10 @@
+export DESIGN_NAME = compute_core_v10a
+export DESIGN_NICKNAME = kimi_v10a_p075
+export PLATFORM = nangate45
+export VERILOG_FILES = $(wildcard $(DESIGN_HOME)/src/kimi_v10/*.v)
+export SDC_FILE = $(DESIGN_HOME)/nangate45/kimi_v10a_p075/constraint.sdc
+export CORE_UTILIZATION = 12
+export PLACE_DENSITY_LB_ADDON = 0.2
+export LEC_CHECK = 0
+export EQUIVALENCE_CHECK = 0
+export ABC_CLOCK_PERIOD_IN_PS = 0750

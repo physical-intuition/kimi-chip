@@ -1,0 +1,18 @@
+# X7 Y3 synthesis, Nangate45 2.0 ns target
+read_verilog -lib rtl/fakeram45_512x64.v
+read_verilog rtl/weight_sram.v rtl/state_sram.v rtl/activation_sram.v rtl/intermediate_sram.v
+read_verilog rtl/requant.v rtl/mac_array_16x16.v rtl/conv_unit_serial.v rtl/state_word_engine.v rtl/state_stream_controller.v rtl/streaming_norm.v rtl/x7_controller.v rtl/x7_top.v
+hierarchy -check -top x7_top
+proc
+memory_collect
+opt -full
+check
+stat -top x7_top
+opt_clean
+techmap
+opt_clean
+dfflibmap -liberty /home/kit/OpenROAD-flow-scripts/flow/platforms/nangate45/lib/NangateOpenCellLibrary_typical.lib
+abc -script flow/abc_y4_margin.script -liberty /home/kit/OpenROAD-flow-scripts/flow/platforms/nangate45/lib/NangateOpenCellLibrary_typical.lib -D 2000
+opt_clean
+stat -liberty /home/kit/OpenROAD-flow-scripts/flow/platforms/nangate45/lib/NangateOpenCellLibrary_typical.lib
+write_verilog -noattr artifacts/y4/x7_mapped.v

@@ -1,0 +1,17 @@
+export DESIGN_NAME = fullchip_sys16
+export DESIGN_NICKNAME = kimi_fullchip_sys16
+export PLATFORM = nangate45
+export VERILOG_FILES = $(wildcard $(DESIGN_HOME)/src/kimi_fullchip_sys16/*.v)
+export SDC_FILE = $(DESIGN_HOME)/nangate45/kimi_fullchip_sys16/constraint.sdc
+export ADDITIONAL_LEFS = $(PLATFORM_DIR)/lef/fakeram45_512x64.lef
+export ADDITIONAL_LIBS = $(PLATFORM_DIR)/lib/fakeram45_512x64.lib
+export CORE_UTILIZATION = 40
+export PLACE_DENSITY_LB_ADDON = 0.2
+export MACRO_PLACE_HALO = 10 10
+export SYNTH_MEMORY_MAX_BITS = 8192
+export LEC_CHECK = 0
+export EQUIVALENCE_CHECK = 0
+export ABC_CLOCK_PERIOD_IN_PS = 1000
+export GDS_ALLOW_EMPTY = fakeram45.*
+export SYNTH_HDL_FRONTEND = slang
+export MACRO_PLACE_CHANNEL = 20 20

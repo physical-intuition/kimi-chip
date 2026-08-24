@@ -1,0 +1,15 @@
+export DESIGN_NAME = inference_accelerator
+export DESIGN_NICKNAME = kimi_ctrlarm
+export PLATFORM = nangate45
+export VERILOG_FILES = $(wildcard $(DESIGN_HOME)/src/kimi_ctrlarm/*.v)
+export SDC_FILE = $(DESIGN_HOME)/nangate45/kimi_ctrlarm/constraint.sdc
+export CORE_UTILIZATION = 30
+export PLACE_DENSITY_LB_ADDON = 0.2
+export SYNTH_MEMORY_MAX_BITS = 4194304
+export LEC_CHECK = 0
+export EQUIVALENCE_CHECK = 0
+export ABC_CLOCK_PERIOD_IN_PS = 1330
+export TNS_END_PERCENT = 0
+export SKIP_CTS_REPAIR_TIMING = 1
+export SKIP_INCREMENTAL_REPAIR = 1
+export SKIP_LAST_GASP = 1

@@ -1,0 +1,29 @@
+Implement X7 Y1 completely in /home/kit/kimi-chip/experiments/x7. Do not commit or push.
+
+First read X7_SPEC.md, X7_HARNESS.md, golden/kda_golden.py, existing X7_BLOCKER.md and trials.jsonl, and inspect reusable X6 RTL/tests. The old X7 Y1 blocker used obsolete macro counts. Preserve that historical trial and append a new corrected Y1 trial rather than deleting history.
+
+The corrected physical contract is exact:
+- Use module fakeram45_512x64 for every SRAM macro. Keep its behavioral model for iverilog but read it as a library/blackbox for synthesis so Yosys does not map its internal reg array.
+- 16 weight macros total, four dedicated macros for each 128x128 INT8 matrix K, V, Q, O. Four macros operate in parallel for 256 bits or 32 INT8 weights each cycle. Provide a programming/preload interface used by the end-to-end test.
+- 8 state macros total, four per ping-pong 128x128 INT8 state bank. Four macros operate in parallel for 32 INT8 state elements per cycle. Both read and write paths must be exercised.
+- 4 activation macros total, two per I/O buffer. Input, residual, intermediate vector storage, and output must use these buffers in a realizable address map. Instantiate exactly 28 fakeram macros total in x7_top hierarchy.
+- No inferred reg-array storage outside the behavioral macro model. Small scalar/vector register files needed for serialized arithmetic may use flip-flop arrays only if clearly documented, but do not silently duplicate full matrices.
+
+Datapath contract:
+- Match golden/kda_golden.py bit exactly, including INT8 signed inputs and weights, saturating INT24 accumulation, requant arithmetic shift 8 plus INT8 saturation, sigmoid/tanh PWL definitions, state recurrence, RMSNorm Newton-Raphson algorithm and shift 4, then saturating residual.
+- Full dependency must be input -> K/V/Q -> conv alpha/beta -> state pass 1 and contraction -> state pass 2 and q output -> O projection -> iterative RMSNorm -> residual -> output. O projection must occur after state output exists.
+- Use a single serialized 16x16 signed INT8 MAC array with INT24 accumulator, time-multiplexed for K/V/Q/O. Do not tie enables low and do not bypass arithmetic.
+- Each projection consumes all 16384 weights over 512 cycles at 32 weights/cycle. If the single 16x16 array needs internal serialization/pipelining, preserve externally visible memory bandwidth and document exact schedule.
+- State full-matrix scan is 512 cycles per pass at 32 elements/cycle. Update schedule/control to reflect realizable full scans rather than retaining obsolete 128-cycle state phases.
+- RMSNorm must be iterative, nominally 24 cycles: eight accumulation beats of 16 elements, two mean/setup cycles, six cycles for three Newton-Raphson iterations, eight output beats. It must implement the Python equations, not the old X6 leading-one LUT approximation.
+- Conv processes all 128 channels with four taps. The golden history duplicates current x across all four taps.
+
+Required deliverables:
+- Complete RTL module set under rtl, including macro, wrappers, MAC, requant, conv, state update, iterative norm, residual, controller and x7_top.
+- Deterministic vector generation derived from golden/kda_golden.py and standalone tests for macro count/storage, MAC/requant, conv, state, RMSNorm, plus one end-to-end top test with nonzero asymmetric input, weights and state. The test must compare every output element and updated state against golden and include explicit dependency checks by changing input and confirming output/state change. Avoid trivial zero or identity-only vectors that let missing stages pass.
+- A run_tests.sh or equivalent that runs all tests and fails nonzero.
+- Synthesis using flow/synth_x7.ys into artifacts/y1/synth.log, with fakeram treated as blackbox. Ensure hierarchy retains exactly 28 macro instances and synthesis completes without OOM. Extract a real ABC delay/critical path estimate against Nangate45. If delay exceeds 2.0 ns, analyze the actual path and make another corrected Y1 implementation pass before finishing, or report the measured failure truthfully.
+- Append a JSON line to trials.jsonl containing x=7, y=1, goal, result, functional results, exact macro counts, timing_ns, area_um2 or gate/cell area from stat, critical_path, and next_fix. Real metrics only.
+- Write artifacts/y1/summary.md explaining architecture, exact cycle schedule, verification, synthesis, timing and remaining caveats.
+
+Do not stop at another architecture discussion. Build and run it. Do not claim P&R/signoff from Yosys. Do not use tied-low or shortcut datapaths. Do not commit or push.

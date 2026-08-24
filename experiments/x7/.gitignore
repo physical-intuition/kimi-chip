@@ -1,0 +1,11 @@
+a.out
+build/
+*.log
+*.typescript
+rtl_y2_backup_*/
+__pycache__/
+artifacts/y3/path_*.txt
+artifacts/y3/synth_close1.log
+artifacts/y3/synth_debug*.log
+artifacts/y3/synth_stage*.log
+artifacts/y3/tests_stage*.log

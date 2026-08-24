@@ -1,0 +1,3 @@
+dependency output 92 state 13414
+PASS tb_x7_units MAC/requant/conv/state/iterative_norm
+PASS tb_x7_top full two-token golden flow cycles=74480 macros=32

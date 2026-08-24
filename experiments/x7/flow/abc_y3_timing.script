@@ -1,0 +1,7 @@
+strash
+dretime
+retime -o -D 2000
+map -D 2000
+topo
+stime -p
+print_delay
