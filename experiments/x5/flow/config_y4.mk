@@ -3,9 +3,9 @@ export DESIGN_NAME = x5_y4_kimi
 export PLATFORM = nangate45
 
 # Paths relative to this config file
-KIMI_ROOT := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))../..
-export VERILOG_FILES = $(KIMI_ROOT)/rtl/x5_y4_kimi.v
-export SDC_FILE = $(KIMI_ROOT)/flow/constraint_y4.sdc
+CONFIG_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
+export VERILOG_FILES = $(CONFIG_DIR)../rtl/x5_y4_kimi.v
+export SDC_FILE = $(CONFIG_DIR)constraint_y4.sdc
 
 export CORE_UTILIZATION = 18
 export PLACE_DENSITY_LB_ADDON = 0.04
