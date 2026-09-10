@@ -1,0 +1,11 @@
+Baseline audit_top with complete state management:
+- MLA KV cache (growing, O(T) reads per token)
+- KDA state SRAM (fixed 32x32 per head, read-modify-write)
+- Conv history shift registers (3 streams x 3 taps x 64 width)
+- Layer controller FSM ("LF" pattern: KDA layer 0, MLA layer 1)
+
+Target: synthesize and route on Nangate45 at 100 MHz with zero DRC violations.
+Identify critical path for next iteration.
+
+This is the REAL baseline - includes all state/cache that X1-X7 was missing.
+KV cache timing is expected to be the bottleneck due to O(T) SRAM reads.
