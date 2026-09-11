@@ -1,0 +1,6 @@
+violation type: Short
+	srcs: net:_1673_ net:conv_hist_l0.history\[65\]\[25\]
+	bbox = (152.2500, 119.4900) - (152.2900, 119.6300) on Layer metal2
+violation type: Short
+	srcs: net:_1673_ net:conv_hist_l0.history\[65\]\[25\]
+	bbox = (152.2500, 119.4900) - (152.3200, 119.6300) on Layer metal2
