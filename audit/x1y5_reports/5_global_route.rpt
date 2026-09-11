@@ -1,0 +1,650 @@
+
+==========================================================================
+global route report_tns
+--------------------------------------------------------------------------
+tns max 0.00
+
+==========================================================================
+global route report_wns
+--------------------------------------------------------------------------
+wns max 0.00
+
+==========================================================================
+global route report_worst_slack
+--------------------------------------------------------------------------
+worst slack max 8.25
+
+==========================================================================
+global route report_clock_min_period
+--------------------------------------------------------------------------
+core_clock period_min = 1.75 fmax = 570.52
+
+==========================================================================
+global route report_clock_skew
+--------------------------------------------------------------------------
+Clock core_clock
+   0.21 source latency ctrl.current_phase[0]$_DFFE_PN0P_/CK ^
+  -0.22 target latency conv_hist_l0.history[0][7]$_DFFE_PN0P_/CK ^
+   0.00 CRPR
+--------------
+  -0.01 setup skew
+
+
+==========================================================================
+global route report_checks -path_delay min
+--------------------------------------------------------------------------
+Startpoint: rst_n (input port clocked by core_clock)
+Endpoint: ctrl.h_reg[24]$_DFFE_PN0P_
+          (removal check against rising-edge clock core_clock)
+Path Group: asynchronous
+Path Type: min
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                          0.00    0.00   clock core_clock (rise edge)
+                          0.00    0.00   clock network delay (propagated)
+                          0.50    0.50 ^ input external delay
+     1    4.47    0.00    0.00    0.50 ^ rst_n (in)
+                                         rst_n (net)
+                  0.00    0.00    0.50 ^ input65/A (CLKBUF_X3)
+    35   94.03    0.06    0.08    0.58 ^ input65/Z (CLKBUF_X3)
+                                         net64 (net)
+                  0.07    0.02    0.60 ^ ctrl.h_reg[24]$_DFFE_PN0P_/RN (DFFR_X1)
+                                  0.60   data arrival time
+
+                          0.00    0.00   clock core_clock (rise edge)
+                          0.00    0.00   clock source latency
+     1   22.18    0.00    0.00    0.00 ^ clk (in)
+                                         clk (net)
+                  0.00    0.00    0.00 ^ clkbuf_0_clk/A (CLKBUF_X3)
+     4   21.82    0.02    0.04    0.04 ^ clkbuf_0_clk/Z (CLKBUF_X3)
+                                         clknet_0_clk (net)
+                  0.02    0.00    0.05 ^ clkbuf_2_1_0_clk/A (CLKBUF_X3)
+     2   10.64    0.01    0.04    0.09 ^ clkbuf_2_1_0_clk/Z (CLKBUF_X3)
+                                         clknet_2_1_0_clk (net)
+                  0.01    0.00    0.09 ^ clkbuf_3_2_0_clk/A (CLKBUF_X3)
+     2    9.20    0.01    0.04    0.12 ^ clkbuf_3_2_0_clk/Z (CLKBUF_X3)
+                                         clknet_3_2_0_clk (net)
+                  0.01    0.00    0.12 ^ clkbuf_4_4__f_clk/A (CLKBUF_X3)
+     8   22.74    0.02    0.05    0.17 ^ clkbuf_4_4__f_clk/Z (CLKBUF_X3)
+                                         clknet_4_4__leaf_clk (net)
+                  0.02    0.00    0.17 ^ clkbuf_leaf_93_clk/A (CLKBUF_X3)
+     8   10.81    0.01    0.04    0.21 ^ clkbuf_leaf_93_clk/Z (CLKBUF_X3)
+                                         clknet_leaf_93_clk (net)
+                  0.01    0.00    0.21 ^ ctrl.h_reg[24]$_DFFE_PN0P_/CK (DFFR_X1)
+                          0.00    0.21   clock reconvergence pessimism
+                          0.27    0.48   library removal time
+                                  0.48   data required time
+-----------------------------------------------------------------------------
+                                  0.48   data required time
+                                 -0.60   data arrival time
+-----------------------------------------------------------------------------
+                                  0.12   slack (MET)
+
+
+Startpoint: ctrl.phase_cycle[0]$_DFFE_PN0P_
+            (rising edge-triggered flip-flop clocked by core_clock)
+Endpoint: ctrl.phase_cycle[0]$_DFFE_PN0P_
+          (rising edge-triggered flip-flop clocked by core_clock)
+Path Group: core_clock
+Path Type: min
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                          0.00    0.00   clock core_clock (rise edge)
+                          0.00    0.00   clock source latency
+     1   22.18    0.00    0.00    0.00 ^ clk (in)
+                                         clk (net)
+                  0.00    0.00    0.00 ^ clkbuf_0_clk/A (CLKBUF_X3)
+     4   21.82    0.02    0.04    0.04 ^ clkbuf_0_clk/Z (CLKBUF_X3)
+                                         clknet_0_clk (net)
+                  0.02    0.00    0.05 ^ clkbuf_2_0_0_clk/A (CLKBUF_X3)
+     2   11.85    0.01    0.04    0.09 ^ clkbuf_2_0_0_clk/Z (CLKBUF_X3)
+                                         clknet_2_0_0_clk (net)
+                  0.01    0.00    0.09 ^ clkbuf_3_0_0_clk/A (CLKBUF_X3)
+     2    9.67    0.01    0.04    0.12 ^ clkbuf_3_0_0_clk/Z (CLKBUF_X3)
+                                         clknet_3_0_0_clk (net)
+                  0.01    0.00    0.12 ^ clkbuf_4_0__f_clk/A (CLKBUF_X3)
+     7   20.14    0.02    0.04    0.17 ^ clkbuf_4_0__f_clk/Z (CLKBUF_X3)
+                                         clknet_4_0__leaf_clk (net)
+                  0.02    0.00    0.17 ^ clkbuf_leaf_116_clk/A (CLKBUF_X3)
+     6   11.35    0.01    0.04    0.21 ^ clkbuf_leaf_116_clk/Z (CLKBUF_X3)
+                                         clknet_leaf_116_clk (net)
+                  0.01    0.00    0.21 ^ ctrl.phase_cycle[0]$_DFFE_PN0P_/CK (DFFR_X1)
+     1    2.00    0.01    0.07    0.28 v ctrl.phase_cycle[0]$_DFFE_PN0P_/QN (DFFR_X1)
+                                         _0002_ (net)
+                  0.01    0.00    0.28 v _5546_/A1 (NAND3_X1)
+     1    1.93    0.01    0.02    0.30 ^ _5546_/ZN (NAND3_X1)
+                                         _1472_ (net)
+                  0.01    0.00    0.30 ^ _5548_/A (OAI21_X1)
+     1    1.61    0.01    0.01    0.31 v _5548_/ZN (OAI21_X1)
+                                         _0042_ (net)
+                  0.01    0.00    0.31 v ctrl.phase_cycle[0]$_DFFE_PN0P_/D (DFFR_X1)
+                                  0.31   data arrival time
+
+                          0.00    0.00   clock core_clock (rise edge)
+                          0.00    0.00   clock source latency
+     1   22.18    0.00    0.00    0.00 ^ clk (in)
+                                         clk (net)
+                  0.00    0.00    0.00 ^ clkbuf_0_clk/A (CLKBUF_X3)
+     4   21.82    0.02    0.04    0.04 ^ clkbuf_0_clk/Z (CLKBUF_X3)
+                                         clknet_0_clk (net)
+                  0.02    0.00    0.05 ^ clkbuf_2_0_0_clk/A (CLKBUF_X3)
+     2   11.85    0.01    0.04    0.09 ^ clkbuf_2_0_0_clk/Z (CLKBUF_X3)
+                                         clknet_2_0_0_clk (net)
+                  0.01    0.00    0.09 ^ clkbuf_3_0_0_clk/A (CLKBUF_X3)
+     2    9.67    0.01    0.04    0.12 ^ clkbuf_3_0_0_clk/Z (CLKBUF_X3)
+                                         clknet_3_0_0_clk (net)
+                  0.01    0.00    0.12 ^ clkbuf_4_0__f_clk/A (CLKBUF_X3)
+     7   20.14    0.02    0.04    0.17 ^ clkbuf_4_0__f_clk/Z (CLKBUF_X3)
+                                         clknet_4_0__leaf_clk (net)
+                  0.02    0.00    0.17 ^ clkbuf_leaf_116_clk/A (CLKBUF_X3)
+     6   11.35    0.01    0.04    0.21 ^ clkbuf_leaf_116_clk/Z (CLKBUF_X3)
+                                         clknet_leaf_116_clk (net)
+                  0.01    0.00    0.21 ^ ctrl.phase_cycle[0]$_DFFE_PN0P_/CK (DFFR_X1)
+                          0.00    0.21   clock reconvergence pessimism
+                          0.01    0.22   library hold time
+                                  0.22   data required time
+-----------------------------------------------------------------------------
+                                  0.22   data required time
+                                 -0.31   data arrival time
+-----------------------------------------------------------------------------
+                                  0.10   slack (MET)
+
+
+
+==========================================================================
+global route report_checks -path_delay max
+--------------------------------------------------------------------------
+Startpoint: rst_n (input port clocked by core_clock)
+Endpoint: conv_hist_l0.history[193][19]$_DFFE_PN0P_
+          (recovery check against rising-edge clock core_clock)
+Path Group: asynchronous
+Path Type: max
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                          0.00    0.00   clock core_clock (rise edge)
+                          0.00    0.00   clock network delay (propagated)
+                          0.50    0.50 ^ input external delay
+     1    4.47    0.00    0.00    0.50 ^ rst_n (in)
+                                         rst_n (net)
+                  0.00    0.00    0.50 ^ input65/A (CLKBUF_X3)
+    35   94.03    0.06    0.08    0.58 ^ input65/Z (CLKBUF_X3)
+                                         net64 (net)
+                  0.06    0.00    0.58 ^ place444/A (BUF_X4)
+    65  167.02    0.09    0.11    0.69 ^ place444/Z (BUF_X4)
+                                         net434 (net)
+                  0.10    0.03    0.72 ^ place443/A (BUF_X8)
+   116  303.58    0.05    0.07    0.79 ^ place443/Z (BUF_X8)
+                                         net433 (net)
+                  0.14    0.10    0.88 ^ place442/A (BUF_X4)
+    69  166.83    0.09    0.11    1.00 ^ place442/Z (BUF_X4)
+                                         net432 (net)
+                  0.09    0.02    1.02 ^ conv_hist_l0.history[193][19]$_DFFE_PN0P_/RN (DFFR_X1)
+                                  1.02   data arrival time
+
+                         10.00   10.00   clock core_clock (rise edge)
+                          0.00   10.00   clock source latency
+     1   22.18    0.00    0.00   10.00 ^ clk (in)
+                                         clk (net)
+                  0.00    0.00   10.00 ^ clkbuf_0_clk/A (CLKBUF_X3)
+     4   21.82    0.02    0.04   10.04 ^ clkbuf_0_clk/Z (CLKBUF_X3)
+                                         clknet_0_clk (net)
+                  0.02    0.00   10.05 ^ clkbuf_2_2_0_clk/A (CLKBUF_X3)
+     2   12.44    0.01    0.04   10.09 ^ clkbuf_2_2_0_clk/Z (CLKBUF_X3)
+                                         clknet_2_2_0_clk (net)
+                  0.01    0.00   10.09 ^ clkbuf_3_5_0_clk/A (CLKBUF_X3)
+     2    9.48    0.01    0.04   10.12 ^ clkbuf_3_5_0_clk/Z (CLKBUF_X3)
+                                         clknet_3_5_0_clk (net)
+                  0.01    0.00   10.13 ^ clkbuf_4_10__f_clk/A (CLKBUF_X3)
+     8   25.36    0.02    0.05   10.17 ^ clkbuf_4_10__f_clk/Z (CLKBUF_X3)
+                                         clknet_4_10__leaf_clk (net)
+                  0.02    0.00   10.17 ^ clkbuf_leaf_28_clk/A (CLKBUF_X3)
+     6    9.74    0.01    0.04   10.22 ^ clkbuf_leaf_28_clk/Z (CLKBUF_X3)
+                                         clknet_leaf_28_clk (net)
+                  0.01    0.00   10.22 ^ conv_hist_l0.history[193][19]$_DFFE_PN0P_/CK (DFFR_X1)
+                          0.00   10.22   clock reconvergence pessimism
+                          0.04   10.26   library recovery time
+                                 10.26   data required time
+-----------------------------------------------------------------------------
+                                 10.26   data required time
+                                 -1.02   data arrival time
+-----------------------------------------------------------------------------
+                                  9.24   slack (MET)
+
+
+Startpoint: ctrl.current_phase[1]$_DFFE_PN0P_
+            (rising edge-triggered flip-flop clocked by core_clock)
+Endpoint: debug_state_hash[25] (output port clocked by core_clock)
+Path Group: core_clock
+Path Type: max
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                          0.00    0.00   clock core_clock (rise edge)
+                          0.00    0.00   clock source latency
+     1   22.18    0.00    0.00    0.00 ^ clk (in)
+                                         clk (net)
+                  0.00    0.00    0.00 ^ clkbuf_0_clk/A (CLKBUF_X3)
+     4   21.82    0.02    0.04    0.04 ^ clkbuf_0_clk/Z (CLKBUF_X3)
+                                         clknet_0_clk (net)
+                  0.02    0.00    0.05 ^ clkbuf_2_0_0_clk/A (CLKBUF_X3)
+     2   11.85    0.01    0.04    0.09 ^ clkbuf_2_0_0_clk/Z (CLKBUF_X3)
+                                         clknet_2_0_0_clk (net)
+                  0.01    0.00    0.09 ^ clkbuf_3_0_0_clk/A (CLKBUF_X3)
+     2    9.67    0.01    0.04    0.12 ^ clkbuf_3_0_0_clk/Z (CLKBUF_X3)
+                                         clknet_3_0_0_clk (net)
+                  0.01    0.00    0.12 ^ clkbuf_4_1__f_clk/A (CLKBUF_X3)
+     6   20.01    0.02    0.04    0.17 ^ clkbuf_4_1__f_clk/Z (CLKBUF_X3)
+                                         clknet_4_1__leaf_clk (net)
+                  0.02    0.00    0.17 ^ clkbuf_leaf_106_clk/A (CLKBUF_X3)
+     5   11.08    0.01    0.04    0.21 ^ clkbuf_leaf_106_clk/Z (CLKBUF_X3)
+                                         clknet_leaf_106_clk (net)
+                  0.01    0.00    0.21 ^ ctrl.current_phase[1]$_DFFE_PN0P_/CK (DFFR_X1)
+     9   24.31    0.06    0.16    0.37 ^ ctrl.current_phase[1]$_DFFE_PN0P_/Q (DFFR_X1)
+                                         conv_hist_l0.read_stream[1] (net)
+                  0.06    0.00    0.37 ^ _8803_/B (HA_X1)
+     2    6.07    0.02    0.05    0.42 ^ _8803_/CO (HA_X1)
+                                         _0012_ (net)
+                  0.02    0.00    0.42 ^ _8542_/A (INV_X1)
+     1    3.55    0.01    0.01    0.43 v _8542_/ZN (INV_X1)
+                                         _0017_ (net)
+                  0.01    0.00    0.43 v _8794_/B (HA_X1)
+    12   43.80    0.05    0.08    0.51 v _8794_/CO (HA_X1)
+                                         _0018_ (net)
+                  0.05    0.01    0.52 v _4746_/A2 (AND2_X2)
+     9   27.06    0.02    0.06    0.58 v _4746_/ZN (AND2_X2)
+                                         _0717_ (net)
+                  0.02    0.00    0.58 v max_cap456/A (BUF_X4)
+    28  100.99    0.02    0.05    0.63 v max_cap456/Z (BUF_X4)
+                                         net446 (net)
+                  0.03    0.01    0.64 v _4748_/A3 (OR4_X2)
+     1    5.93    0.02    0.12    0.76 v _4748_/ZN (OR4_X2)
+                                         _0719_ (net)
+                  0.02    0.00    0.76 v _4759_/A (AOI21_X4)
+    25   90.19    0.11    0.14    0.90 ^ _4759_/ZN (AOI21_X4)
+                                         _0730_ (net)
+                  0.11    0.01    0.90 ^ _4760_/A2 (NAND2_X2)
+    28  109.92    0.10    0.15    1.05 v _4760_/ZN (NAND2_X2)
+                                         _0731_ (net)
+                  0.10    0.01    1.06 v _4920_/A1 (OAI22_X1)
+     1   10.12    0.07    0.11    1.17 ^ _4920_/ZN (OAI22_X1)
+                                         _0886_ (net)
+                  0.07    0.00    1.18 ^ _4923_/A (XNOR2_X1)
+     1    1.22    0.02    0.05    1.23 ^ _4923_/ZN (XNOR2_X1)
+                                         net100 (net)
+                  0.02    0.00    1.23 ^ output103/A (BUF_X1)
+     1    1.77    0.01    0.03    1.25 ^ output103/Z (BUF_X1)
+                                         debug_state_hash[25] (net)
+                  0.01    0.00    1.25 ^ debug_state_hash[25] (out)
+                                  1.25   data arrival time
+
+                         10.00   10.00   clock core_clock (rise edge)
+                          0.00   10.00   clock network delay (propagated)
+                          0.00   10.00   clock reconvergence pessimism
+                         -0.50    9.50   output external delay
+                                  9.50   data required time
+-----------------------------------------------------------------------------
+                                  9.50   data required time
+                                 -1.25   data arrival time
+-----------------------------------------------------------------------------
+                                  8.25   slack (MET)
+
+
+
+==========================================================================
+global route report_checks -unconstrained
+--------------------------------------------------------------------------
+Startpoint: rst_n (input port clocked by core_clock)
+Endpoint: conv_hist_l0.history[193][19]$_DFFE_PN0P_
+          (recovery check against rising-edge clock core_clock)
+Path Group: asynchronous
+Path Type: max
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                          0.00    0.00   clock core_clock (rise edge)
+                          0.00    0.00   clock network delay (propagated)
+                          0.50    0.50 ^ input external delay
+     1    4.47    0.00    0.00    0.50 ^ rst_n (in)
+                                         rst_n (net)
+                  0.00    0.00    0.50 ^ input65/A (CLKBUF_X3)
+    35   94.03    0.06    0.08    0.58 ^ input65/Z (CLKBUF_X3)
+                                         net64 (net)
+                  0.06    0.00    0.58 ^ place444/A (BUF_X4)
+    65  167.02    0.09    0.11    0.69 ^ place444/Z (BUF_X4)
+                                         net434 (net)
+                  0.10    0.03    0.72 ^ place443/A (BUF_X8)
+   116  303.58    0.05    0.07    0.79 ^ place443/Z (BUF_X8)
+                                         net433 (net)
+                  0.14    0.10    0.88 ^ place442/A (BUF_X4)
+    69  166.83    0.09    0.11    1.00 ^ place442/Z (BUF_X4)
+                                         net432 (net)
+                  0.09    0.02    1.02 ^ conv_hist_l0.history[193][19]$_DFFE_PN0P_/RN (DFFR_X1)
+                                  1.02   data arrival time
+
+                         10.00   10.00   clock core_clock (rise edge)
+                          0.00   10.00   clock source latency
+     1   22.18    0.00    0.00   10.00 ^ clk (in)
+                                         clk (net)
+                  0.00    0.00   10.00 ^ clkbuf_0_clk/A (CLKBUF_X3)
+     4   21.82    0.02    0.04   10.04 ^ clkbuf_0_clk/Z (CLKBUF_X3)
+                                         clknet_0_clk (net)
+                  0.02    0.00   10.05 ^ clkbuf_2_2_0_clk/A (CLKBUF_X3)
+     2   12.44    0.01    0.04   10.09 ^ clkbuf_2_2_0_clk/Z (CLKBUF_X3)
+                                         clknet_2_2_0_clk (net)
+                  0.01    0.00   10.09 ^ clkbuf_3_5_0_clk/A (CLKBUF_X3)
+     2    9.48    0.01    0.04   10.12 ^ clkbuf_3_5_0_clk/Z (CLKBUF_X3)
+                                         clknet_3_5_0_clk (net)
+                  0.01    0.00   10.13 ^ clkbuf_4_10__f_clk/A (CLKBUF_X3)
+     8   25.36    0.02    0.05   10.17 ^ clkbuf_4_10__f_clk/Z (CLKBUF_X3)
+                                         clknet_4_10__leaf_clk (net)
+                  0.02    0.00   10.17 ^ clkbuf_leaf_28_clk/A (CLKBUF_X3)
+     6    9.74    0.01    0.04   10.22 ^ clkbuf_leaf_28_clk/Z (CLKBUF_X3)
+                                         clknet_leaf_28_clk (net)
+                  0.01    0.00   10.22 ^ conv_hist_l0.history[193][19]$_DFFE_PN0P_/CK (DFFR_X1)
+                          0.00   10.22   clock reconvergence pessimism
+                          0.04   10.26   library recovery time
+                                 10.26   data required time
+-----------------------------------------------------------------------------
+                                 10.26   data required time
+                                 -1.02   data arrival time
+-----------------------------------------------------------------------------
+                                  9.24   slack (MET)
+
+
+Startpoint: ctrl.current_phase[1]$_DFFE_PN0P_
+            (rising edge-triggered flip-flop clocked by core_clock)
+Endpoint: debug_state_hash[25] (output port clocked by core_clock)
+Path Group: core_clock
+Path Type: max
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                          0.00    0.00   clock core_clock (rise edge)
+                          0.00    0.00   clock source latency
+     1   22.18    0.00    0.00    0.00 ^ clk (in)
+                                         clk (net)
+                  0.00    0.00    0.00 ^ clkbuf_0_clk/A (CLKBUF_X3)
+     4   21.82    0.02    0.04    0.04 ^ clkbuf_0_clk/Z (CLKBUF_X3)
+                                         clknet_0_clk (net)
+                  0.02    0.00    0.05 ^ clkbuf_2_0_0_clk/A (CLKBUF_X3)
+     2   11.85    0.01    0.04    0.09 ^ clkbuf_2_0_0_clk/Z (CLKBUF_X3)
+                                         clknet_2_0_0_clk (net)
+                  0.01    0.00    0.09 ^ clkbuf_3_0_0_clk/A (CLKBUF_X3)
+     2    9.67    0.01    0.04    0.12 ^ clkbuf_3_0_0_clk/Z (CLKBUF_X3)
+                                         clknet_3_0_0_clk (net)
+                  0.01    0.00    0.12 ^ clkbuf_4_1__f_clk/A (CLKBUF_X3)
+     6   20.01    0.02    0.04    0.17 ^ clkbuf_4_1__f_clk/Z (CLKBUF_X3)
+                                         clknet_4_1__leaf_clk (net)
+                  0.02    0.00    0.17 ^ clkbuf_leaf_106_clk/A (CLKBUF_X3)
+     5   11.08    0.01    0.04    0.21 ^ clkbuf_leaf_106_clk/Z (CLKBUF_X3)
+                                         clknet_leaf_106_clk (net)
+                  0.01    0.00    0.21 ^ ctrl.current_phase[1]$_DFFE_PN0P_/CK (DFFR_X1)
+     9   24.31    0.06    0.16    0.37 ^ ctrl.current_phase[1]$_DFFE_PN0P_/Q (DFFR_X1)
+                                         conv_hist_l0.read_stream[1] (net)
+                  0.06    0.00    0.37 ^ _8803_/B (HA_X1)
+     2    6.07    0.02    0.05    0.42 ^ _8803_/CO (HA_X1)
+                                         _0012_ (net)
+                  0.02    0.00    0.42 ^ _8542_/A (INV_X1)
+     1    3.55    0.01    0.01    0.43 v _8542_/ZN (INV_X1)
+                                         _0017_ (net)
+                  0.01    0.00    0.43 v _8794_/B (HA_X1)
+    12   43.80    0.05    0.08    0.51 v _8794_/CO (HA_X1)
+                                         _0018_ (net)
+                  0.05    0.01    0.52 v _4746_/A2 (AND2_X2)
+     9   27.06    0.02    0.06    0.58 v _4746_/ZN (AND2_X2)
+                                         _0717_ (net)
+                  0.02    0.00    0.58 v max_cap456/A (BUF_X4)
+    28  100.99    0.02    0.05    0.63 v max_cap456/Z (BUF_X4)
+                                         net446 (net)
+                  0.03    0.01    0.64 v _4748_/A3 (OR4_X2)
+     1    5.93    0.02    0.12    0.76 v _4748_/ZN (OR4_X2)
+                                         _0719_ (net)
+                  0.02    0.00    0.76 v _4759_/A (AOI21_X4)
+    25   90.19    0.11    0.14    0.90 ^ _4759_/ZN (AOI21_X4)
+                                         _0730_ (net)
+                  0.11    0.01    0.90 ^ _4760_/A2 (NAND2_X2)
+    28  109.92    0.10    0.15    1.05 v _4760_/ZN (NAND2_X2)
+                                         _0731_ (net)
+                  0.10    0.01    1.06 v _4920_/A1 (OAI22_X1)
+     1   10.12    0.07    0.11    1.17 ^ _4920_/ZN (OAI22_X1)
+                                         _0886_ (net)
+                  0.07    0.00    1.18 ^ _4923_/A (XNOR2_X1)
+     1    1.22    0.02    0.05    1.23 ^ _4923_/ZN (XNOR2_X1)
+                                         net100 (net)
+                  0.02    0.00    1.23 ^ output103/A (BUF_X1)
+     1    1.77    0.01    0.03    1.25 ^ output103/Z (BUF_X1)
+                                         debug_state_hash[25] (net)
+                  0.01    0.00    1.25 ^ debug_state_hash[25] (out)
+                                  1.25   data arrival time
+
+                         10.00   10.00   clock core_clock (rise edge)
+                          0.00   10.00   clock network delay (propagated)
+                          0.00   10.00   clock reconvergence pessimism
+                         -0.50    9.50   output external delay
+                                  9.50   data required time
+-----------------------------------------------------------------------------
+                                  9.50   data required time
+                                 -1.25   data arrival time
+-----------------------------------------------------------------------------
+                                  8.25   slack (MET)
+
+
+
+==========================================================================
+global route report_check_types -max_slew -max_cap -max_fanout -violators
+--------------------------------------------------------------------------
+
+==========================================================================
+global route max_slew_check_slack
+--------------------------------------------------------------------------
+0.0694180428981781
+
+==========================================================================
+global route max_slew_check_limit
+--------------------------------------------------------------------------
+0.1985349953174591
+
+==========================================================================
+global route max_slew_check_slack_limit
+--------------------------------------------------------------------------
+0.3497
+
+==========================================================================
+global route max_fanout_check_slack
+--------------------------------------------------------------------------
+1.0000000150474662e+30
+
+==========================================================================
+global route max_fanout_check_limit
+--------------------------------------------------------------------------
+1.0000000150474662e+30
+
+==========================================================================
+global route max_capacitance_check_slack
+--------------------------------------------------------------------------
+0.8769162893295288
+
+==========================================================================
+global route max_capacitance_check_limit
+--------------------------------------------------------------------------
+25.329599380493164
+
+==========================================================================
+global route max_capacitance_check_slack_limit
+--------------------------------------------------------------------------
+0.0346
+
+==========================================================================
+global route max_slew_violation_count
+--------------------------------------------------------------------------
+max slew violation count 0
+
+==========================================================================
+global route max_fanout_violation_count
+--------------------------------------------------------------------------
+max fanout violation count 0
+
+==========================================================================
+global route max_cap_violation_count
+--------------------------------------------------------------------------
+max cap violation count 0
+
+==========================================================================
+global route setup_violation_count
+--------------------------------------------------------------------------
+setup violation count 0
+
+==========================================================================
+global route hold_violation_count
+--------------------------------------------------------------------------
+hold violation count 0
+
+==========================================================================
+global route report_checks -path_delay max reg to reg
+--------------------------------------------------------------------------
+Startpoint: ctrl.current_phase[0]$_DFFE_PN0P_
+            (rising edge-triggered flip-flop clocked by core_clock)
+Endpoint: conv_hist_l0.history[225][4]$_DFFE_PN0P_
+          (rising edge-triggered flip-flop clocked by core_clock)
+Path Group: core_clock
+Path Type: max
+
+  Delay    Time   Description
+---------------------------------------------------------
+   0.00    0.00   clock core_clock (rise edge)
+   0.00    0.00   clock source latency
+   0.00    0.00 ^ clk (in)
+   0.04    0.04 ^ clkbuf_0_clk/Z (CLKBUF_X3)
+   0.04    0.09 ^ clkbuf_2_0_0_clk/Z (CLKBUF_X3)
+   0.04    0.12 ^ clkbuf_3_0_0_clk/Z (CLKBUF_X3)
+   0.05    0.17 ^ clkbuf_4_1__f_clk/Z (CLKBUF_X3)
+   0.04    0.21 ^ clkbuf_leaf_106_clk/Z (CLKBUF_X3)
+   0.00    0.21 ^ ctrl.current_phase[0]$_DFFE_PN0P_/CK (DFFR_X1)
+   0.13    0.34 ^ ctrl.current_phase[0]$_DFFE_PN0P_/Q (DFFR_X1)
+   0.15    0.48 ^ _8801_/CO (HA_X1)
+   0.08    0.56 ^ place425/Z (BUF_X4)
+   0.13    0.69 ^ place424/Z (BUF_X4)
+   0.11    0.80 ^ place423/Z (BUF_X4)
+   0.12    0.93 ^ _5596_/ZN (AND2_X1)
+   0.04    0.96 v _6868_/ZN (NOR3_X1)
+   0.15    1.11 ^ _6869_/ZN (NOR2_X4)
+   0.10    1.21 v _6911_/ZN (NAND2_X2)
+   0.10    1.31 v place351/Z (BUF_X2)
+   0.07    1.38 ^ _6960_/ZN (OAI22_X1)
+   0.00    1.38 ^ conv_hist_l0.history[225][4]$_DFFE_PN0P_/D (DFFR_X1)
+           1.38   data arrival time
+
+  10.00   10.00   clock core_clock (rise edge)
+   0.00   10.00   clock source latency
+   0.00   10.00 ^ clk (in)
+   0.04   10.04 ^ clkbuf_0_clk/Z (CLKBUF_X3)
+   0.04   10.09 ^ clkbuf_2_3_0_clk/Z (CLKBUF_X3)
+   0.04   10.12 ^ clkbuf_3_6_0_clk/Z (CLKBUF_X3)
+   0.05   10.17 ^ clkbuf_4_13__f_clk/Z (CLKBUF_X3)
+   0.04   10.21 ^ clkbuf_leaf_69_clk/Z (CLKBUF_X3)
+   0.00   10.21 ^ conv_hist_l0.history[225][4]$_DFFE_PN0P_/CK (DFFR_X1)
+   0.00   10.21   clock reconvergence pessimism
+  -0.04   10.17   library setup time
+          10.17   data required time
+---------------------------------------------------------
+          10.17   data required time
+          -1.38   data arrival time
+---------------------------------------------------------
+           8.79   slack (MET)
+
+
+
+==========================================================================
+global route report_checks -path_delay min reg to reg
+--------------------------------------------------------------------------
+Startpoint: ctrl.phase_cycle[0]$_DFFE_PN0P_
+            (rising edge-triggered flip-flop clocked by core_clock)
+Endpoint: ctrl.phase_cycle[0]$_DFFE_PN0P_
+          (rising edge-triggered flip-flop clocked by core_clock)
+Path Group: core_clock
+Path Type: min
+
+  Delay    Time   Description
+---------------------------------------------------------
+   0.00    0.00   clock core_clock (rise edge)
+   0.00    0.00   clock source latency
+   0.00    0.00 ^ clk (in)
+   0.04    0.04 ^ clkbuf_0_clk/Z (CLKBUF_X3)
+   0.04    0.09 ^ clkbuf_2_0_0_clk/Z (CLKBUF_X3)
+   0.04    0.12 ^ clkbuf_3_0_0_clk/Z (CLKBUF_X3)
+   0.05    0.17 ^ clkbuf_4_0__f_clk/Z (CLKBUF_X3)
+   0.04    0.21 ^ clkbuf_leaf_116_clk/Z (CLKBUF_X3)
+   0.00    0.21 ^ ctrl.phase_cycle[0]$_DFFE_PN0P_/CK (DFFR_X1)
+   0.07    0.28 v ctrl.phase_cycle[0]$_DFFE_PN0P_/QN (DFFR_X1)
+   0.02    0.30 ^ _5546_/ZN (NAND3_X1)
+   0.01    0.31 v _5548_/ZN (OAI21_X1)
+   0.00    0.31 v ctrl.phase_cycle[0]$_DFFE_PN0P_/D (DFFR_X1)
+           0.31   data arrival time
+
+   0.00    0.00   clock core_clock (rise edge)
+   0.00    0.00   clock source latency
+   0.00    0.00 ^ clk (in)
+   0.04    0.04 ^ clkbuf_0_clk/Z (CLKBUF_X3)
+   0.04    0.09 ^ clkbuf_2_0_0_clk/Z (CLKBUF_X3)
+   0.04    0.12 ^ clkbuf_3_0_0_clk/Z (CLKBUF_X3)
+   0.05    0.17 ^ clkbuf_4_0__f_clk/Z (CLKBUF_X3)
+   0.04    0.21 ^ clkbuf_leaf_116_clk/Z (CLKBUF_X3)
+   0.00    0.21 ^ ctrl.phase_cycle[0]$_DFFE_PN0P_/CK (DFFR_X1)
+   0.00    0.21   clock reconvergence pessimism
+   0.01    0.22   library hold time
+           0.22   data required time
+---------------------------------------------------------
+           0.22   data required time
+          -0.31   data arrival time
+---------------------------------------------------------
+           0.10   slack (MET)
+
+
+
+==========================================================================
+global route critical path target clock latency max path
+--------------------------------------------------------------------------
+0.2153
+
+==========================================================================
+global route critical path target clock latency min path
+--------------------------------------------------------------------------
+0.2108
+
+==========================================================================
+global route critical path source clock latency min path
+--------------------------------------------------------------------------
+0.0000
+
+==========================================================================
+global route critical path delay
+--------------------------------------------------------------------------
+1.2528
+
+==========================================================================
+global route critical path slack
+--------------------------------------------------------------------------
+8.2472
+
+==========================================================================
+global route slack div critical path delay
+--------------------------------------------------------------------------
+658.301405
+
+==========================================================================
+global route report_power
+--------------------------------------------------------------------------
+Group                  Internal  Switching    Leakage      Total
+                          Power      Power      Power      Power (Watts)
+----------------------------------------------------------------
+Sequential             9.09e-04   2.66e-04   5.59e-05   1.23e-03  25.5%
+Combinational          1.45e-03   1.63e-03   1.16e-04   3.20e-03  66.3%
+Clock                  1.78e-04   2.08e-04   5.80e-06   3.91e-04   8.1%
+Macro                  0.00e+00   0.00e+00   0.00e+00   0.00e+00   0.0%
+Pad                    0.00e+00   0.00e+00   0.00e+00   0.00e+00   0.0%
+----------------------------------------------------------------
+Total                  2.54e-03   2.11e-03   1.77e-04   4.82e-03 100.0%
+                          52.6%      43.7%       3.7%

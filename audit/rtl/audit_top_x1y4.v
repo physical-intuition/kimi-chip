@@ -5,18 +5,18 @@
 // X1Y3: Fixed to prevent optimization - internal signals wired to outputs
 //-----------------------------------------------------------------------------
 module audit_top #(
-    parameter D_MODEL    = 32,
+    parameter D_MODEL    = 16,
     parameter N_LAYERS   = 2,
     parameter KDA_HEADS  = 2,
-    parameter KDA_DIM    = 16,
+    parameter KDA_DIM    = 8,
     parameter CONV_KERNEL = 4,
     parameter MLA_HEADS  = 2,
-    parameter MLA_DK     = 16,
-    parameter MLA_DR     = 8,
-    parameter MLA_DV     = 16,
-    parameter MLA_DC    = 64,
-    parameter MAX_SEQ    = 16,
-    parameter VOCAB      = 256
+    parameter MLA_DK     = 8,
+    parameter MLA_DR     = 4,
+    parameter MLA_DV     = 8,
+    parameter MLA_DC    = 32,
+    parameter MAX_SEQ    = 8,
+    parameter VOCAB      = 128
 )(
     input  wire                    clk,
     input  wire                    rst_n,
