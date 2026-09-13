@@ -1,0 +1,70 @@
+
+21. Printing statistics.
+
+=== audit_top ===
+
+        +----------------------------Count including submodules.
+        |        +-------------------Area including submodules.
+        |        |        +----------Local count, excluding submodules.
+        |        |        |        +-Local area, excluding submodules.
+        |        |        |        | 
+      909        -      909        - wires
+     1018        -     1018        - wire bits
+      194        -      194        - public wires
+      303        -      303        - public wire bits
+       11        -       11        - ports
+      120        -      120        - port bits
+        -        -        -        - memories
+        -        -        -        - memory bits
+        -        -        -        - processes
+      811 1.73E+03      811 1.73E+03 cells
+       16   17.024       16   17.024   AND2_X1
+        2    4.788        2    4.788   AND2_X4
+        4     5.32        4     5.32   AND3_X1
+        2    3.192        2    3.192   AND3_X2
+       46   48.944       46   48.944   AOI21_X1
+       11   17.556       11   17.556   AOI221_X1
+        1    3.458        1    3.458   AOI221_X4
+       23    30.59       23    30.59   AOI22_X1
+        1    4.522        1    4.522   AOI22_X4
+      120    95.76      120    95.76   BUF_X1
+        9    9.576        9    9.576   BUF_X2
+        4    7.448        4    7.448   BUF_X4
+        1    0.798        1    0.798   CLKBUF_X1
+      166   883.12      166   883.12   DFFR_X1
+       18   81.396       18   81.396   DFF_X1
+       10     26.6       10     26.6   HA_X1
+       35    18.62       35    18.62   INV_X1
+        1    0.798        1    0.798   INV_X2
+        1    0.532        1    0.532   LOGIC0_X1
+      140   260.68      140   260.68   MUX2_X1
+       64   51.072       64   51.072   NAND2_X1
+        1     1.33        1     1.33   NAND2_X2
+        1    2.394        1    2.394   NAND2_X4
+       22   23.408       22   23.408   NAND3_X1
+        1    1.862        1    1.862   NAND3_X2
+        4     5.32        4     5.32   NAND4_X1
+       31   24.738       31   24.738   NOR2_X1
+        3     3.99        3     3.99   NOR2_X2
+        1    2.394        1    2.394   NOR2_X4
+        4    4.256        4    4.256   NOR3_X1
+        2    3.724        2    3.724   NOR3_X2
+        1    3.724        1    3.724   NOR3_X4
+        1     1.33        1     1.33   NOR4_X1
+       27   28.728       27   28.728   OAI21_X1
+        1    1.862        1    1.862   OAI21_X2
+        3    4.788        3    4.788   OAI221_X1
+        1    2.926        1    2.926   OAI221_X2
+        8    10.64        8    10.64   OAI22_X1
+        7    7.448        7    7.448   OR2_X1
+        1     1.33        1     1.33   OR2_X2
+        1    2.394        1    2.394   OR2_X4
+        2     2.66        2     2.66   OR3_X1
+        2    3.192        2    3.192   OR4_X1
+        1    1.862        1    1.862   OR4_X2
+        8   12.768        8   12.768   XNOR2_X1
+        2    3.192        2    3.192   XOR2_X1
+
+   Chip area for module '\audit_top': 1734.054000
+     of which used for sequential elements: 964.516000 (55.62%)
+
