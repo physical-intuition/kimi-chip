@@ -1,0 +1,468 @@
+
+==========================================================================
+resizer report_tns
+--------------------------------------------------------------------------
+tns max 0.00
+
+==========================================================================
+resizer report_wns
+--------------------------------------------------------------------------
+wns max 0.00
+
+==========================================================================
+resizer report_worst_slack
+--------------------------------------------------------------------------
+worst slack max 0.03
+
+==========================================================================
+resizer report_clock_min_period
+--------------------------------------------------------------------------
+core_clock period_min = 0.53 fmax = 1886.34
+
+==========================================================================
+resizer report_checks -path_delay min
+--------------------------------------------------------------------------
+Startpoint: rst_n (input port clocked by core_clock)
+Endpoint: ctrl.phase_cycle[5]$_DFFE_PN0P_
+          (removal check against rising-edge clock core_clock)
+Path Group: asynchronous
+Path Type: min
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                  0.00    0.00    0.00   clock core_clock (rise edge)
+                          0.00    0.00   clock network delay (ideal)
+                          0.03    0.03 ^ input external delay
+     1    2.19    0.00    0.00    0.03 ^ rst_n (in)
+                                         rst_n (net)
+                  0.00    0.00    0.03 ^ input97/A (BUF_X2)
+    20   39.82    0.05    0.06    0.09 ^ input97/Z (BUF_X2)
+                                         net96 (net)
+                  0.05    0.00    0.09 ^ ctrl.phase_cycle[5]$_DFFE_PN0P_/RN (DFFR_X1)
+                                  0.09   data arrival time
+
+                  0.00    0.00    0.00   clock core_clock (rise edge)
+                          0.00    0.00   clock network delay (ideal)
+                          0.00    0.00   clock reconvergence pessimism
+                                  0.00 ^ ctrl.phase_cycle[5]$_DFFE_PN0P_/CK (DFFR_X1)
+                          0.24    0.24   library removal time
+                                  0.24   data required time
+-----------------------------------------------------------------------------
+                                  0.24   data required time
+                                 -0.09   data arrival time
+-----------------------------------------------------------------------------
+                                 -0.15   slack (VIOLATED)
+
+
+Startpoint: ctrl.phase_cycle[0]$_DFFE_PN0P_
+            (rising edge-triggered flip-flop clocked by core_clock)
+Endpoint: ctrl.phase_cycle[0]$_DFFE_PN0P_
+          (rising edge-triggered flip-flop clocked by core_clock)
+Path Group: core_clock
+Path Type: min
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                  0.00    0.00    0.00   clock core_clock (rise edge)
+                          0.00    0.00   clock network delay (ideal)
+                  0.00    0.00    0.00 ^ ctrl.phase_cycle[0]$_DFFE_PN0P_/CK (DFFR_X1)
+     1    1.77    0.01    0.06    0.06 v ctrl.phase_cycle[0]$_DFFE_PN0P_/QN (DFFR_X1)
+                                         _001_ (net)
+                  0.01    0.00    0.06 v _484_/A1 (NAND2_X1)
+     1    1.95    0.01    0.02    0.08 ^ _484_/ZN (NAND2_X1)
+                                         _191_ (net)
+                  0.01    0.00    0.08 ^ _485_/B1 (OAI21_X1)
+     1    1.29    0.01    0.01    0.09 v _485_/ZN (OAI21_X1)
+                                         _027_ (net)
+                  0.01    0.00    0.09 v ctrl.phase_cycle[0]$_DFFE_PN0P_/D (DFFR_X1)
+                                  0.09   data arrival time
+
+                  0.00    0.00    0.00   clock core_clock (rise edge)
+                          0.00    0.00   clock network delay (ideal)
+                          0.00    0.00   clock reconvergence pessimism
+                                  0.00 ^ ctrl.phase_cycle[0]$_DFFE_PN0P_/CK (DFFR_X1)
+                          0.00    0.00   library hold time
+                                  0.00   data required time
+-----------------------------------------------------------------------------
+                                  0.00   data required time
+                                 -0.09   data arrival time
+-----------------------------------------------------------------------------
+                                  0.09   slack (MET)
+
+
+
+==========================================================================
+resizer report_checks -path_delay max
+--------------------------------------------------------------------------
+Startpoint: rst_n (input port clocked by core_clock)
+Endpoint: kda_state_l0.state[0][28]$_DFFE_PN0P_
+          (recovery check against rising-edge clock core_clock)
+Path Group: asynchronous
+Path Type: max
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                  0.00    0.00    0.00   clock core_clock (rise edge)
+                          0.00    0.00   clock network delay (ideal)
+                          0.03    0.03 ^ input external delay
+     1    2.19    0.00    0.00    0.03 ^ rst_n (in)
+                                         rst_n (net)
+                  0.00    0.00    0.03 ^ input97/A (BUF_X2)
+    20   39.82    0.05    0.06    0.09 ^ input97/Z (BUF_X2)
+                                         net96 (net)
+                  0.05    0.00    0.09 ^ place137/A (BUF_X2)
+    37   88.87    0.10    0.13    0.22 ^ place137/Z (BUF_X2)
+                                         net136 (net)
+                  0.10    0.01    0.23 ^ kda_state_l0.state[0][28]$_DFFE_PN0P_/RN (DFFR_X1)
+                                  0.23   data arrival time
+
+                  0.00    0.56    0.56   clock core_clock (rise edge)
+                          0.00    0.56   clock network delay (ideal)
+                          0.00    0.56   clock reconvergence pessimism
+                                  0.56 ^ kda_state_l0.state[0][28]$_DFFE_PN0P_/CK (DFFR_X1)
+                          0.04    0.60   library recovery time
+                                  0.60   data required time
+-----------------------------------------------------------------------------
+                                  0.60   data required time
+                                 -0.23   data arrival time
+-----------------------------------------------------------------------------
+                                  0.38   slack (MET)
+
+
+Startpoint: ctrl.phase_cycle[1]$_DFFE_PN0P_
+            (rising edge-triggered flip-flop clocked by core_clock)
+Endpoint: ctrl.current_phase[4]$_DFFE_PN0P_
+          (rising edge-triggered flip-flop clocked by core_clock)
+Path Group: core_clock
+Path Type: max
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                  0.00    0.00    0.00   clock core_clock (rise edge)
+                          0.00    0.00   clock network delay (ideal)
+                  0.00    0.00    0.00 ^ ctrl.phase_cycle[1]$_DFFE_PN0P_/CK (DFFR_X1)
+     3    7.00    0.02    0.11    0.11 ^ ctrl.phase_cycle[1]$_DFFE_PN0P_/Q (DFFR_X1)
+                                         ctrl.phase_cycle[1] (net)
+                  0.02    0.00    0.11 ^ _681_/B (HA_X1)
+     6   11.20    0.03    0.06    0.17 ^ _681_/CO (HA_X1)
+                                         _014_ (net)
+                  0.03    0.00    0.17 ^ _446_/A3 (NAND3_X1)
+     2    3.32    0.02    0.03    0.20 v _446_/ZN (NAND3_X1)
+                                         _159_ (net)
+                  0.02    0.00    0.20 v _447_/A (INV_X1)
+     2    3.70    0.01    0.02    0.22 ^ _447_/ZN (INV_X1)
+                                         _160_ (net)
+                  0.01    0.00    0.22 ^ _448_/A3 (NAND3_X1)
+     3    3.87    0.02    0.03    0.25 v _448_/ZN (NAND3_X1)
+                                         _161_ (net)
+                  0.02    0.00    0.25 v _450_/A2 (NOR3_X1)
+     1    6.65    0.06    0.09    0.34 ^ _450_/ZN (NOR3_X1)
+                                         _163_ (net)
+                  0.06    0.00    0.34 ^ _455_/B1 (OAI21_X4)
+    10   27.60    0.03    0.04    0.38 v _455_/ZN (OAI21_X4)
+                                         _168_ (net)
+                  0.03    0.00    0.38 v _494_/A (AOI21_X4)
+     5   12.39    0.03    0.05    0.43 ^ _494_/ZN (AOI21_X4)
+                                         _200_ (net)
+                  0.03    0.00    0.43 ^ _668_/S (MUX2_X1)
+     1    1.16    0.01    0.06    0.49 v _668_/Z (MUX2_X1)
+                                         _079_ (net)
+                  0.01    0.00    0.49 v ctrl.current_phase[4]$_DFFE_PN0P_/D (DFFR_X1)
+                                  0.49   data arrival time
+
+                  0.00    0.56    0.56   clock core_clock (rise edge)
+                          0.00    0.56   clock network delay (ideal)
+                          0.00    0.56   clock reconvergence pessimism
+                                  0.56 ^ ctrl.current_phase[4]$_DFFE_PN0P_/CK (DFFR_X1)
+                         -0.04    0.52   library setup time
+                                  0.52   data required time
+-----------------------------------------------------------------------------
+                                  0.52   data required time
+                                 -0.49   data arrival time
+-----------------------------------------------------------------------------
+                                  0.03   slack (MET)
+
+
+
+==========================================================================
+resizer report_checks -unconstrained
+--------------------------------------------------------------------------
+Startpoint: rst_n (input port clocked by core_clock)
+Endpoint: kda_state_l0.state[0][28]$_DFFE_PN0P_
+          (recovery check against rising-edge clock core_clock)
+Path Group: asynchronous
+Path Type: max
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                  0.00    0.00    0.00   clock core_clock (rise edge)
+                          0.00    0.00   clock network delay (ideal)
+                          0.03    0.03 ^ input external delay
+     1    2.19    0.00    0.00    0.03 ^ rst_n (in)
+                                         rst_n (net)
+                  0.00    0.00    0.03 ^ input97/A (BUF_X2)
+    20   39.82    0.05    0.06    0.09 ^ input97/Z (BUF_X2)
+                                         net96 (net)
+                  0.05    0.00    0.09 ^ place137/A (BUF_X2)
+    37   88.87    0.10    0.13    0.22 ^ place137/Z (BUF_X2)
+                                         net136 (net)
+                  0.10    0.01    0.23 ^ kda_state_l0.state[0][28]$_DFFE_PN0P_/RN (DFFR_X1)
+                                  0.23   data arrival time
+
+                  0.00    0.56    0.56   clock core_clock (rise edge)
+                          0.00    0.56   clock network delay (ideal)
+                          0.00    0.56   clock reconvergence pessimism
+                                  0.56 ^ kda_state_l0.state[0][28]$_DFFE_PN0P_/CK (DFFR_X1)
+                          0.04    0.60   library recovery time
+                                  0.60   data required time
+-----------------------------------------------------------------------------
+                                  0.60   data required time
+                                 -0.23   data arrival time
+-----------------------------------------------------------------------------
+                                  0.38   slack (MET)
+
+
+Startpoint: ctrl.phase_cycle[1]$_DFFE_PN0P_
+            (rising edge-triggered flip-flop clocked by core_clock)
+Endpoint: ctrl.current_phase[4]$_DFFE_PN0P_
+          (rising edge-triggered flip-flop clocked by core_clock)
+Path Group: core_clock
+Path Type: max
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                  0.00    0.00    0.00   clock core_clock (rise edge)
+                          0.00    0.00   clock network delay (ideal)
+                  0.00    0.00    0.00 ^ ctrl.phase_cycle[1]$_DFFE_PN0P_/CK (DFFR_X1)
+     3    7.00    0.02    0.11    0.11 ^ ctrl.phase_cycle[1]$_DFFE_PN0P_/Q (DFFR_X1)
+                                         ctrl.phase_cycle[1] (net)
+                  0.02    0.00    0.11 ^ _681_/B (HA_X1)
+     6   11.20    0.03    0.06    0.17 ^ _681_/CO (HA_X1)
+                                         _014_ (net)
+                  0.03    0.00    0.17 ^ _446_/A3 (NAND3_X1)
+     2    3.32    0.02    0.03    0.20 v _446_/ZN (NAND3_X1)
+                                         _159_ (net)
+                  0.02    0.00    0.20 v _447_/A (INV_X1)
+     2    3.70    0.01    0.02    0.22 ^ _447_/ZN (INV_X1)
+                                         _160_ (net)
+                  0.01    0.00    0.22 ^ _448_/A3 (NAND3_X1)
+     3    3.87    0.02    0.03    0.25 v _448_/ZN (NAND3_X1)
+                                         _161_ (net)
+                  0.02    0.00    0.25 v _450_/A2 (NOR3_X1)
+     1    6.65    0.06    0.09    0.34 ^ _450_/ZN (NOR3_X1)
+                                         _163_ (net)
+                  0.06    0.00    0.34 ^ _455_/B1 (OAI21_X4)
+    10   27.60    0.03    0.04    0.38 v _455_/ZN (OAI21_X4)
+                                         _168_ (net)
+                  0.03    0.00    0.38 v _494_/A (AOI21_X4)
+     5   12.39    0.03    0.05    0.43 ^ _494_/ZN (AOI21_X4)
+                                         _200_ (net)
+                  0.03    0.00    0.43 ^ _668_/S (MUX2_X1)
+     1    1.16    0.01    0.06    0.49 v _668_/Z (MUX2_X1)
+                                         _079_ (net)
+                  0.01    0.00    0.49 v ctrl.current_phase[4]$_DFFE_PN0P_/D (DFFR_X1)
+                                  0.49   data arrival time
+
+                  0.00    0.56    0.56   clock core_clock (rise edge)
+                          0.00    0.56   clock network delay (ideal)
+                          0.00    0.56   clock reconvergence pessimism
+                                  0.56 ^ ctrl.current_phase[4]$_DFFE_PN0P_/CK (DFFR_X1)
+                         -0.04    0.52   library setup time
+                                  0.52   data required time
+-----------------------------------------------------------------------------
+                                  0.52   data required time
+                                 -0.49   data arrival time
+-----------------------------------------------------------------------------
+                                  0.03   slack (MET)
+
+
+
+==========================================================================
+resizer report_check_types -max_slew -max_cap -max_fanout -violators
+--------------------------------------------------------------------------
+
+==========================================================================
+resizer max_slew_check_slack
+--------------------------------------------------------------------------
+0.09601420909166336
+
+==========================================================================
+resizer max_slew_check_limit
+--------------------------------------------------------------------------
+0.1985349953174591
+
+==========================================================================
+resizer max_slew_check_slack_limit
+--------------------------------------------------------------------------
+0.4836
+
+==========================================================================
+resizer max_fanout_check_slack
+--------------------------------------------------------------------------
+1.0000000150474662e+30
+
+==========================================================================
+resizer max_fanout_check_limit
+--------------------------------------------------------------------------
+1.0000000150474662e+30
+
+==========================================================================
+resizer max_capacitance_check_slack
+--------------------------------------------------------------------------
+3.698063611984253
+
+==========================================================================
+resizer max_capacitance_check_limit
+--------------------------------------------------------------------------
+11.482199668884277
+
+==========================================================================
+resizer max_capacitance_check_slack_limit
+--------------------------------------------------------------------------
+0.3221
+
+==========================================================================
+resizer max_slew_violation_count
+--------------------------------------------------------------------------
+max slew violation count 0
+
+==========================================================================
+resizer max_fanout_violation_count
+--------------------------------------------------------------------------
+max fanout violation count 0
+
+==========================================================================
+resizer max_cap_violation_count
+--------------------------------------------------------------------------
+max cap violation count 0
+
+==========================================================================
+resizer setup_violation_count
+--------------------------------------------------------------------------
+setup violation count 0
+
+==========================================================================
+resizer hold_violation_count
+--------------------------------------------------------------------------
+hold violation count 46
+
+==========================================================================
+resizer report_checks -path_delay max reg to reg
+--------------------------------------------------------------------------
+Startpoint: ctrl.phase_cycle[1]$_DFFE_PN0P_
+            (rising edge-triggered flip-flop clocked by core_clock)
+Endpoint: ctrl.current_phase[4]$_DFFE_PN0P_
+          (rising edge-triggered flip-flop clocked by core_clock)
+Path Group: core_clock
+Path Type: max
+
+  Delay    Time   Description
+---------------------------------------------------------
+   0.00    0.00   clock core_clock (rise edge)
+   0.00    0.00   clock network delay (ideal)
+   0.00    0.00 ^ ctrl.phase_cycle[1]$_DFFE_PN0P_/CK (DFFR_X1)
+   0.11    0.11 ^ ctrl.phase_cycle[1]$_DFFE_PN0P_/Q (DFFR_X1)
+   0.06    0.17 ^ _681_/CO (HA_X1)
+   0.03    0.20 v _446_/ZN (NAND3_X1)
+   0.02    0.22 ^ _447_/ZN (INV_X1)
+   0.03    0.25 v _448_/ZN (NAND3_X1)
+   0.09    0.34 ^ _450_/ZN (NOR3_X1)
+   0.04    0.38 v _455_/ZN (OAI21_X4)
+   0.05    0.43 ^ _494_/ZN (AOI21_X4)
+   0.06    0.49 v _668_/Z (MUX2_X1)
+   0.00    0.49 v ctrl.current_phase[4]$_DFFE_PN0P_/D (DFFR_X1)
+           0.49   data arrival time
+
+   0.56    0.56   clock core_clock (rise edge)
+   0.00    0.56   clock network delay (ideal)
+   0.00    0.56   clock reconvergence pessimism
+           0.56 ^ ctrl.current_phase[4]$_DFFE_PN0P_/CK (DFFR_X1)
+  -0.04    0.52   library setup time
+           0.52   data required time
+---------------------------------------------------------
+           0.52   data required time
+          -0.49   data arrival time
+---------------------------------------------------------
+           0.03   slack (MET)
+
+
+
+==========================================================================
+resizer report_checks -path_delay min reg to reg
+--------------------------------------------------------------------------
+Startpoint: ctrl.phase_cycle[0]$_DFFE_PN0P_
+            (rising edge-triggered flip-flop clocked by core_clock)
+Endpoint: ctrl.phase_cycle[0]$_DFFE_PN0P_
+          (rising edge-triggered flip-flop clocked by core_clock)
+Path Group: core_clock
+Path Type: min
+
+  Delay    Time   Description
+---------------------------------------------------------
+   0.00    0.00   clock core_clock (rise edge)
+   0.00    0.00   clock network delay (ideal)
+   0.00    0.00 ^ ctrl.phase_cycle[0]$_DFFE_PN0P_/CK (DFFR_X1)
+   0.06    0.06 v ctrl.phase_cycle[0]$_DFFE_PN0P_/QN (DFFR_X1)
+   0.02    0.08 ^ _484_/ZN (NAND2_X1)
+   0.01    0.09 v _485_/ZN (OAI21_X1)
+   0.00    0.09 v ctrl.phase_cycle[0]$_DFFE_PN0P_/D (DFFR_X1)
+           0.09   data arrival time
+
+   0.00    0.00   clock core_clock (rise edge)
+   0.00    0.00   clock network delay (ideal)
+   0.00    0.00   clock reconvergence pessimism
+           0.00 ^ ctrl.phase_cycle[0]$_DFFE_PN0P_/CK (DFFR_X1)
+   0.00    0.00   library hold time
+           0.00   data required time
+---------------------------------------------------------
+           0.00   data required time
+          -0.09   data arrival time
+---------------------------------------------------------
+           0.09   slack (MET)
+
+
+
+==========================================================================
+resizer critical path target clock latency max path
+--------------------------------------------------------------------------
+0.0000
+
+==========================================================================
+resizer critical path target clock latency min path
+--------------------------------------------------------------------------
+0.0000
+
+==========================================================================
+resizer critical path source clock latency min path
+--------------------------------------------------------------------------
+0.0000
+
+==========================================================================
+resizer critical path delay
+--------------------------------------------------------------------------
+0.4893
+
+==========================================================================
+resizer critical path slack
+--------------------------------------------------------------------------
+0.0349
+
+==========================================================================
+resizer slack div critical path delay
+--------------------------------------------------------------------------
+7.132638
+
+==========================================================================
+resizer report_power
+--------------------------------------------------------------------------
+Group                  Internal  Switching    Leakage      Total
+                          Power      Power      Power      Power (Watts)
+----------------------------------------------------------------
+Sequential             1.03e-03   1.85e-04   5.10e-06   1.22e-03  42.1%
+Combinational          8.40e-04   8.29e-04   9.14e-06   1.68e-03  57.9%
+Clock                  0.00e+00   0.00e+00   0.00e+00   0.00e+00   0.0%
+Macro                  0.00e+00   0.00e+00   0.00e+00   0.00e+00   0.0%
+Pad                    0.00e+00   0.00e+00   0.00e+00   0.00e+00   0.0%
+----------------------------------------------------------------
+Total                  1.87e-03   1.01e-03   1.42e-05   2.90e-03 100.0%
+                          64.5%      35.0%       0.5%
