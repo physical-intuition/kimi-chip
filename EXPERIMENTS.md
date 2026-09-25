@@ -16,7 +16,10 @@ target dims (nano-kpu): D_MODEL=64, KDA 2x32, MLA dc=128, MAX_SEQ=64
 | X2Y2 | constraint loosen, wall scales => real path | 0.65 | 1.593 | 0.022 | 0 | 0 | 2194.0 | 2.92 | fcc6c57 |
 | X2Y3 | pipeline reg between MAC out and kda_q/k/v writeback | 0.6 | 1.703 | 0.013 | 0 | 0 | 2470.1 | 5.80 | 5e7d017 |
 | X2Y4 | weights as shift-register streams (no muxed array reads) | 0.6 | 1.689 | 0.008 | 0 | 0 | 2396.9 | 3.62 | ed08cd3 |
-| X2Y5 | argmax precomputed at token load (out of DONE/case fan-in) | 0.6 | 1.697 | 0.011 | 0 | 0 | 2536.8 | 5.77 | TBD |
+| X2Y5 | argmax precomputed at token load (out of DONE/case fan-in) | 0.6 | 1.697 | 0.011 | 0 | 0 | 2536.8 | 5.77 | bf0f18c |
+| X2Y6 | constraint probe (X2Y5 design) | 0.55 | 1.704* | -0.037 | -0.037 | 15 | 2679.7 | 6.80 | TBD |
+
+\* X2Y6 violates: 15 setup viol, ws -0.037ns. true wall of X2 design ~1.70 GHz (~0.587ns)
 
 ## learnings
 - X1 sweep: FSM-only design meets any constraint -> sweep uninformative
@@ -27,7 +30,8 @@ target dims (nano-kpu): D_MODEL=64, KDA 2x32, MLA dc=128, MAX_SEQ=64
 - X2Y4 timing report: critical path ends at argmax_reg via FSM case statement; WNS -0.233 at current_layer[2] during repair. next-state decoder fan-in is the wall
 - X2Y5: argmax precompute also ~no change (1.697). Y3/Y4/Y5 all 1.69-1.70 => per-fix micro-opt at fixed 0.6ns is noise
 - pre-repair WNS -0.243 at kda_q[16]/RN; tool repairs to ~0 => reported fmax is post-repair, single fixes just move the endpoint
-- next: constraint probe 0.55ns on X2Y5 design to find real wall, then X3 (MLA attention MAC)
+- X2Y6 probe: 0.55ns fails (15 viol, ws -0.037) => X2 true wall ~1.70 GHz / 0.587ns. RTL-level fix needed to go faster, not more repair
+- X3 next: wire MAC into MLA attention score dot products (Q.K over KV cache), accept freq cost, measure
 
 ## known gaps vs nano-kpu
 - dims 4x small; register arrays not SRAM macros; MLA attention + conv + state update still cycle-counting (no MAC); no INT4 group-128 dequant; no functional/bit-exact verification
