@@ -33,11 +33,14 @@ target dims (nano-kpu): D_MODEL=64, KDA 2x32, MLA dc=128, MAX_SEQ=64
 - X2Y6 probe: 0.55ns fails (15 viol, ws -0.037) => X2 true wall ~1.70 GHz / 0.587ns. RTL-level fix needed to go faster, not more repair
 
 ## X3 series: MLA attention MAC
-| X3Y1 | MAC into MLA: real mla_q GEMV + attn score Q.K dot products over KV cache, KV append writes token data | 0.6 | 0.876* | -0.542 | -131 | 64 | 88121 | 236.3 | TBD |
+| X3Y1 | MAC into MLA: real mla_q GEMV + attn score Q.K dot products over KV cache, KV append writes token data | 0.6 | 0.876* | -0.542 | -131 | 64 | 88121 | 236.3 | 782889c |
+| X3Y2 | relaxed probe, X3Y1 design | 1.2 | 0.870 CLEAN | 0.051 | 0 | 0 | 87093 | 118.5 | TBD |
 
 \* X3Y1 VIOLATES: 64 setup viol, ws -0.542, pre-repair WNS -0.434/-131. real attention compute costs dearly
 - X3Y1 learnings: full KV-cache score loop (16 entries x 32 dims, unpacked array reads) is heavy; also 2-layer KV cache storage exploded area 8.8k -> 88k um2, power 5.8 -> 236 mW
-- next: X3Y2 pipeline attn score MAC (dim-level pipe regs) + shrink path; or isolate cost (loosen to 1.2ns to find true X3 wall)
+- X3Y2: 0.870 GHz CLEAN at 1.2ns => X3 true wall ~0.87 GHz (1.15ns). real attention cost is intrinsic, not repairable at 0.6
+- X3Y2 area 87k um2, power halves at 1.2ns (236 -> 118 mW)
+- next: X3Y3 pipeline attn score MAC (dim-level pipe) to claw back freq; X4 = SRAM macros for KV cache + KDA state (kill the 87k register array)
 
 ## known gaps vs nano-kpu
 - dims 4x small; register arrays not SRAM macros; MLA attention + conv + state update still cycle-counting (no MAC); no INT4 group-128 dequant; no functional/bit-exact verification
