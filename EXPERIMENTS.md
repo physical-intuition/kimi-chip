@@ -35,7 +35,10 @@ target dims (nano-kpu): D_MODEL=64, KDA 2x32, MLA dc=128, MAX_SEQ=64
 ## X3 series: MLA attention MAC
 | X3Y1 | MAC into MLA: real mla_q GEMV + attn score Q.K dot products over KV cache, KV append writes token data | 0.6 | 0.876* | -0.542 | -131 | 64 | 88121 | 236.3 | 782889c |
 | X3Y2 | relaxed probe, X3Y1 design | 1.2 | 0.870 CLEAN | 0.051 | 0 | 0 | 87093 | 118.5 | 0fb4d7f |
-| X3Y3 | staged q/kv nibbles through regs (break array mux -> MAC) | 0.6 | 0.908* | -0.501 | -104 | 32 | 88094 | 238.3 | TBD |
+| X3Y3 | staged q/kv nibbles through regs (break array mux -> MAC) | 0.6 | 0.908* | -0.501 | -104 | 32 | 88094 | 238.3 | 8625a4b |
+
+## X4 series: SRAM macros
+| X4Y1 | KV cache -> fakeram45_512x64 SRAM macro (entry = 16 words x 64b), staged word reads, prefetch | 0.6 | 0.899* | -0.512 | -144 | 272 | 106792 | 258.5 | TBD |
 
 \* X3Y1 VIOLATES: 64 setup viol, ws -0.542, pre-repair WNS -0.434/-131. real attention compute costs dearly
 - X3Y1 learnings: full KV-cache score loop (16 entries x 32 dims, unpacked array reads) is heavy; also 2-layer KV cache storage exploded area 8.8k -> 88k um2, power 5.8 -> 236 mW
@@ -43,7 +46,9 @@ target dims (nano-kpu): D_MODEL=64, KDA 2x32, MLA dc=128, MAX_SEQ=64
 - X3Y2 area 87k um2, power halves at 1.2ns (236 -> 118 mW)
 - X3Y3: 0.908 GHz but still FAILS 0.6 (32 viol, ws -0.501). staging cut viol 64->32, helped but not enough. critical path still originates in KV array read (kv_nibble_r/RN - the register-array read port itself)
 - conclusion: unpacked register arrays for KV cache ARE the wall. this is exactly the X4 SRAM macro story - X3 freq ceiling confirmed architectural, not fixable by pipelining
-- next: X4Y1 swap mla_kv_cache + kda_state to fakeram45 SRAM macros
+- X4Y1: 0.899 GHz, still fails 0.6ns (272 viol - WORSE than X3). SRAM loaded fine (fakeram45_512x64 inst placed) but critical path moved to mac.acc itself; area 88k -> 107k
+- X4Y1 learning: SRAM alone doesn't fix it - MAC accumulator path is now exposed. viol went UP because repair effort spent on many near-critical paths. fakeram45 read access time is large at 45nm
+- next: X4Y2 pipeline the MAC (2-stage: mult reg, add reg) + relaxed 1.2ns probe to find X4 wall
 
 ## known gaps vs nano-kpu
 - dims 4x small; register arrays not SRAM macros; MLA attention + conv + state update still cycle-counting (no MAC); no INT4 group-128 dequant; no functional/bit-exact verification
