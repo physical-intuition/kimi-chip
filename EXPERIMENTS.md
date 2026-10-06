@@ -38,7 +38,8 @@ target dims (nano-kpu): D_MODEL=64, KDA 2x32, MLA dc=128, MAX_SEQ=64
 | X3Y3 | staged q/kv nibbles through regs (break array mux -> MAC) | 0.6 | 0.908* | -0.501 | -104 | 32 | 88094 | 238.3 | 8625a4b |
 
 ## X4 series: SRAM macros
-| X4Y1 | KV cache -> fakeram45_512x64 SRAM macro (entry = 16 words x 64b), staged word reads, prefetch | 0.6 | 0.899* | -0.512 | -144 | 272 | 106792 | 258.5 | TBD |
+| X4Y1 | KV cache -> fakeram45_512x64 SRAM macro (entry = 16 words x 64b), staged word reads, prefetch | 0.6 | 0.899* | -0.512 | -144 | 272 | 106792 | 258.5 | 090f6f7 |
+| X4Y2 | 2-stage pipelined MAC (prod reg -> acc reg) | 0.6 | 1.542* | -0.049 | TNS sm | 108 | 106473 | 264.6 | TBD |
 
 \* X3Y1 VIOLATES: 64 setup viol, ws -0.542, pre-repair WNS -0.434/-131. real attention compute costs dearly
 - X3Y1 learnings: full KV-cache score loop (16 entries x 32 dims, unpacked array reads) is heavy; also 2-layer KV cache storage exploded area 8.8k -> 88k um2, power 5.8 -> 236 mW
@@ -48,7 +49,9 @@ target dims (nano-kpu): D_MODEL=64, KDA 2x32, MLA dc=128, MAX_SEQ=64
 - conclusion: unpacked register arrays for KV cache ARE the wall. this is exactly the X4 SRAM macro story - X3 freq ceiling confirmed architectural, not fixable by pipelining
 - X4Y1: 0.899 GHz, still fails 0.6ns (272 viol - WORSE than X3). SRAM loaded fine (fakeram45_512x64 inst placed) but critical path moved to mac.acc itself; area 88k -> 107k
 - X4Y1 learning: SRAM alone doesn't fix it - MAC accumulator path is now exposed. viol went UP because repair effort spent on many near-critical paths. fakeram45 read access time is large at 45nm
-- next: X4Y2 pipeline the MAC (2-stage: mult reg, add reg) + relaxed 1.2ns probe to find X4 wall
+- X4Y2: 1.542 GHz, ws only -0.049, viol 272->108. MASSIVE jump from pipelining the MAC (0.899 -> 1.542). near closure
+- X4Y2 learning: single-cycle MAC accumulate was the real wall all along; register arrays masked it in X3
+- next: X4Y3 repair the last -0.049 (extra pipe stage on attn path or upsize drivers); then 1.2ns probe would be redundant if we close at 0.6
 
 ## known gaps vs nano-kpu
 - dims 4x small; register arrays not SRAM macros; MLA attention + conv + state update still cycle-counting (no MAC); no INT4 group-128 dequant; no functional/bit-exact verification
