@@ -39,7 +39,8 @@ target dims (nano-kpu): D_MODEL=64, KDA 2x32, MLA dc=128, MAX_SEQ=64
 
 ## X4 series: SRAM macros
 | X4Y1 | KV cache -> fakeram45_512x64 SRAM macro (entry = 16 words x 64b), staged word reads, prefetch | 0.6 | 0.899* | -0.512 | -144 | 272 | 106792 | 258.5 | 090f6f7 |
-| X4Y2 | 2-stage pipelined MAC (prod reg -> acc reg) | 0.6 | 1.542* | -0.049 | TNS sm | 108 | 106473 | 264.6 | TBD |
+| X4Y2 | 2-stage pipelined MAC (prod reg -> acc reg) | 0.6 | 1.542* | -0.049 | TNS sm | 108 | 106473 | 264.6 | d52b302 |
+| X4Y3 | + IDLE2 staging (token_id_r reg breaks input fanout to token_emb/argmax) | 0.6 | 1.459* | -0.086 | TNS sm | 200 | 107319 | 273.2 | TBD |
 
 \* X3Y1 VIOLATES: 64 setup viol, ws -0.542, pre-repair WNS -0.434/-131. real attention compute costs dearly
 - X3Y1 learnings: full KV-cache score loop (16 entries x 32 dims, unpacked array reads) is heavy; also 2-layer KV cache storage exploded area 8.8k -> 88k um2, power 5.8 -> 236 mW
@@ -51,7 +52,9 @@ target dims (nano-kpu): D_MODEL=64, KDA 2x32, MLA dc=128, MAX_SEQ=64
 - X4Y1 learning: SRAM alone doesn't fix it - MAC accumulator path is now exposed. viol went UP because repair effort spent on many near-critical paths. fakeram45 read access time is large at 45nm
 - X4Y2: 1.542 GHz, ws only -0.049, viol 272->108. MASSIVE jump from pipelining the MAC (0.899 -> 1.542). near closure
 - X4Y2 learning: single-cycle MAC accumulate was the real wall all along; register arrays masked it in X3
-- next: X4Y3 repair the last -0.049 (extra pipe stage on attn path or upsize drivers); then 1.2ns probe would be redundant if we close at 0.6
+- X4Y3: REGRESSION - 1.459 GHz, ws -0.086, viol 200. IDLE2 staging hurt: extra phase shifts all activity, probably moved congestion; token_id fanout was not the real limiter (fix targeted wrong path)
+- X4Y3 learning: dont patch paths from repair-table noise; mac.acc[RN] and mac_pipe[RN] endpoints = reset-deassertion paths (async reset recovery), staging inputs never touches those. X4Y2 remains best
+- next: X4Y4 revert to X4Y2 base, attack mac_pipe/argmax writeback directly (register the projection writeback instead) OR accept 1.54GHz@0.6ns and move to X5 real dims
 
 ## known gaps vs nano-kpu
 - dims 4x small; register arrays not SRAM macros; MLA attention + conv + state update still cycle-counting (no MAC); no INT4 group-128 dequant; no functional/bit-exact verification
