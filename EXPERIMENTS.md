@@ -41,7 +41,8 @@ target dims (nano-kpu): D_MODEL=64, KDA 2x32, MLA dc=128, MAX_SEQ=64
 | X4Y1 | KV cache -> fakeram45_512x64 SRAM macro (entry = 16 words x 64b), staged word reads, prefetch | 0.6 | 0.899* | -0.512 | -144 | 272 | 106792 | 258.5 | 090f6f7 |
 | X4Y2 | 2-stage pipelined MAC (prod reg -> acc reg) | 0.6 | 1.542* | -0.049 | TNS sm | 108 | 106473 | 264.6 | d52b302 |
 | X4Y3 | + IDLE2 staging (token_id_r reg breaks input fanout to token_emb/argmax) | 0.6 | 1.459* | -0.086 | TNS sm | 200 | 107319 | 273.2 | 347cd6f |
-| X4Y4 | + attn operand staging (q_nib_r/kv_nib_r regs feed MAC) | 0.6 | 1.640* | -0.010 | ~0 | 3 | 104643 | 255.0 | TBD |
+| X4Y4 | + attn operand staging (q_nib_r/kv_nib_r regs feed MAC) | 0.6 | 1.640* | -0.010 | ~0 | 3 | 104643 | 255.0 | 385de18 |
+| X4Y5 | X4Y4 + set_false_path rst_n (async reset recovery excluded) | 0.6 | 1.643* | -0.0085 | ~0 | 2 | 104496 | 254.8 | TBD |
 
 \* X3Y1 VIOLATES: 64 setup viol, ws -0.542, pre-repair WNS -0.434/-131. real attention compute costs dearly
 - X3Y1 learnings: full KV-cache score loop (16 entries x 32 dims, unpacked array reads) is heavy; also 2-layer KV cache storage exploded area 8.8k -> 88k um2, power 5.8 -> 236 mW
@@ -56,7 +57,8 @@ target dims (nano-kpu): D_MODEL=64, KDA 2x32, MLA dc=128, MAX_SEQ=64
 - X4Y3: REGRESSION - 1.459 GHz, ws -0.086, viol 200. IDLE2 staging hurt: extra phase shifts all activity, probably moved congestion; token_id fanout was not the real limiter (fix targeted wrong path)
 - X4Y3 learning: dont patch paths from repair-table noise; mac.acc[RN] and mac_pipe[RN] endpoints = reset-deassertion paths (async reset recovery), staging inputs never touches those. X4Y2 remains best
 - X4Y4: NEW CHAMPION - 1.640 GHz, ws -0.0099, viol only 3, area 104.6k um2, 255mW. operand staging worked (MAC now reads pure regs in attn). ONE more nudge closes 0.6ns
-- next: X4Y5 - the last 3 violations; try tight repair (buffer the specific path) or accept and probe tighter constraint (0.55ns) to map wall; then X5 real dims
+- X4Y5: 1.643 GHz, ws -0.0085, viol 2 (argmax_reg[0] -0.239 pre-repair, token_emb[1019] -0.218, mac_start -0.014). Reset exclusion worked - remaining worst is argmax compare fanout, a REAL datapath path
+- next: X5Y1 = probe 0.55ns on X4Y5 netlist to map the true wall; X5Y2+ = real dims (D_MODEL 64, MLA dc 128, seq 64, INT4 dequant) + golden-model verification
 
 ## known gaps vs nano-kpu
 - dims 4x small; register arrays not SRAM macros; MLA attention + conv + state update still cycle-counting (no MAC); no INT4 group-128 dequant; no functional/bit-exact verification
