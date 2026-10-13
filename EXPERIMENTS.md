@@ -40,7 +40,8 @@ target dims (nano-kpu): D_MODEL=64, KDA 2x32, MLA dc=128, MAX_SEQ=64
 ## X4 series: SRAM macros
 | X4Y1 | KV cache -> fakeram45_512x64 SRAM macro (entry = 16 words x 64b), staged word reads, prefetch | 0.6 | 0.899* | -0.512 | -144 | 272 | 106792 | 258.5 | 090f6f7 |
 | X4Y2 | 2-stage pipelined MAC (prod reg -> acc reg) | 0.6 | 1.542* | -0.049 | TNS sm | 108 | 106473 | 264.6 | d52b302 |
-| X4Y3 | + IDLE2 staging (token_id_r reg breaks input fanout to token_emb/argmax) | 0.6 | 1.459* | -0.086 | TNS sm | 200 | 107319 | 273.2 | TBD |
+| X4Y3 | + IDLE2 staging (token_id_r reg breaks input fanout to token_emb/argmax) | 0.6 | 1.459* | -0.086 | TNS sm | 200 | 107319 | 273.2 | 347cd6f |
+| X4Y4 | + attn operand staging (q_nib_r/kv_nib_r regs feed MAC) | 0.6 | 1.640* | -0.010 | ~0 | 3 | 104643 | 255.0 | TBD |
 
 \* X3Y1 VIOLATES: 64 setup viol, ws -0.542, pre-repair WNS -0.434/-131. real attention compute costs dearly
 - X3Y1 learnings: full KV-cache score loop (16 entries x 32 dims, unpacked array reads) is heavy; also 2-layer KV cache storage exploded area 8.8k -> 88k um2, power 5.8 -> 236 mW
@@ -54,7 +55,8 @@ target dims (nano-kpu): D_MODEL=64, KDA 2x32, MLA dc=128, MAX_SEQ=64
 - X4Y2 learning: single-cycle MAC accumulate was the real wall all along; register arrays masked it in X3
 - X4Y3: REGRESSION - 1.459 GHz, ws -0.086, viol 200. IDLE2 staging hurt: extra phase shifts all activity, probably moved congestion; token_id fanout was not the real limiter (fix targeted wrong path)
 - X4Y3 learning: dont patch paths from repair-table noise; mac.acc[RN] and mac_pipe[RN] endpoints = reset-deassertion paths (async reset recovery), staging inputs never touches those. X4Y2 remains best
-- next: X4Y4 revert to X4Y2 base, attack mac_pipe/argmax writeback directly (register the projection writeback instead) OR accept 1.54GHz@0.6ns and move to X5 real dims
+- X4Y4: NEW CHAMPION - 1.640 GHz, ws -0.0099, viol only 3, area 104.6k um2, 255mW. operand staging worked (MAC now reads pure regs in attn). ONE more nudge closes 0.6ns
+- next: X4Y5 - the last 3 violations; try tight repair (buffer the specific path) or accept and probe tighter constraint (0.55ns) to map wall; then X5 real dims
 
 ## known gaps vs nano-kpu
 - dims 4x small; register arrays not SRAM macros; MLA attention + conv + state update still cycle-counting (no MAC); no INT4 group-128 dequant; no functional/bit-exact verification
