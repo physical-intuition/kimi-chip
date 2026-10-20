@@ -1,0 +1,372 @@
+
+==========================================================================
+detailed place report_tns
+--------------------------------------------------------------------------
+tns max -0.66
+
+==========================================================================
+detailed place report_wns
+--------------------------------------------------------------------------
+wns max -0.05
+
+==========================================================================
+detailed place report_worst_slack
+--------------------------------------------------------------------------
+worst slack max -0.05
+
+==========================================================================
+detailed place report_clock_min_period
+--------------------------------------------------------------------------
+core_clock period_min = 0.65 fmax = 1542.50
+
+==========================================================================
+detailed place report_checks -path_delay min
+--------------------------------------------------------------------------
+Startpoint: mac.partial_fold$_DFF_PN0_
+            (rising edge-triggered flip-flop clocked by core_clock)
+Endpoint: mac.fold_r$_DFF_PN0_
+          (rising edge-triggered flip-flop clocked by core_clock)
+Path Group: core_clock
+Path Type: min
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                  0.00    0.00    0.00   clock core_clock (rise edge)
+                          0.00    0.00   clock network delay (ideal)
+                  0.00    0.00    0.00 ^ mac.partial_fold$_DFF_PN0_/CK (DFFR_X1)
+     1    1.20    0.01    0.08    0.08 v mac.partial_fold$_DFF_PN0_/Q (DFFR_X1)
+                                         mac.partial_fold (net)
+                  0.01    0.00    0.08 v mac.fold_r$_DFF_PN0_/D (DFFR_X1)
+                                  0.08   data arrival time
+
+                  0.00    0.00    0.00   clock core_clock (rise edge)
+                          0.00    0.00   clock network delay (ideal)
+                          0.00    0.00   clock reconvergence pessimism
+                                  0.00 ^ mac.fold_r$_DFF_PN0_/CK (DFFR_X1)
+                          0.00    0.00   library hold time
+                                  0.00   data required time
+-----------------------------------------------------------------------------
+                                  0.00   data required time
+                                 -0.08   data arrival time
+-----------------------------------------------------------------------------
+                                  0.08   slack (MET)
+
+
+
+==========================================================================
+detailed place report_checks -path_delay max
+--------------------------------------------------------------------------
+Startpoint: mac.prod_r[3]$_DFFE_PN0P_
+            (rising edge-triggered flip-flop clocked by core_clock)
+Endpoint: mac.acc[16]$_DFFE_PN0P_
+          (rising edge-triggered flip-flop clocked by core_clock)
+Path Group: core_clock
+Path Type: max
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                  0.00    0.00    0.00   clock core_clock (rise edge)
+                          0.00    0.00   clock network delay (ideal)
+                  0.00    0.00    0.00 ^ mac.prod_r[3]$_DFFE_PN0P_/CK (DFFR_X1)
+     2    5.03    0.01    0.09    0.09 v mac.prod_r[3]$_DFFE_PN0P_/Q (DFFR_X1)
+                                         mac.prod_r[3] (net)
+                  0.01    0.00    0.09 v _162870_/B (FA_X1)
+     1    3.61    0.01    0.12    0.21 ^ _162870_/S (FA_X1)
+                                         _106296_ (net)
+                  0.01    0.00    0.21 ^ _162894_/B (HA_X1)
+     3    8.55    0.05    0.08    0.29 ^ _162894_/S (HA_X1)
+                                         _000134_ (net)
+                  0.05    0.00    0.30 ^ _159759_/A (INV_X1)
+     1    4.91    0.02    0.02    0.31 v _159759_/ZN (INV_X1)
+                                         _056101_ (net)
+                  0.02    0.00    0.31 v _159760_/B2 (OAI21_X1)
+     2    3.22    0.02    0.04    0.36 ^ _159760_/ZN (OAI21_X1)
+                                         _056102_ (net)
+                  0.02    0.00    0.36 ^ _159761_/B1 (AOI21_X1)
+     2    5.74    0.02    0.03    0.38 v _159761_/ZN (AOI21_X1)
+                                         _056103_ (net)
+                  0.02    0.00    0.38 v _159770_/A1 (NOR3_X2)
+     3    6.15    0.04    0.05    0.43 ^ _159770_/ZN (NOR3_X2)
+                                         _056112_ (net)
+                  0.04    0.00    0.43 ^ _159783_/A1 (NOR3_X1)
+     2    6.55    0.01    0.02    0.46 v _159783_/ZN (NOR3_X1)
+                                         _056125_ (net)
+                  0.01    0.00    0.46 v place4707/A (BUF_X1)
+     2    6.77    0.01    0.04    0.49 v place4707/Z (BUF_X1)
+                                         net4706 (net)
+                  0.01    0.00    0.49 v _159825_/A2 (NOR4_X2)
+     1    3.94    0.04    0.07    0.56 ^ _159825_/ZN (NOR4_X2)
+                                         _056161_ (net)
+                  0.04    0.00    0.56 ^ _159826_/B (XNOR2_X1)
+     1    2.62    0.02    0.05    0.61 ^ _159826_/ZN (XNOR2_X1)
+                                         _047268_ (net)
+                  0.02    0.00    0.61 ^ mac.acc[16]$_DFFE_PN0P_/D (DFFR_X1)
+                                  0.61   data arrival time
+
+                  0.00    0.60    0.60   clock core_clock (rise edge)
+                          0.00    0.60   clock network delay (ideal)
+                          0.00    0.60   clock reconvergence pessimism
+                                  0.60 ^ mac.acc[16]$_DFFE_PN0P_/CK (DFFR_X1)
+                         -0.04    0.56   library setup time
+                                  0.56   data required time
+-----------------------------------------------------------------------------
+                                  0.56   data required time
+                                 -0.61   data arrival time
+-----------------------------------------------------------------------------
+                                 -0.05   slack (VIOLATED)
+
+
+
+==========================================================================
+detailed place report_checks -unconstrained
+--------------------------------------------------------------------------
+Startpoint: mac.prod_r[3]$_DFFE_PN0P_
+            (rising edge-triggered flip-flop clocked by core_clock)
+Endpoint: mac.acc[16]$_DFFE_PN0P_
+          (rising edge-triggered flip-flop clocked by core_clock)
+Path Group: core_clock
+Path Type: max
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                  0.00    0.00    0.00   clock core_clock (rise edge)
+                          0.00    0.00   clock network delay (ideal)
+                  0.00    0.00    0.00 ^ mac.prod_r[3]$_DFFE_PN0P_/CK (DFFR_X1)
+     2    5.03    0.01    0.09    0.09 v mac.prod_r[3]$_DFFE_PN0P_/Q (DFFR_X1)
+                                         mac.prod_r[3] (net)
+                  0.01    0.00    0.09 v _162870_/B (FA_X1)
+     1    3.61    0.01    0.12    0.21 ^ _162870_/S (FA_X1)
+                                         _106296_ (net)
+                  0.01    0.00    0.21 ^ _162894_/B (HA_X1)
+     3    8.55    0.05    0.08    0.29 ^ _162894_/S (HA_X1)
+                                         _000134_ (net)
+                  0.05    0.00    0.30 ^ _159759_/A (INV_X1)
+     1    4.91    0.02    0.02    0.31 v _159759_/ZN (INV_X1)
+                                         _056101_ (net)
+                  0.02    0.00    0.31 v _159760_/B2 (OAI21_X1)
+     2    3.22    0.02    0.04    0.36 ^ _159760_/ZN (OAI21_X1)
+                                         _056102_ (net)
+                  0.02    0.00    0.36 ^ _159761_/B1 (AOI21_X1)
+     2    5.74    0.02    0.03    0.38 v _159761_/ZN (AOI21_X1)
+                                         _056103_ (net)
+                  0.02    0.00    0.38 v _159770_/A1 (NOR3_X2)
+     3    6.15    0.04    0.05    0.43 ^ _159770_/ZN (NOR3_X2)
+                                         _056112_ (net)
+                  0.04    0.00    0.43 ^ _159783_/A1 (NOR3_X1)
+     2    6.55    0.01    0.02    0.46 v _159783_/ZN (NOR3_X1)
+                                         _056125_ (net)
+                  0.01    0.00    0.46 v place4707/A (BUF_X1)
+     2    6.77    0.01    0.04    0.49 v place4707/Z (BUF_X1)
+                                         net4706 (net)
+                  0.01    0.00    0.49 v _159825_/A2 (NOR4_X2)
+     1    3.94    0.04    0.07    0.56 ^ _159825_/ZN (NOR4_X2)
+                                         _056161_ (net)
+                  0.04    0.00    0.56 ^ _159826_/B (XNOR2_X1)
+     1    2.62    0.02    0.05    0.61 ^ _159826_/ZN (XNOR2_X1)
+                                         _047268_ (net)
+                  0.02    0.00    0.61 ^ mac.acc[16]$_DFFE_PN0P_/D (DFFR_X1)
+                                  0.61   data arrival time
+
+                  0.00    0.60    0.60   clock core_clock (rise edge)
+                          0.00    0.60   clock network delay (ideal)
+                          0.00    0.60   clock reconvergence pessimism
+                                  0.60 ^ mac.acc[16]$_DFFE_PN0P_/CK (DFFR_X1)
+                         -0.04    0.56   library setup time
+                                  0.56   data required time
+-----------------------------------------------------------------------------
+                                  0.56   data required time
+                                 -0.61   data arrival time
+-----------------------------------------------------------------------------
+                                 -0.05   slack (VIOLATED)
+
+
+
+==========================================================================
+detailed place report_check_types -max_slew -max_cap -max_fanout -violators
+--------------------------------------------------------------------------
+
+==========================================================================
+detailed place max_slew_check_slack
+--------------------------------------------------------------------------
+0.07745658606290817
+
+==========================================================================
+detailed place max_slew_check_limit
+--------------------------------------------------------------------------
+0.1985349953174591
+
+==========================================================================
+detailed place max_slew_check_slack_limit
+--------------------------------------------------------------------------
+0.3901
+
+==========================================================================
+detailed place max_fanout_check_slack
+--------------------------------------------------------------------------
+1.0000000150474662e+30
+
+==========================================================================
+detailed place max_fanout_check_limit
+--------------------------------------------------------------------------
+1.0000000150474662e+30
+
+==========================================================================
+detailed place max_capacitance_check_slack
+--------------------------------------------------------------------------
+2.813037157058716
+
+==========================================================================
+detailed place max_capacitance_check_limit
+--------------------------------------------------------------------------
+26.702899932861328
+
+==========================================================================
+detailed place max_capacitance_check_slack_limit
+--------------------------------------------------------------------------
+0.1053
+
+==========================================================================
+detailed place max_slew_violation_count
+--------------------------------------------------------------------------
+max slew violation count 0
+
+==========================================================================
+detailed place max_fanout_violation_count
+--------------------------------------------------------------------------
+max fanout violation count 0
+
+==========================================================================
+detailed place max_cap_violation_count
+--------------------------------------------------------------------------
+max cap violation count 0
+
+==========================================================================
+detailed place setup_violation_count
+--------------------------------------------------------------------------
+setup violation count 68
+
+==========================================================================
+detailed place hold_violation_count
+--------------------------------------------------------------------------
+hold violation count 0
+
+==========================================================================
+detailed place report_checks -path_delay max reg to reg
+--------------------------------------------------------------------------
+Startpoint: mac.prod_r[3]$_DFFE_PN0P_
+            (rising edge-triggered flip-flop clocked by core_clock)
+Endpoint: mac.acc[16]$_DFFE_PN0P_
+          (rising edge-triggered flip-flop clocked by core_clock)
+Path Group: core_clock
+Path Type: max
+
+  Delay    Time   Description
+---------------------------------------------------------
+   0.00    0.00   clock core_clock (rise edge)
+   0.00    0.00   clock network delay (ideal)
+   0.00    0.00 ^ mac.prod_r[3]$_DFFE_PN0P_/CK (DFFR_X1)
+   0.09    0.09 v mac.prod_r[3]$_DFFE_PN0P_/Q (DFFR_X1)
+   0.12    0.21 ^ _162870_/S (FA_X1)
+   0.08    0.29 ^ _162894_/S (HA_X1)
+   0.02    0.31 v _159759_/ZN (INV_X1)
+   0.04    0.36 ^ _159760_/ZN (OAI21_X1)
+   0.03    0.38 v _159761_/ZN (AOI21_X1)
+   0.05    0.43 ^ _159770_/ZN (NOR3_X2)
+   0.02    0.46 v _159783_/ZN (NOR3_X1)
+   0.04    0.49 v place4707/Z (BUF_X1)
+   0.07    0.56 ^ _159825_/ZN (NOR4_X2)
+   0.05    0.61 ^ _159826_/ZN (XNOR2_X1)
+   0.00    0.61 ^ mac.acc[16]$_DFFE_PN0P_/D (DFFR_X1)
+           0.61   data arrival time
+
+   0.60    0.60   clock core_clock (rise edge)
+   0.00    0.60   clock network delay (ideal)
+   0.00    0.60   clock reconvergence pessimism
+           0.60 ^ mac.acc[16]$_DFFE_PN0P_/CK (DFFR_X1)
+  -0.04    0.56   library setup time
+           0.56   data required time
+---------------------------------------------------------
+           0.56   data required time
+          -0.61   data arrival time
+---------------------------------------------------------
+          -0.05   slack (VIOLATED)
+
+
+
+==========================================================================
+detailed place report_checks -path_delay min reg to reg
+--------------------------------------------------------------------------
+Startpoint: mac.partial_fold$_DFF_PN0_
+            (rising edge-triggered flip-flop clocked by core_clock)
+Endpoint: mac.fold_r$_DFF_PN0_
+          (rising edge-triggered flip-flop clocked by core_clock)
+Path Group: core_clock
+Path Type: min
+
+  Delay    Time   Description
+---------------------------------------------------------
+   0.00    0.00   clock core_clock (rise edge)
+   0.00    0.00   clock network delay (ideal)
+   0.00    0.00 ^ mac.partial_fold$_DFF_PN0_/CK (DFFR_X1)
+   0.08    0.08 v mac.partial_fold$_DFF_PN0_/Q (DFFR_X1)
+   0.00    0.08 v mac.fold_r$_DFF_PN0_/D (DFFR_X1)
+           0.08   data arrival time
+
+   0.00    0.00   clock core_clock (rise edge)
+   0.00    0.00   clock network delay (ideal)
+   0.00    0.00   clock reconvergence pessimism
+           0.00 ^ mac.fold_r$_DFF_PN0_/CK (DFFR_X1)
+   0.00    0.00   library hold time
+           0.00   data required time
+---------------------------------------------------------
+           0.00   data required time
+          -0.08   data arrival time
+---------------------------------------------------------
+           0.08   slack (MET)
+
+
+
+==========================================================================
+detailed place critical path target clock latency max path
+--------------------------------------------------------------------------
+0.0000
+
+==========================================================================
+detailed place critical path target clock latency min path
+--------------------------------------------------------------------------
+0.0000
+
+==========================================================================
+detailed place critical path source clock latency min path
+--------------------------------------------------------------------------
+0.0000
+
+==========================================================================
+detailed place critical path delay
+--------------------------------------------------------------------------
+0.6115
+
+==========================================================================
+detailed place critical path slack
+--------------------------------------------------------------------------
+-0.0483
+
+==========================================================================
+detailed place slack div critical path delay
+--------------------------------------------------------------------------
+-7.898610
+
+==========================================================================
+detailed place report_power
+--------------------------------------------------------------------------
+Group                  Internal  Switching    Leakage      Total
+                          Power      Power      Power      Power (Watts)
+----------------------------------------------------------------
+Sequential             5.76e-01   0.00e+00   3.78e-03   5.80e-01  88.4%
+Combinational          3.48e-05   4.05e-04   1.63e-03   2.06e-03   0.3%
+Clock                  0.00e+00   0.00e+00   0.00e+00   0.00e+00   0.0%
+Macro                  7.07e-02   0.00e+00   3.29e-03   7.40e-02  11.3%
+Pad                    0.00e+00   0.00e+00   0.00e+00   0.00e+00   0.0%
+----------------------------------------------------------------
+Total                  6.46e-01   4.05e-04   8.70e-03   6.55e-01 100.0%
+                          98.6%       0.1%       1.3%

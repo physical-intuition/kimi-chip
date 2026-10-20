@@ -51,4 +51,32 @@ remain documented in CORRECTNESS.md.
 
 ## Physical results
 
-Full flow launched in x3y4_timing_dataflow. Routed results pending.
+Full routed flow completed successfully (container exit 0). The unchanged
+0.6 ns target does NOT close: worst setup slack is -0.0245119 ns, TNS
+-0.408776 ns, and 39 setup-violating endpoints. Reported fmax is
+1.60125 GHz, up 41.25% from the actual X3Y3 baseline of 1.13364 GHz.
+Setup slack improves from -0.282117 ns; violating endpoints fall from 274.
+
+Worst overall path is debug_q_hash[26] register to its output port:
+0.5245 ns arrival versus 0.5000 ns required, with about 0.3286 ns clock
+insertion. Worst register-to-register path is mac.prod_r[1] to mac.acc[21],
+with +0.01 ns setup slack (rounded report precision). The pipelined MAC
+register-to-register path now meets; constrained debug outputs remain limiting.
+
+Hold worst slack is +0.0282831 ns, with zero hold violations. There are
+zero slew/fanout violations, but two max-capacitance violations at
+place7308/Z and place7307/Z (2.36 fF and 1.45 fF over the limit).
+Final detailed routing reports zero geometric DRC violations; the final
+5_route_drc reports are empty, confirmed by the routing log's final zero count.
+This is route DRC, not a claim of independent foundry signoff.
+
+Placed instance area excluding filler is 407285 square micrometers
+(338079 standard cells + 69205.8 macros), down 0.27% from 408373.
+The metrics JSON contains a duplicate instance-area key: the earlier 977124
+includes filler and must not be compared against the baseline non-filler area.
+Vectorless estimated power is 1.05279 W, up 6.67% from 0.987002 W;
+this is not measured silicon power.
+
+Final reports are in reports_final/ and metrics_final.json.
+Full inference remains unverified because of the inherited CORRECTNESS.md
+blockers. No clock/I/O/false-path constraint relaxation was used.
