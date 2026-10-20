@@ -1,0 +1,344 @@
+
+==========================================================================
+detailed place report_tns
+--------------------------------------------------------------------------
+tns max 0.00
+
+==========================================================================
+detailed place report_wns
+--------------------------------------------------------------------------
+wns max 0.00
+
+==========================================================================
+detailed place report_worst_slack
+--------------------------------------------------------------------------
+worst slack max 0.01
+
+==========================================================================
+detailed place report_clock_min_period
+--------------------------------------------------------------------------
+core_clock period_min = 0.59 fmax = 1684.61
+
+==========================================================================
+detailed place report_checks -path_delay min
+--------------------------------------------------------------------------
+Startpoint: mac.partial_fold$_DFF_PN0_
+            (rising edge-triggered flip-flop clocked by core_clock)
+Endpoint: mac.fold_r$_DFF_PN0_
+          (rising edge-triggered flip-flop clocked by core_clock)
+Path Group: core_clock
+Path Type: min
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                  0.00    0.00    0.00   clock core_clock (rise edge)
+                          0.00    0.00   clock network delay (ideal)
+                  0.00    0.00    0.00 ^ mac.partial_fold$_DFF_PN0_/CK (DFFR_X1)
+     1    1.40    0.01    0.08    0.08 v mac.partial_fold$_DFF_PN0_/Q (DFFR_X1)
+                                         mac.partial_fold (net)
+                  0.01    0.00    0.08 v mac.fold_r$_DFF_PN0_/D (DFFR_X1)
+                                  0.08   data arrival time
+
+                  0.00    0.00    0.00   clock core_clock (rise edge)
+                          0.00    0.00   clock network delay (ideal)
+                          0.00    0.00   clock reconvergence pessimism
+                                  0.00 ^ mac.fold_r$_DFF_PN0_/CK (DFFR_X1)
+                          0.00    0.00   library hold time
+                                  0.00   data required time
+-----------------------------------------------------------------------------
+                                  0.00   data required time
+                                 -0.08   data arrival time
+-----------------------------------------------------------------------------
+                                  0.08   slack (MET)
+
+
+
+==========================================================================
+detailed place report_checks -path_delay max
+--------------------------------------------------------------------------
+Startpoint: weight_k_pending[2]$_DFF_PN0_
+            (rising edge-triggered flip-flop clocked by core_clock)
+Endpoint: weight_k_sr[2636]$_DFFE_PP_
+          (rising edge-triggered flip-flop clocked by core_clock)
+Path Group: core_clock
+Path Type: max
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                  0.00    0.00    0.00   clock core_clock (rise edge)
+                          0.00    0.00   clock network delay (ideal)
+                  0.00    0.00    0.00 ^ weight_k_pending[2]$_DFF_PN0_/CK (DFFR_X1)
+     5   23.76    0.06    0.15    0.15 ^ weight_k_pending[2]$_DFF_PN0_/Q (DFFR_X1)
+                                         weight_k_pending[0] (net)
+                  0.06    0.00    0.15 ^ place7143/A (BUF_X8)
+     9   92.44    0.02    0.04    0.19 ^ place7143/Z (BUF_X8)
+                                         net7142 (net)
+                  0.06    0.04    0.23 ^ place7142/A (BUF_X4)
+     5   46.85    0.02    0.04    0.27 ^ place7142/Z (BUF_X4)
+                                         net7141 (net)
+                  0.04    0.02    0.30 ^ place7080/A (BUF_X4)
+     8   44.71    0.03    0.05    0.34 ^ place7080/Z (BUF_X4)
+                                         net7079 (net)
+                  0.03    0.00    0.34 ^ place7027/A (BUF_X4)
+    16   51.24    0.03    0.04    0.39 ^ place7027/Z (BUF_X4)
+                                         net7026 (net)
+                  0.03    0.02    0.40 ^ place7025/A (BUF_X4)
+    46  101.60    0.06    0.08    0.48 ^ place7025/Z (BUF_X4)
+                                         net7024 (net)
+                  0.06    0.01    0.49 ^ _141281_/S (MUX2_X1)
+     1    1.44    0.01    0.06    0.55 v _141281_/Z (MUX2_X1)
+                                         _031028_ (net)
+                  0.01    0.00    0.55 v weight_k_sr[2636]$_DFFE_PP_/D (DFF_X1)
+                                  0.55   data arrival time
+
+                  0.00    0.60    0.60   clock core_clock (rise edge)
+                          0.00    0.60   clock network delay (ideal)
+                          0.00    0.60   clock reconvergence pessimism
+                                  0.60 ^ weight_k_sr[2636]$_DFFE_PP_/CK (DFF_X1)
+                         -0.04    0.56   library setup time
+                                  0.56   data required time
+-----------------------------------------------------------------------------
+                                  0.56   data required time
+                                 -0.55   data arrival time
+-----------------------------------------------------------------------------
+                                  0.01   slack (MET)
+
+
+
+==========================================================================
+detailed place report_checks -unconstrained
+--------------------------------------------------------------------------
+Startpoint: weight_k_pending[2]$_DFF_PN0_
+            (rising edge-triggered flip-flop clocked by core_clock)
+Endpoint: weight_k_sr[2636]$_DFFE_PP_
+          (rising edge-triggered flip-flop clocked by core_clock)
+Path Group: core_clock
+Path Type: max
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                  0.00    0.00    0.00   clock core_clock (rise edge)
+                          0.00    0.00   clock network delay (ideal)
+                  0.00    0.00    0.00 ^ weight_k_pending[2]$_DFF_PN0_/CK (DFFR_X1)
+     5   23.76    0.06    0.15    0.15 ^ weight_k_pending[2]$_DFF_PN0_/Q (DFFR_X1)
+                                         weight_k_pending[0] (net)
+                  0.06    0.00    0.15 ^ place7143/A (BUF_X8)
+     9   92.44    0.02    0.04    0.19 ^ place7143/Z (BUF_X8)
+                                         net7142 (net)
+                  0.06    0.04    0.23 ^ place7142/A (BUF_X4)
+     5   46.85    0.02    0.04    0.27 ^ place7142/Z (BUF_X4)
+                                         net7141 (net)
+                  0.04    0.02    0.30 ^ place7080/A (BUF_X4)
+     8   44.71    0.03    0.05    0.34 ^ place7080/Z (BUF_X4)
+                                         net7079 (net)
+                  0.03    0.00    0.34 ^ place7027/A (BUF_X4)
+    16   51.24    0.03    0.04    0.39 ^ place7027/Z (BUF_X4)
+                                         net7026 (net)
+                  0.03    0.02    0.40 ^ place7025/A (BUF_X4)
+    46  101.60    0.06    0.08    0.48 ^ place7025/Z (BUF_X4)
+                                         net7024 (net)
+                  0.06    0.01    0.49 ^ _141281_/S (MUX2_X1)
+     1    1.44    0.01    0.06    0.55 v _141281_/Z (MUX2_X1)
+                                         _031028_ (net)
+                  0.01    0.00    0.55 v weight_k_sr[2636]$_DFFE_PP_/D (DFF_X1)
+                                  0.55   data arrival time
+
+                  0.00    0.60    0.60   clock core_clock (rise edge)
+                          0.00    0.60   clock network delay (ideal)
+                          0.00    0.60   clock reconvergence pessimism
+                                  0.60 ^ weight_k_sr[2636]$_DFFE_PP_/CK (DFF_X1)
+                         -0.04    0.56   library setup time
+                                  0.56   data required time
+-----------------------------------------------------------------------------
+                                  0.56   data required time
+                                 -0.55   data arrival time
+-----------------------------------------------------------------------------
+                                  0.01   slack (MET)
+
+
+
+==========================================================================
+detailed place report_check_types -max_slew -max_cap -max_fanout -violators
+--------------------------------------------------------------------------
+
+==========================================================================
+detailed place max_slew_check_slack
+--------------------------------------------------------------------------
+0.07547683268785477
+
+==========================================================================
+detailed place max_slew_check_limit
+--------------------------------------------------------------------------
+0.1985349953174591
+
+==========================================================================
+detailed place max_slew_check_slack_limit
+--------------------------------------------------------------------------
+0.3802
+
+==========================================================================
+detailed place max_fanout_check_slack
+--------------------------------------------------------------------------
+1.0000000150474662e+30
+
+==========================================================================
+detailed place max_fanout_check_limit
+--------------------------------------------------------------------------
+1.0000000150474662e+30
+
+==========================================================================
+detailed place max_capacitance_check_slack
+--------------------------------------------------------------------------
+0.3902789056301117
+
+==========================================================================
+detailed place max_capacitance_check_limit
+--------------------------------------------------------------------------
+26.702899932861328
+
+==========================================================================
+detailed place max_capacitance_check_slack_limit
+--------------------------------------------------------------------------
+0.0146
+
+==========================================================================
+detailed place max_slew_violation_count
+--------------------------------------------------------------------------
+max slew violation count 0
+
+==========================================================================
+detailed place max_fanout_violation_count
+--------------------------------------------------------------------------
+max fanout violation count 0
+
+==========================================================================
+detailed place max_cap_violation_count
+--------------------------------------------------------------------------
+max cap violation count 0
+
+==========================================================================
+detailed place setup_violation_count
+--------------------------------------------------------------------------
+setup violation count 0
+
+==========================================================================
+detailed place hold_violation_count
+--------------------------------------------------------------------------
+hold violation count 0
+
+==========================================================================
+detailed place report_checks -path_delay max reg to reg
+--------------------------------------------------------------------------
+Startpoint: weight_k_pending[2]$_DFF_PN0_
+            (rising edge-triggered flip-flop clocked by core_clock)
+Endpoint: weight_k_sr[2636]$_DFFE_PP_
+          (rising edge-triggered flip-flop clocked by core_clock)
+Path Group: core_clock
+Path Type: max
+
+  Delay    Time   Description
+---------------------------------------------------------
+   0.00    0.00   clock core_clock (rise edge)
+   0.00    0.00   clock network delay (ideal)
+   0.00    0.00 ^ weight_k_pending[2]$_DFF_PN0_/CK (DFFR_X1)
+   0.15    0.15 ^ weight_k_pending[2]$_DFF_PN0_/Q (DFFR_X1)
+   0.04    0.19 ^ place7143/Z (BUF_X8)
+   0.08    0.27 ^ place7142/Z (BUF_X4)
+   0.07    0.34 ^ place7080/Z (BUF_X4)
+   0.04    0.39 ^ place7027/Z (BUF_X4)
+   0.09    0.48 ^ place7025/Z (BUF_X4)
+   0.07    0.55 v _141281_/Z (MUX2_X1)
+   0.00    0.55 v weight_k_sr[2636]$_DFFE_PP_/D (DFF_X1)
+           0.55   data arrival time
+
+   0.60    0.60   clock core_clock (rise edge)
+   0.00    0.60   clock network delay (ideal)
+   0.00    0.60   clock reconvergence pessimism
+           0.60 ^ weight_k_sr[2636]$_DFFE_PP_/CK (DFF_X1)
+  -0.04    0.56   library setup time
+           0.56   data required time
+---------------------------------------------------------
+           0.56   data required time
+          -0.55   data arrival time
+---------------------------------------------------------
+           0.01   slack (MET)
+
+
+
+==========================================================================
+detailed place report_checks -path_delay min reg to reg
+--------------------------------------------------------------------------
+Startpoint: mac.partial_fold$_DFF_PN0_
+            (rising edge-triggered flip-flop clocked by core_clock)
+Endpoint: mac.fold_r$_DFF_PN0_
+          (rising edge-triggered flip-flop clocked by core_clock)
+Path Group: core_clock
+Path Type: min
+
+  Delay    Time   Description
+---------------------------------------------------------
+   0.00    0.00   clock core_clock (rise edge)
+   0.00    0.00   clock network delay (ideal)
+   0.00    0.00 ^ mac.partial_fold$_DFF_PN0_/CK (DFFR_X1)
+   0.08    0.08 v mac.partial_fold$_DFF_PN0_/Q (DFFR_X1)
+   0.00    0.08 v mac.fold_r$_DFF_PN0_/D (DFFR_X1)
+           0.08   data arrival time
+
+   0.00    0.00   clock core_clock (rise edge)
+   0.00    0.00   clock network delay (ideal)
+   0.00    0.00   clock reconvergence pessimism
+           0.00 ^ mac.fold_r$_DFF_PN0_/CK (DFFR_X1)
+   0.00    0.00   library hold time
+           0.00   data required time
+---------------------------------------------------------
+           0.00   data required time
+          -0.08   data arrival time
+---------------------------------------------------------
+           0.08   slack (MET)
+
+
+
+==========================================================================
+detailed place critical path target clock latency max path
+--------------------------------------------------------------------------
+0.0000
+
+==========================================================================
+detailed place critical path target clock latency min path
+--------------------------------------------------------------------------
+0.0000
+
+==========================================================================
+detailed place critical path source clock latency min path
+--------------------------------------------------------------------------
+0.0000
+
+==========================================================================
+detailed place critical path delay
+--------------------------------------------------------------------------
+0.5529
+
+==========================================================================
+detailed place critical path slack
+--------------------------------------------------------------------------
+0.0064
+
+==========================================================================
+detailed place slack div critical path delay
+--------------------------------------------------------------------------
+1.157533
+
+==========================================================================
+detailed place report_power
+--------------------------------------------------------------------------
+Group                  Internal  Switching    Leakage      Total
+                          Power      Power      Power      Power (Watts)
+----------------------------------------------------------------
+Sequential             5.76e-01   0.00e+00   3.78e-03   5.80e-01  88.4%
+Combinational          3.09e-05   4.04e-04   1.65e-03   2.09e-03   0.3%
+Clock                  0.00e+00   0.00e+00   0.00e+00   0.00e+00   0.0%
+Macro                  7.07e-02   0.00e+00   3.29e-03   7.40e-02  11.3%
+Pad                    0.00e+00   0.00e+00   0.00e+00   0.00e+00   0.0%
+----------------------------------------------------------------
+Total                  6.46e-01   4.04e-04   8.72e-03   6.55e-01 100.0%
+                          98.6%       0.1%       1.3%

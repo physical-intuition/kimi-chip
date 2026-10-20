@@ -1,0 +1,206 @@
+
+==========================================================================
+global place report_tns
+--------------------------------------------------------------------------
+tns max -0.20
+
+==========================================================================
+global place report_wns
+--------------------------------------------------------------------------
+wns max -0.02
+
+==========================================================================
+global place report_worst_slack
+--------------------------------------------------------------------------
+worst slack max -0.02
+
+==========================================================================
+global place report_clock_min_period
+--------------------------------------------------------------------------
+core_clock period_min = 0.62 fmax = 1616.17
+
+==========================================================================
+global place report_checks -path_delay min
+--------------------------------------------------------------------------
+Startpoint: mac.cnt[2]$_DFFE_PN0P_
+            (rising edge-triggered flip-flop clocked by core_clock)
+Endpoint: mac.partial_fold$_DFF_PN0_
+          (rising edge-triggered flip-flop clocked by core_clock)
+Path Group: core_clock
+Path Type: min
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                  0.00    0.00    0.00   clock core_clock (rise edge)
+                          0.00    0.00   clock network delay (ideal)
+                  0.00    0.00    0.00 ^ mac.cnt[2]$_DFFE_PN0P_/CK (DFFR_X1)
+     1    2.04    0.01    0.07    0.07 ^ mac.cnt[2]$_DFFE_PN0P_/QN (DFFR_X1)
+                                         _000073_ (net)
+                  0.01    0.00    0.07 ^ _122257_/A1 (NOR3_X1)
+     5    7.56    0.01    0.02    0.08 v _122257_/ZN (NOR3_X1)
+                                         _049789_ (net)
+                  0.01    0.00    0.08 v mac.partial_fold$_DFF_PN0_/D (DFFR_X1)
+                                  0.08   data arrival time
+
+                  0.00    0.00    0.00   clock core_clock (rise edge)
+                          0.00    0.00   clock network delay (ideal)
+                          0.00    0.00   clock reconvergence pessimism
+                                  0.00 ^ mac.partial_fold$_DFF_PN0_/CK (DFFR_X1)
+                          0.00    0.00   library hold time
+                                  0.00   data required time
+-----------------------------------------------------------------------------
+                                  0.00   data required time
+                                 -0.08   data arrival time
+-----------------------------------------------------------------------------
+                                  0.08   slack (MET)
+
+
+
+==========================================================================
+global place report_checks -path_delay max
+--------------------------------------------------------------------------
+Startpoint: mac.prod_r[7]$_DFFE_PN0P_
+            (rising edge-triggered flip-flop clocked by core_clock)
+Endpoint: mac.acc[20]$_DFFE_PN0P_
+          (rising edge-triggered flip-flop clocked by core_clock)
+Path Group: core_clock
+Path Type: max
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                  0.00    0.00    0.00   clock core_clock (rise edge)
+                          0.00    0.00   clock network delay (ideal)
+                  0.00    0.00    0.00 ^ mac.prod_r[7]$_DFFE_PN0P_/CK (DFFR_X1)
+     2    6.31    0.02    0.11    0.11 ^ mac.prod_r[7]$_DFFE_PN0P_/Q (DFFR_X1)
+                                         mac.prod_r[7] (net)
+                  0.02    0.00    0.11 ^ _162868_/B (FA_X1)
+     1    4.60    0.02    0.10    0.21 v _162868_/S (FA_X1)
+                                         _106292_ (net)
+                  0.02    0.00    0.21 v _162933_/B (HA_X1)
+     2    4.29    0.01    0.04    0.25 v _162933_/CO (HA_X1)
+                                         _000200_ (net)
+                  0.01    0.00    0.25 v _159773_/B1 (AOI21_X1)
+     1    4.17    0.03    0.04    0.29 ^ _159773_/ZN (AOI21_X1)
+                                         _056115_ (net)
+                  0.03    0.00    0.29 ^ _159775_/B1 (OAI21_X1)
+     1    2.67    0.01    0.02    0.31 v _159775_/ZN (OAI21_X1)
+                                         _056117_ (net)
+                  0.01    0.00    0.31 v _159776_/B2 (AOI21_X1)
+     3    8.24    0.05    0.07    0.38 ^ _159776_/ZN (AOI21_X1)
+                                         _056118_ (net)
+                  0.05    0.00    0.38 ^ _159778_/B1 (OAI21_X1)
+     1    4.24    0.02    0.03    0.41 v _159778_/ZN (OAI21_X1)
+                                         _056120_ (net)
+                  0.02    0.00    0.41 v place4543/A (BUF_X4)
+     3    9.23    0.01    0.03    0.44 v place4543/Z (BUF_X4)
+                                         net4542 (net)
+                  0.01    0.00    0.44 v _159783_/A2 (NOR3_X4)
+     3   11.82    0.04    0.06    0.49 ^ _159783_/ZN (NOR3_X4)
+                                         _056125_ (net)
+                  0.04    0.00    0.50 ^ place4535/A (BUF_X4)
+     2    6.31    0.01    0.03    0.52 ^ place4535/Z (BUF_X4)
+                                         net4534 (net)
+                  0.01    0.00    0.52 ^ _159806_/A1 (NOR2_X1)
+     1    4.83    0.01    0.01    0.53 v _159806_/ZN (NOR2_X1)
+                                         _056146_ (net)
+                  0.01    0.00    0.53 v _159807_/B (XNOR2_X1)
+     1    2.45    0.01    0.04    0.58 v _159807_/ZN (XNOR2_X1)
+                                         _047264_ (net)
+                  0.01    0.00    0.58 v mac.acc[20]$_DFFE_PN0P_/D (DFFR_X1)
+                                  0.58   data arrival time
+
+                  0.00    0.60    0.60   clock core_clock (rise edge)
+                          0.00    0.60   clock network delay (ideal)
+                          0.00    0.60   clock reconvergence pessimism
+                                  0.60 ^ mac.acc[20]$_DFFE_PN0P_/CK (DFFR_X1)
+                         -0.04    0.56   library setup time
+                                  0.56   data required time
+-----------------------------------------------------------------------------
+                                  0.56   data required time
+                                 -0.58   data arrival time
+-----------------------------------------------------------------------------
+                                 -0.02   slack (VIOLATED)
+
+
+
+==========================================================================
+global place report_checks -unconstrained
+--------------------------------------------------------------------------
+Startpoint: mac.prod_r[7]$_DFFE_PN0P_
+            (rising edge-triggered flip-flop clocked by core_clock)
+Endpoint: mac.acc[20]$_DFFE_PN0P_
+          (rising edge-triggered flip-flop clocked by core_clock)
+Path Group: core_clock
+Path Type: max
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                  0.00    0.00    0.00   clock core_clock (rise edge)
+                          0.00    0.00   clock network delay (ideal)
+                  0.00    0.00    0.00 ^ mac.prod_r[7]$_DFFE_PN0P_/CK (DFFR_X1)
+     2    6.31    0.02    0.11    0.11 ^ mac.prod_r[7]$_DFFE_PN0P_/Q (DFFR_X1)
+                                         mac.prod_r[7] (net)
+                  0.02    0.00    0.11 ^ _162868_/B (FA_X1)
+     1    4.60    0.02    0.10    0.21 v _162868_/S (FA_X1)
+                                         _106292_ (net)
+                  0.02    0.00    0.21 v _162933_/B (HA_X1)
+     2    4.29    0.01    0.04    0.25 v _162933_/CO (HA_X1)
+                                         _000200_ (net)
+                  0.01    0.00    0.25 v _159773_/B1 (AOI21_X1)
+     1    4.17    0.03    0.04    0.29 ^ _159773_/ZN (AOI21_X1)
+                                         _056115_ (net)
+                  0.03    0.00    0.29 ^ _159775_/B1 (OAI21_X1)
+     1    2.67    0.01    0.02    0.31 v _159775_/ZN (OAI21_X1)
+                                         _056117_ (net)
+                  0.01    0.00    0.31 v _159776_/B2 (AOI21_X1)
+     3    8.24    0.05    0.07    0.38 ^ _159776_/ZN (AOI21_X1)
+                                         _056118_ (net)
+                  0.05    0.00    0.38 ^ _159778_/B1 (OAI21_X1)
+     1    4.24    0.02    0.03    0.41 v _159778_/ZN (OAI21_X1)
+                                         _056120_ (net)
+                  0.02    0.00    0.41 v place4543/A (BUF_X4)
+     3    9.23    0.01    0.03    0.44 v place4543/Z (BUF_X4)
+                                         net4542 (net)
+                  0.01    0.00    0.44 v _159783_/A2 (NOR3_X4)
+     3   11.82    0.04    0.06    0.49 ^ _159783_/ZN (NOR3_X4)
+                                         _056125_ (net)
+                  0.04    0.00    0.50 ^ place4535/A (BUF_X4)
+     2    6.31    0.01    0.03    0.52 ^ place4535/Z (BUF_X4)
+                                         net4534 (net)
+                  0.01    0.00    0.52 ^ _159806_/A1 (NOR2_X1)
+     1    4.83    0.01    0.01    0.53 v _159806_/ZN (NOR2_X1)
+                                         _056146_ (net)
+                  0.01    0.00    0.53 v _159807_/B (XNOR2_X1)
+     1    2.45    0.01    0.04    0.58 v _159807_/ZN (XNOR2_X1)
+                                         _047264_ (net)
+                  0.01    0.00    0.58 v mac.acc[20]$_DFFE_PN0P_/D (DFFR_X1)
+                                  0.58   data arrival time
+
+                  0.00    0.60    0.60   clock core_clock (rise edge)
+                          0.00    0.60   clock network delay (ideal)
+                          0.00    0.60   clock reconvergence pessimism
+                                  0.60 ^ mac.acc[20]$_DFFE_PN0P_/CK (DFFR_X1)
+                         -0.04    0.56   library setup time
+                                  0.56   data required time
+-----------------------------------------------------------------------------
+                                  0.56   data required time
+                                 -0.58   data arrival time
+-----------------------------------------------------------------------------
+                                 -0.02   slack (VIOLATED)
+
+
+
+==========================================================================
+global place report_power
+--------------------------------------------------------------------------
+Group                  Internal  Switching    Leakage      Total
+                          Power      Power      Power      Power (Watts)
+----------------------------------------------------------------
+Sequential             5.76e-01   0.00e+00   3.78e-03   5.80e-01  88.4%
+Combinational          2.96e-05   4.02e-04   1.65e-03   2.08e-03   0.3%
+Clock                  0.00e+00   0.00e+00   0.00e+00   0.00e+00   0.0%
+Macro                  7.07e-02   0.00e+00   3.29e-03   7.40e-02  11.3%
+Pad                    0.00e+00   0.00e+00   0.00e+00   0.00e+00   0.0%
+----------------------------------------------------------------
+Total                  6.46e-01   4.02e-04   8.72e-03   6.55e-01 100.0%
+                          98.6%       0.1%       1.3%
