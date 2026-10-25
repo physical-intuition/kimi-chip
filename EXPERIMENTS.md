@@ -56,3 +56,21 @@ X4Y1 golden model harness exposed these gaps. X4Y2 fixed some bounds issues but 
 
 ---
 
+
+## X4: Golden-model functional correctness (harness 4)
+Harness: RTL vs Python reference, cycle-by-cycle (golden.py) and exact per-tensor (operator models), strict inference gate that must fail until full inference exists. Normative spec: MoonshotAI/nano-kpu reference/model.py (vendored at third_party/nano-kpu, commit e1855de, SHA-256 pinned from X4Y4). Weights are synthetic throughout.
+Directory note: dataflow/x4y4, x4y4_reports, x4y5*, x5y* are pre-scheme physical-flow runs (old numbering), not harness-4/5 iterations; they are not renumbered.
+
+| variant | change | verification | result | dir | commit |
+|---|---|---|---|---|---|
+| X4Y1 | full-top arithmetic diagnostic + strict inference gate | golden.py cycle model | diagnostic match, strict fails (correctly) | x4y1_golden | 077c37d |
+| X4Y2 | MLA cache bounds, backpressure until restart, projection storage overflow | + bounds/protocol tbs | pass, strict fails | x4y2_bounds | f9d340d |
+| X4Y3 | KDA operators (proj, conv+SiLU, L2, gates, delta rule, gated norm, o-proj) | RTL == kda_model exact, 6 tok / 2 seq | exact, strict fails | x4y3_kda | 3e8f7c2 |
+| X4Y4 | MLA operators (latent wc + knorm RMSNorm, q/kr from h, kc/v decompression, KV cache in 9x512x64 SRAM, NoPE scores, LUT softmax, p@V, o-proj); reference int4 dequant (z, Q3.12 s, group 128/64) with official seeded weights; KDA fixes (f/z rank 32, gated-norm eps 1e-5) | RTL == mla_model / kda_model exact on 6 tok, 66 tok (64-entry cache, refused 65th, restart), group 64; mla_model vs model.py `_mla` | exact; MLA out cos vs model.py >= 0.99965 (64-entry cache); strict fails (MLA input staged, no norm/MoE/residual/head) | x4y4_mla | X4Y4_COMMIT |
+
+### X4 learnings
+- X4Y4: checking the X4Y3 KDA float model against model.py itself (not a re-derivation) exposed two structural deviations (rank 8 vs kda_dim 32, eps 1e-6 vs 1e-5; up to 155% of max|out| on early tokens) that an RTL==own-model exact match cannot see. From X4Y4 on, every operator is also compared to RefModel directly.
+- X4Y4: MLA error vs reference is dominated by INT8 coding of lat/ctx at the MAC input, not by softmax (LUT < 1.5e-4) or the latent norm (cos > 0.99999).
+- X4Y4: KDA fixed point is weak on the first token of a sequence (cos 0.983 vs model.py); revisit numerics before logits are judged.
+- X4Y4: Icarus 13 rejects use-before-declaration; X4Y4 RTL is order-clean, frozen X4Y2/X4Y3 need Icarus <= 12.
+- Next: X4Y5 norm + MoE + residual wiring (feeds KDA output into MLA, replaces the staged h), then X5 harness work.
